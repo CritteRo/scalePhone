@@ -75,6 +75,7 @@ RegisterCommand('phone', function()
         PlaySoundFrontend(-1, "Put_Away", "Phone_SoundSet_Michael", 1)
     end
 end)
+RegisterKeyMapping('phone', "Open Phone", 'keyboard', 'm')
 
 Citizen.CreateThread(function()
     while true do
@@ -184,11 +185,9 @@ RegisterCommand('phoneup', function()
             Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 1)
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
-    else
-        ExecuteCommand('phone')
     end
 end)
-RegisterKeyMapping('phoneup', "Phone Swipe Up / Open Phone", 'keyboard', 'UP')
+RegisterKeyMapping('phoneup', "Phone Swipe Up", 'keyboard', 'UP')
 
 RegisterCommand('phonedown', function()
     if isPhoneActive then
