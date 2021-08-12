@@ -6,39 +6,38 @@ appSelectID = 0
 renderID = 0
 themeID = 0
 
+RequestStreamedTextureDict("shopui_title_casino")
+
 apps = {
     [0] = {id = 2, isLeftToRight = false, name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.Homepage"},
     [1] = {id = 6, isLeftToRight = false, name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.Homepage"},
     [2] = {id = 8, isLeftToRight = false, name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
     [3] = {id = 0, isLeftToRight = false, name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.Homepage"},
-    [4] = {id = 18, isLeftToRight = false, name = "Jobs", icon = 12, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
+    [4] = {id = 14, isLeftToRight = false, name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.Homepage"},
     [5] = {id = 18, isLeftToRight = false, name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
 }
 
 buttons = {
     [0] = { --contacts
         --[0] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
-        --[1] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
-        --[2] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
     },
     [1] = { --messages
         --[0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = false},
-        --[1] = {contact = "Dan Nistor", h = 17, m = 5, message = "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer", event = "scalePhone.ShowMessage", isentthat = true},
     },
     [2] = { --emails
-        --[0] = {title = "Update 1", to = "fivem.net", from = "homies.net", message = "Boiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\n"},
+        --[0] = {title = "Update 1", to = "fivem.net", from = "homies.net", message = "<img src='img://shopui_title_casino/shopui_title_casino' height='80' width='320'/>"},
     },
     [3] = {
         [0] = {selfieOn = false},
         [1] = {selfieOn = true},
     },
-    [4] = { --jobs menu
-        [0] = {text = "Item 1", event = "core.alert", eventParams = {type = "simple", text = "test1"}},
-        [1] = {text = "Item 2", event = "core.alert", eventParams = {type = "simple", text = "test2"}},
-        [2] = {text = "Item 3", event = "core.alert", eventParams = {type = "simple", text = "test3"}},
-        [3] = {text = "Item 4", event = "core.alert", eventParams = {type = "simple", text = "test54"}},
-        [4] = {text = "Item 5", event = "core.alert", eventParams = {type = "simple", text = "test5"}},
-        [5] = {text = "Item 6", event = "core.alert", eventParams = {type = "simple", text = "test6"}},
+    [4] = { --stats menu
+        [0] = {title = "UID", text = "14", procent = 0},
+        [1] = {title = "Rank", text = "4", procent = 0},
+        [2] = {title = "Level", text = "100", procent = 0},
+        [3] = {title = "Job", text = "Hitman", procent = 0},
+        [4] = {title = "Faction", text = "FIB", procent = 0},
+        [5] = {title = "Heist Points", text = "52", procent = 0},
     },
     [5] = { --themes menu
         [0] = {text = "Blue", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 0}},
@@ -199,8 +198,6 @@ RegisterCommand('phonedown', function()
                 end
                 CellCamMoveFinger(2)
                 Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
-            elseif appOpen == 2 then
-                
             else
                 if apps[appOpen].isLeftToRight == false then
                     if appSelectID < #buttons[appOpen] then
@@ -240,6 +237,11 @@ RegisterCommand('phoneselect', function()
                     appSelectID = 0
                     CellCamMoveFinger(5)
                     openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
+                elseif apps[selectID].openEvent == "scalePhone.OpenStatsMenu" then
+                    appOpen = selectID
+                    appSelectID = 0
+                    CellCamMoveFinger(5)
+                    openStatsMenu(phoneScaleform, buttons[appOpen], appSelectID)
                 elseif apps[selectID].openEvent == "scalePhone.OpenSnapmatic" then
                     appOpen = selectID
                     appSelectID = 0
@@ -250,6 +252,8 @@ RegisterCommand('phoneselect', function()
                     appSelectID = 0
                     CellCamMoveFinger(5)
                     openCustomMenu(phoneScaleform, apps[selectID].name, buttons[appOpen], appSelectID)
+                elseif apps[selectID].openEvent == 'scalePhone.SendSMS' then
+                    
                 end
             end
         elseif appOpen == 1 then

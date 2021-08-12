@@ -83,6 +83,17 @@ function openEmailsMenu(scaleform, emails, selectID)
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 8, selectID)
 end
 
+function openStatsMenu(scaleform, list, selectID)
+    SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
+    SetPhoneLean(false)
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Stats")
+    for i,k in pairs(list) do
+        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 14, i, k.procent, k.title, k.text)
+    end
+    Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 14, selectID)
+end
+
+
 function openEmailViewer(scaleform, title, from, to, message)
     SetMobilePhoneRotation(-90.0,0.0,90.0) -- 75<X<75
     SetPhoneLean(true)

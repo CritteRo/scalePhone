@@ -9,6 +9,7 @@ client_scripts {
     'client/scaleforms/cl_scaleform_functions.lua',
     'client/scaleforms/cl_phone_scaleform_main.lua',
     'client/cl_phone_handle.lua',
+    'client/cl_phone_events.lua',
 }
 
 server_scripts {
