@@ -10,23 +10,27 @@ apps = {
     [0] = {id = 2, isLeftToRight = false, name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.Homepage"},
     [1] = {id = 6, isLeftToRight = false, name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.Homepage"},
     [2] = {id = 8, isLeftToRight = false, name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
-    [3] = {id = 0, isLeftToRight = false, name = "Snapmatic", icon = 1, notif = 0, openEvent = "", backEvent = "scalePhone.Homepage"},
+    [3] = {id = 0, isLeftToRight = false, name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.Homepage"},
     [4] = {id = 18, isLeftToRight = false, name = "Jobs", icon = 12, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
     [5] = {id = 18, isLeftToRight = false, name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
 }
 
 buttons = {
     [0] = { --contacts
-        [0] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
-        [1] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
-        [2] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
+        --[0] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
+        --[1] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
+        --[2] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
     },
     [1] = { --messages
-        [0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = false},
-        [1] = {contact = "Dan Nistor", h = 17, m = 5, message = "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer", event = "scalePhone.ShowMessage", isentthat = true},
+        --[0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = false},
+        --[1] = {contact = "Dan Nistor", h = 17, m = 5, message = "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer", event = "scalePhone.ShowMessage", isentthat = true},
     },
     [2] = { --emails
-        [0] = {title = "Update 1", to = "fivem.net", from = "homies.net", message = "Boiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\n"},
+        --[0] = {title = "Update 1", to = "fivem.net", from = "homies.net", message = "Boiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\n"},
+    },
+    [3] = {
+        [0] = {selfieOn = false},
+        [1] = {selfieOn = true},
     },
     [4] = { --jobs menu
         [0] = {text = "Item 1", event = "core.alert", eventParams = {type = "simple", text = "test1"}},
@@ -51,7 +55,7 @@ buttons = {
 RegisterCommand('phone', function()
     if isPhoneActive == false then
         CreateMobilePhone(0)
-        renderID = GetMobilePhoneRenderId() --
+        renderID = GetMobilePhoneRenderId() --render id for both the phone AND the frontend render.
         SetMobilePhonePosition(45.0,-23.0,-60.0)
         SetMobilePhoneRotation(-90.0,0.0,0.0) --last one is important
         SetPhoneLean(false) --flips the phone in hand
@@ -84,6 +88,15 @@ Citizen.CreateThread(function()
 			end
             DrawScaleformMovie(phoneScaleform, 0.1, 0.18, 0.2, 0.35, 255, 255, 255, 255, 0)
             SetTextRenderId(GetDefaultScriptRendertargetRenderId())
+
+            if appOpen == 3 then
+                HideHudComponentThisFrame(7)
+                HideHudComponentThisFrame(8)
+                HideHudComponentThisFrame(9)
+                HideHudComponentThisFrame(6)
+                HideHudComponentThisFrame(19)
+                HideHudAndRadarThisFrame()
+            end
         end
         Citizen.Wait(1)
     end
@@ -102,6 +115,14 @@ RegisterCommand('phoneleft', function()
                     CellCamMoveFinger(4)
                     Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
                 end
+            elseif appOpen == 3 then
+                if appSelectID == 0 then
+                    appSelectID = 1
+                else
+                    appSelectID = 0
+                end
+                CellCamMoveFinger(4)
+                CellFrontCamActivate(buttons[appOpen][appSelectID].selfieOn)
             end
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
@@ -122,6 +143,14 @@ RegisterCommand('phoneright', function()
                     CellCamMoveFinger(3)
                     Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
                 end
+            elseif appOpen == 3 then
+                if appSelectID == 0 then
+                    appSelectID = 1
+                else
+                    appSelectID = 0
+                end
+                CellCamMoveFinger(3)
+                CellFrontCamActivate(buttons[appOpen][appSelectID].selfieOn)
             end
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
@@ -212,6 +241,11 @@ RegisterCommand('phoneselect', function()
                     appSelectID = 0
                     CellCamMoveFinger(5)
                     openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
+                elseif apps[selectID].openEvent == "scalePhone.OpenSnapmatic" then
+                    appOpen = selectID
+                    appSelectID = 0
+                    CellCamMoveFinger(5)
+                    openSnapmatic(phoneScaleform)
                 elseif apps[selectID].openEvent == "scalePhone.OpenCustomMenu" then
                     appOpen = selectID
                     appSelectID = 0
@@ -227,6 +261,11 @@ RegisterCommand('phoneselect', function()
             CellCamMoveFinger(5)
             openEmailViewer(phoneScaleform, buttons[appOpen][appSelectID].title, buttons[appOpen][appSelectID].from, buttons[appOpen][appSelectID].to, buttons[appOpen][appSelectID].message)
             appOpen = -2
+        elseif appOpen == 3 then
+            TakePhoto()
+            if (WasPhotoTaken() and SavePhoto(-1)) then
+                ClearPhoto()
+            end
         else
             if appOpen ~= -2 and appOpen ~= -3 then
                 TriggerEvent(buttons[appOpen][appSelectID].event, buttons[appOpen][appSelectID].eventParams)

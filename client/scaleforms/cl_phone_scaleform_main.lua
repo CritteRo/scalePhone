@@ -1,12 +1,6 @@
 
 day = {
-	[1] = "Mon",
-	[2] = "Tue",
-	[3] = "Wed",
-	[4] = "Thu",
-	[5] = "Fri",
-	[6] = "Sat",
-	[7] = "Sun"
+	[1] = "Mon", [2] = "Tue", [3] = "Wed", [4] = "Thu", [5] = "Fri", [6] = "Sat", [7] = "Sun"
 }
 
 themes = {
@@ -20,8 +14,6 @@ themes = {
 }
 
 --view id 4 = call screen / 11 = numpad / 14 = better todo / 15 = todo 6= sms list / 8 = email list / 24 = weird text
-
-
 function generateMainPhone(_apps, _selectID, _theme)
     local scaleform = Scaleform.Request('CELLPHONE_IFRUIT')
 
@@ -36,8 +28,17 @@ end
 function showHomepage(scaleform, apps, selectID, theme)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
+
+    SetPedConfigFlag(PlayerPedId(), 242, not true)
+	SetPedConfigFlag(PlayerPedId(), 243, not true)
+	SetPedConfigFlag(PlayerPedId(), 244, true)
+
+    CellCamActivate(false, false)
+	CellFrontCamActivate(false)
+
     Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", themes[theme].wallpaper)
     for i,k in pairs(apps) do
+        --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 1, slotID, iconID, notification number, App Name, opacityFloat)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 1, i, k.icon, k.notif, k.name, 500.0)
     end
 
@@ -53,10 +54,9 @@ function openMessagesMenu(scaleform, messages, selectID)
         if k.isentthat == true then
             var = "To: "
         end
+        --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 6, slotID, Hour, Minute, Player Name, Message)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 6, i, k.h, k.m, var..k.contact, k.message)
     end
-    --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, 0, 0, 0, "Lili", "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da")
-    --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, 1, 2, 0, "Dan Nistor", "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer")
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 6, selectID)
 end
 
@@ -65,6 +65,7 @@ function openContactsMenu(scaleform, contacts, selectID)
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Contacts")
     for i,k in pairs(contacts) do
+        --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 2, slotID, unk, Contact Name, unk, Contact Mugshot)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 2, i, 0, k.name, "", k.pic)
     end
 
@@ -76,6 +77,7 @@ function openEmailsMenu(scaleform, emails, selectID)
     SetPhoneLean(true)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Emails")
     for i,k in pairs(emails) do
+        --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, slotID, someIconID, 0, Title, Message)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, i, 1, 0, k.title, k.message)
     end
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 8, selectID)
@@ -111,6 +113,20 @@ function openCustomMenu(scaleform, title, buttons, selectID)
     end
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 18, seletID)
+end
+
+function openSnapmatic(scaleform)
+    SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
+    SetPhoneLean(false)
+
+    SetPedConfigFlag(PlayerPedId(), 242, true)
+	SetPedConfigFlag(PlayerPedId(), 243, true)
+	SetPedConfigFlag(PlayerPedId(), 244, not true)
+
+	CellCamActivate(true, true)
+	CellFrontCamActivate(false)
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", 'Snapmatic')
+    Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 16, 0)
 end
 
 --[[
