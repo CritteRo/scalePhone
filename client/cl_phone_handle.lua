@@ -4,6 +4,7 @@ appOpen = -1
 selectID = 0
 appSelectID = 0
 renderID = 0
+themeID = 0
 
 apps = {
     [0] = {id = 2, isLeftToRight = false, name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.Homepage"},
@@ -11,7 +12,7 @@ apps = {
     [2] = {id = 8, isLeftToRight = false, name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
     [3] = {id = 0, isLeftToRight = false, name = "Snapmatic", icon = 1, notif = 0, openEvent = "", backEvent = "scalePhone.Homepage"},
     [4] = {id = 18, isLeftToRight = false, name = "Jobs", icon = 12, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
-    [5] = {id = 0, isLeftToRight = false, name = "Settings", icon = 24, notif = 0, openEvent = "", backEvent = "scalePhone.Homepage"},
+    [5] = {id = 18, isLeftToRight = false, name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
 }
 
 buttons = {
@@ -21,7 +22,7 @@ buttons = {
         [2] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
     },
     [1] = { --messages
-        [0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = true},
+        [0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = false},
         [1] = {contact = "Dan Nistor", h = 17, m = 5, message = "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer", event = "scalePhone.ShowMessage", isentthat = true},
     },
     [2] = { --emails
@@ -34,6 +35,15 @@ buttons = {
         [3] = {text = "Item 4", event = "core.alert", eventParams = {type = "simple", text = "test54"}},
         [4] = {text = "Item 5", event = "core.alert", eventParams = {type = "simple", text = "test5"}},
         [5] = {text = "Item 6", event = "core.alert", eventParams = {type = "simple", text = "test6"}},
+    },
+    [5] = { --themes menu
+        [0] = {text = "Blue", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 0}},
+        [1] = {text = "Green", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 1}},
+        [2] = {text = "Red", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 2}},
+        [3] = {text = "Orange", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 3}},
+        [4] = {text = "Gray", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 4}},
+        [5] = {text = "Purple", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 5}},
+        [6] = {text = "Pink", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 6}},
     }
 }
 
@@ -48,7 +58,7 @@ RegisterCommand('phone', function()
         SetMobilePhoneScale(250.0)
         appOpen = -1
         selectID = 0
-        phoneScaleform = generateMainPhone(apps, selectID)
+        phoneScaleform = generateMainPhone(apps, selectID, themeID)
         isPhoneActive = true
         SetPedConfigFlag(PlayerPedId(), 242, not true)
 		SetPedConfigFlag(PlayerPedId(), 243, not true)
@@ -81,61 +91,70 @@ end)
 
 RegisterCommand('phoneleft', function()
     if isPhoneActive then
-        if appOpen == -1 then
-            if selectID < #apps then
-                selectID = selectID + 1
-                CellCamMoveFinger(4)
-                Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
-            else
-                selectID = 0
-                CellCamMoveFinger(4)
-                Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+        if appOpen > -2 then
+            if appOpen == -1 then
+                if selectID < #apps then
+                    selectID = selectID + 1
+                    CellCamMoveFinger(4)
+                    Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+                else
+                    selectID = 0
+                    CellCamMoveFinger(4)
+                    Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+                end
             end
+            PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
-        PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
     end
 end)
 RegisterKeyMapping('phoneleft', "Phone Swipe Left", 'keyboard', 'LEFT')
 
 RegisterCommand('phoneright', function()
     if isPhoneActive then
-        if appOpen == -1 then
-            if selectID > 0 then
-                selectID = selectID - 1
-                CellCamMoveFinger(3)
-                Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
-            else
-                selectID = #apps
-                CellCamMoveFinger(3)
-                Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+        if appOpen > -2 then
+            if appOpen == -1 then
+                if selectID > 0 then
+                    selectID = selectID - 1
+                    CellCamMoveFinger(3)
+                    Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+                else
+                    selectID = #apps
+                    CellCamMoveFinger(3)
+                    Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+                end
             end
+            PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
-        PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
     end
 end)
 RegisterKeyMapping('phoneright', "Phone Swipe Right", 'keyboard', 'RIGHT')
 
 RegisterCommand('phoneup', function()
     if isPhoneActive then
-        if appOpen == -1 then
-            selectID = selectID - 3
-            if selectID < 0 then
-                selectID = selectID + #apps + 1
-            end
-            CellCamMoveFinger(1)
-            Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
-        else
-            if apps[appOpen].isLeftToRight == false then
-                if appSelectID > 0 then
-                    appSelectID = appSelectID - 1
-                else
-                    appSelectID = #buttons[appOpen]
+        if appOpen > -2 then
+            if appOpen == -1 then
+                selectID = selectID - 3
+                if selectID < 0 then
+                    selectID = selectID + #apps + 1
                 end
                 CellCamMoveFinger(1)
-                Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", apps[appOpen].id, appSelectID)
+                Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+            else
+                if apps[appOpen].isLeftToRight == false then
+                    if appSelectID > 0 then
+                        appSelectID = appSelectID - 1
+                    else
+                        appSelectID = #buttons[appOpen]
+                    end
+                    CellCamMoveFinger(1)
+                    Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", apps[appOpen].id, appSelectID)
+                end
             end
+            PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
+        else
+            Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 1)
+            PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
-        PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
     else
         ExecuteCommand('phone')
     end
@@ -144,7 +163,7 @@ RegisterKeyMapping('phoneup', "Phone Swipe Up / Open Phone", 'keyboard', 'UP')
 
 RegisterCommand('phonedown', function()
     if isPhoneActive then
-        if appOpen > -1 then
+        if appOpen > -2 then
             if appOpen == -1 then
                 selectID = selectID + 3
                 if selectID > #apps then
@@ -167,7 +186,8 @@ RegisterCommand('phonedown', function()
             end
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         else
-
+            Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
+            PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
     end
 end)
@@ -224,7 +244,7 @@ RegisterCommand('phoneback', function()
                 if apps[appOpen].backEvent == "scalePhone.Homepage" then
                     appOpen = -1
                     CellCamMoveFinger(5)
-                    showHomepage(phoneScaleform, apps, selectID)
+                    showHomepage(phoneScaleform, apps, selectID, themeID)
                 end
             elseif appOpen == -2 then
                 appOpen = 2
