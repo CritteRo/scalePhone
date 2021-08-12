@@ -6,6 +6,7 @@ description 'GTA:O Style phone for FiveM, using scaleforms.'
 
 client_scripts {
     'client/cl_functions.lua',
+    'client/scaleforms/cl_scaleform_functions.lua',
     'client/scaleforms/cl_phone_scaleform_main.lua',
     'client/cl_phone_handle.lua',
 }
