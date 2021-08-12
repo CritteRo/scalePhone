@@ -9,7 +9,7 @@ day = {
 	[7] = "Sun"
 }
 
---id 4 = call screen / 11 = numpad / 15 = todo 6= sms list / 8 = email list
+--view id 4 = call screen / 11 = numpad / 14 = better todo / 15 = todo 6= sms list / 8 = email list
 
 
 function generateMainPhone(_apps, _selectID)
@@ -39,7 +39,11 @@ function openMessagesMenu(scaleform, messages, selectID)
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Messages")
     for i,k in pairs(messages) do
-        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 6, i, k.h, k.m, k.contact, k.message)
+        local var = ""
+        if k.isentthat == true then
+            var = "To: "
+        end
+        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 6, i, k.h, k.m, var..k.contact, k.message)
     end
     --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, 0, 0, 0, "Lili", "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da")
     --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, 1, 2, 0, "Dan Nistor", "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer")
@@ -75,6 +79,18 @@ function openEmailViewer(scaleform, title, from, to, message)
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 9, 0)
 end
+function openMessageViewer(scaleform, contact, message, fromme)
+    SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
+    SetPhoneLean(false)
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Message")
+    local var = "From: "
+    if fromme == true then
+        var = "To: "
+    end
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 7, 0, var..contact, message, 'CHAR_BLANK_ENTRY')
+
+    Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 7, 0)
+end
 
 function openCustomMenu(scaleform, title, buttons, selectID)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
@@ -88,7 +104,7 @@ function openCustomMenu(scaleform, title, buttons, selectID)
 end
 
 --[[
-APPS:
+APP icons:
 1 = snapmatic,
 2 = sms,
 3 = blank / black

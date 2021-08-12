@@ -21,8 +21,8 @@ buttons = {
         [2] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
     },
     [1] = { --messages
-        [0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage"},
-        [1] = {contact = "Dan Nistor", h = 17, m = 5, message = "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer", event = "scalePhone.ShowMessage"},
+        [0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = true},
+        [1] = {contact = "Dan Nistor", h = 17, m = 5, message = "Salut eu am vb k u iar u incepi sa dai prin ziare si prin astea ce am vb k tine nu i frumos ce ai facut sincer", event = "scalePhone.ShowMessage", isentthat = true},
     },
     [2] = { --emails
         [0] = {title = "Update 1", to = "fivem.net", from = "homies.net", message = "Boiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\nBoiiiii\n"},
@@ -124,8 +124,6 @@ RegisterCommand('phoneup', function()
             end
             CellCamMoveFinger(1)
             Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
-        elseif appOpen == 2 then
-            
         else
             if apps[appOpen].isLeftToRight == false then
                 if appSelectID > 0 then
@@ -146,7 +144,7 @@ RegisterKeyMapping('phoneup', "Phone Swipe Up / Open Phone", 'keyboard', 'UP')
 
 RegisterCommand('phonedown', function()
     if isPhoneActive then
-        if appOpen ~= -2 then
+        if appOpen > -1 then
             if appOpen == -1 then
                 selectID = selectID + 3
                 if selectID > #apps then
@@ -168,6 +166,8 @@ RegisterCommand('phonedown', function()
                 end
             end
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
+        else
+
         end
     end
 end)
@@ -199,12 +199,16 @@ RegisterCommand('phoneselect', function()
                     openCustomMenu(phoneScaleform, apps[selectID].name, buttons[appOpen], appSelectID)
                 end
             end
+        elseif appOpen == 1 then
+            CellCamMoveFinger(5)
+            openMessageViewer(phoneScaleform, buttons[appOpen][appSelectID].contact, buttons[appOpen][appSelectID].message, buttons[appOpen][appSelectID].isentthat)
+            appOpen = -3
         elseif appOpen == 2 then
             CellCamMoveFinger(5)
             openEmailViewer(phoneScaleform, buttons[appOpen][appSelectID].title, buttons[appOpen][appSelectID].from, buttons[appOpen][appSelectID].to, buttons[appOpen][appSelectID].message)
             appOpen = -2
         else
-            if appOpen ~= -2 then
+            if appOpen ~= -2 and appOpen ~= -3 then
                 TriggerEvent(buttons[appOpen][appSelectID].event, buttons[appOpen][appSelectID].eventParams)
             end
         end
@@ -226,12 +230,12 @@ RegisterCommand('phoneback', function()
                 appOpen = 2
                 CellCamMoveFinger(5)
                 openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
+            elseif appOpen == -3 then
+                appOpen = 1
+                CellCamMoveFinger(5)
+                openMessagesMenu(phoneScaleform, buttons[appOpen], appSelectID)
             end
             PlaySoundFrontend(-1, "Menu_Back", "Phone_SoundSet_Michael", 1)
-        elseif appOpen == -2 then
-            appOpen = 2
-            CellCamMoveFinger(5)
-            openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
         else
             ExecuteCommand('phone')
         end
