@@ -34,6 +34,7 @@ AddEventHandler('scalePhone.Event.ReceiveMessage', function(sms, isMine)
 end)
 
 AddEventHandler('scalePhone.Event.UpdateContacts', function(contacts)
+    buttons[0] = {}
     for i,k in pairs(contacts) do
         buttons[0][i] = {name = k.name, pic = k.pic, isBot = k.isBot, event = "scalePhone.SendSMS"}
     end
