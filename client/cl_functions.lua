@@ -33,7 +33,6 @@ function loopGestures()
 		if not IsControlPressed(0, 186) then
 			if IsControlJustPressed(0, 313) then
 				currentGestureDict = (currentGestureDict + 1) % #gestureDicts
-				--DisplayHelpText("Action Selected:\n" .. gestureNames[currentGestureDict+1], 1000)
 			end
 			if IsControlJustPressed(0, 312) then
 				if currentGestureDict-1 < 0 then 
@@ -41,7 +40,6 @@ function loopGestures()
 				else
 					currentGestureDict = (currentGestureDict - 1)
 				end
-				--DisplayHelpText("Action Selected:\n" .. gestureNames[currentGestureDict+1], 1000)
 			end
 		end
 	

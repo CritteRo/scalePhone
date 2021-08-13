@@ -20,7 +20,6 @@ function generateMainPhone(_apps, _selectID, _theme)
     Scaleform.CallFunction(scaleform, false, "SET_THEME", themes[_theme].id)
     Scaleform.CallFunction(scaleform, false, "SET_SLEEP_MODE", 0)
     showHomepage(scaleform, _apps, _selectID, _theme)
-    --openMessagesMenu(scaleform)
 
     return scaleform
 end
