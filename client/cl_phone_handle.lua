@@ -10,12 +10,15 @@ themeID = 0
 RequestStreamedTextureDict("shopui_title_casino")
 
 apps = {
+    --[[ ESSENTIAL APPS ]]--
     [0] = {id = 2, isLeftToRight = false, name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.Homepage"},
     [1] = {id = 6, isLeftToRight = false, name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.Homepage"},
     [2] = {id = 8, isLeftToRight = false, name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
     [3] = {id = 0, isLeftToRight = false, name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.Homepage"},
     [4] = {id = 14, isLeftToRight = false, name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.Homepage"},
     [5] = {id = 18, isLeftToRight = false, name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
+    --[[ CUSTOM APPS ]]--
+    [6] = {id = 18, isLeftToRight = false, name = "eJobs", icon = 14, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
 }
 
 buttons = {
@@ -48,7 +51,16 @@ buttons = {
         [4] = {text = "Gray", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 4}},
         [5] = {text = "Purple", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 5}},
         [6] = {text = "Pink", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 6}},
-    }
+    },
+    --[[ CUSTOM APPS]]--
+    [6] = { --LSLD Jobs selector
+        [0] = {text = "Unemployed", event = "phoneJobs.ChangeJob", eventParams = {jobid = 0}}, 
+        [1] = {text = "Trucker", event = "phoneJobs.ChangeJob", eventParams = {jobid = 1}},
+        [2] = {text = "Farmer", event = "phoneJobs.ChangeJob", eventParams = {jobid = 2}},
+        [3] = {text = "Fisherman", event = "phoneJobs.ChangeJob", eventParams = {jobid = 3}},
+        [4] = {text = "Pilot", event = "phoneJobs.ChangeJob", eventParams = {jobid = 4}},
+        [5] = {text = "Hitman", event = "phoneJobs.ChangeJob", eventParams = {jobid = 5}},
+    },
 }
 
 

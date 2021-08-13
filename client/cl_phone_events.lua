@@ -73,3 +73,9 @@ RegisterCommand('sms', function(source, args)
     end
     TriggerEvent('scalePhone.Event.ReceiveMessage', sms)
 end)
+
+--[[  LSLD CUSTOM EVENTS  ]]--
+
+AddEventHandler('phoneJobs.ChangeJob', function(_data)
+    TriggerServerEvent("jobs.ChangePlayerJob", _data.jobid)
+end)
