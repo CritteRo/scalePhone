@@ -1,5 +1,6 @@
 isPhoneActive = false
 phoneScaleform = 0
+cameraScaleform = 0
 appOpen = -1
 selectID = 0
 appSelectID = 0
@@ -96,6 +97,8 @@ Citizen.CreateThread(function()
                 HideHudComponentThisFrame(6)
                 HideHudComponentThisFrame(19)
                 HideHudAndRadarThisFrame()
+
+                DrawScaleformMovieFullscreen(cameraScaleform, 255, 255, 255, 255)
             end
         end
         Citizen.Wait(1)
@@ -237,6 +240,8 @@ RegisterCommand('phoneselect', function()
             appOpen = -2
         elseif appOpen == 3 then --takes a photo in snapmatic
             TakePhoto()
+            useShutter(cameraScaleform)
+            PlaySoundFrontend(-1, "Camera_Shoot", "Phone_SoundSet_Michael", 1)
             if (WasPhotoTaken() and SavePhoto(-1)) then
                 ClearPhoto()
             end

@@ -25,6 +25,18 @@ function generateMainPhone(_apps, _selectID, _theme)
     return scaleform
 end
 
+function generateSnapmaticScaleform()
+    local scaleform = Scaleform.Request('CAMERA_GALLERY')
+    Scaleform.CallFunction(scaleform, false, "OPEN_SHUTTER")
+    Scaleform.CallFunction(scaleform, false, "SHOW_PHOTO_FRAME", 1)
+    Scaleform.CallFunction(scaleform, false, "SHOW_REMAINING_PHOTOS", 1)
+    return scaleform
+end
+
+function useShutter(scaleform)
+    Scaleform.CallFunction(scaleform, false, "CLOSE_THEN_OPEN_SHUTTER")
+end
+
 function showHomepage(scaleform, apps, selectID, theme)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)

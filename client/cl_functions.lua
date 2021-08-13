@@ -98,6 +98,7 @@ function runHomepageApp(_event, selectID)
     elseif _event == "scalePhone.OpenSnapmatic" then
         appOpen = selectID
         appSelectID = 0
+        cameraScaleform = generateSnapmaticScaleform()
         CellCamMoveFinger(5)
         openSnapmatic(phoneScaleform)
         Citizen.CreateThread(loopGestures())
