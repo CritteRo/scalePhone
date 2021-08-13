@@ -1,5 +1,6 @@
 RegisterNetEvent('scalePhone.Event.UpdateContacts')
 RegisterNetEvent('scalePhone.Event.ReceiveMessage')
+RegisterNetEvent('scalePhone.Event.ReceiveEmail')
 AddEventHandler('scalePhone.Event.UpdateStats', function(stats)
     buttons[4] = stats
 end)
@@ -22,7 +23,6 @@ AddEventHandler('scalePhone.Event.ReceiveMessage', function(sms, isMine)
     local mine = false
     local addnotif = 1
     for i,k in pairs(buttons[1]) do
-        print(i)
         buttons[1][count-i+1] = buttons[1][count-i]
     end
     if isMine ~= nil and isMine == true then

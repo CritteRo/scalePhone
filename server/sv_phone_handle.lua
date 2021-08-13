@@ -34,3 +34,12 @@ AddEventHandler('sendPhone.SendSMS', function(to, message)
         TriggerClientEvent('core.notify', src, "simple", {text = "We could not find that player", colID = 6})
     end
 end)
+
+AddEventHandler('stats.GetPlayerStats', function(_source)
+    local src = _source
+    Citizen.Wait(13000)
+    local email = {title = "Tip of the day!", to = GetPlayerName(src), from = "admins@lslockdown", message = "Bye. I'm leaving the server because I'm bored. Despite talking to all of you for a while I don't care about any of you at all. I lied. I'm not 14 I'm 13. And a girl. I can probably draw better than yall as well. Just sayin. Cya."}
+    TriggerClientEvent('scalePhone.Event.ReceiveEmail', src, email)
+    local notif = {type = "suggestion", img = 'CHAR_SOCIAL_CLUB', title = "New Email!", subtitle = "From: admins@lslockdown", icontype = 1, text = "", colID = 123}
+    TriggerClientEvent('core.notify', src, notif.type, notif)
+end)
