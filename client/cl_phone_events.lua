@@ -51,6 +51,21 @@ AddEventHandler('scalePhone.Event.UpdateContacts', function(contacts)
     end
 end)
 
+AddEventHandler("scalePhone.NumpadAddNumber", function(data)
+    local txt = apps[appOpen].dataText
+    if isPhoneActive == true and apps[appOpen] ~= nil and apps[appOpen].type == 'numpad' then
+        if data.add ~= nil then
+            if data.add == 'del' then
+            elseif data.add == 'can' then
+            else
+                txt = txt..data.add
+            end
+            Scaleform.CallFunction(phoneScaleform, false, "SET_HEADER", txt)
+            apps[appOpen].dataText = txt
+        end
+    end 
+end)
+
 --[[  LSLD CUSTOM EVENTS  ]]--
 
 AddEventHandler('phoneJobs.ChangeJob', function(_data)

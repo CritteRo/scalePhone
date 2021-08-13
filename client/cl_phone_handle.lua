@@ -21,6 +21,7 @@ apps = {
     --[[ CUSTOM APPS ]]--
     [6] = {id = 18, isLeftToRight = false, type = "menu", name = "eJobs", icon = 14, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
     [7] = {id = 8, isLeftToRight = false, type = "emailList", name = "Server Info", icon = 35, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
+    [8] = {id = 11, isLeftToRight = true, type = "numpad", name = "Numpad", icon = 49, notif = 1, openEvent = "scalePhone.OpenNumpad", backEvent = "scalePhone.Homepage", dataText = ""},
 }
 
 buttons = {
@@ -68,6 +69,20 @@ buttons = {
         [1] = {title = "Jobs", to = "You", from = "admins@critte.ro", message = "\nJobs are the main way to make money on this server. You can choose between multiple types of activities, like Truker, Farmer or Hitman. Finishing a job will grant you cash, XP and 1 job point.\n\nJob points can be either traded for XP, or kept for bonus cash & XP for that job."},
         [2] = {title = "Businesses", to = "You", from = "admins@critte.ro", message = "\nExpect banks and rents, every business on the server is player-owned.\n\nWhen a business is owned by the a player, the owner can change the name and description of that business.\n\nThe owner can add funds, retrieve business sales and restock the business.\n\nIf a business is left unstocked, the owner will lose the biz."},
         [3] = {title = "Timetrials", to = "You", from = "admins@critte.ro", message = "\nTimetrials are timed, single-player races that will grant you cash & XP upon completion.\n\nEvery track has it's on leaderboard that will show the top 10 fastest players"},
+    },
+    [8] = { --numpad
+        [0] = {text = 1, event = "scalePhone.NumpadAddNumber", eventParams = {add = 1}},
+        [1] = {text = 2, event = "scalePhone.NumpadAddNumber", eventParams = {add = 2}},
+        [2] = {text = 3, event = "scalePhone.NumpadAddNumber", eventParams = {add = 3}},
+        [3] = {text = 4, event = "scalePhone.NumpadAddNumber", eventParams = {add = 4}},
+        [4] = {text = 5, event = "scalePhone.NumpadAddNumber", eventParams = {add = 5}},
+        [5] = {text = 6, event = "scalePhone.NumpadAddNumber", eventParams = {add = 6}},
+        [6] = {text = 7, event = "scalePhone.NumpadAddNumber", eventParams = {add = 7}},
+        [7] = {text = 8, event = "scalePhone.NumpadAddNumber", eventParams = {add = 8}},
+        [8] = {text = 9, event = "scalePhone.NumpadAddNumber", eventParams = {add = 9}},
+        [9] = {text = "DEL", event = "scalePhone.NumpadAddNumber", eventParams = {add = 'del'}},
+        [10] = {text = 0, event = "scalePhone.NumpadAddNumber", eventParams = {add = 0}},
+        [11] = {text = "CAN", event = "scalePhone.NumpadAddNumber", eventParams = {add = 'can'}},
     },
 }
 
@@ -148,6 +163,17 @@ RegisterCommand('phoneleft', function()
                 end
                 CellCamMoveFinger(4)
                 CellFrontCamActivate(buttons[appOpen][appSelectID].selfieOn)
+            elseif appOpen == 8 then
+                if appSelectID < #buttons[appOpen] then
+                    appSelectID = appSelectID + 1
+                    CellCamMoveFinger(4)
+                    --Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", apps[appOpen].id, appSelectID)
+                else
+                    appSelectID = 0
+                    CellCamMoveFinger(4)
+                    --Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", apps[appOpen].id, appSelectID)
+                end
+                Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 2)
             end
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
@@ -176,6 +202,17 @@ RegisterCommand('phoneright', function()
                 end
                 CellCamMoveFinger(3)
                 CellFrontCamActivate(buttons[appOpen][appSelectID].selfieOn)
+            elseif appOpen == 8 then
+                if appSelectID > 0 then
+                    appSelectID = appSelectID - 1
+                    CellCamMoveFinger(4)
+                    --Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", apps[appOpen].id, appSelectID)
+                else
+                    appSelectID = #buttons[appOpen]
+                    CellCamMoveFinger(4)
+                    --Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", apps[appOpen].id, appSelectID)
+                end
+                Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 4)
             end
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael", 1)
         end
@@ -193,6 +230,15 @@ RegisterCommand('phoneup', function()
                 end
                 CellCamMoveFinger(1)
                 Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+            elseif appOpen == 8 then
+                appSelectID = appSelectID - 3
+                if appSelectID < 0 then
+                    appSelectID = appSelectID + #apps[appOpen] + 1
+                end
+                print(appSelectID)
+                CellCamMoveFinger(1)
+                --Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, appSelectID)
+                Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 1)
             else
                 if apps[appOpen].isLeftToRight == false then
                     if appSelectID > 0 then
@@ -221,8 +267,17 @@ RegisterCommand('phonedown', function()
                 if selectID > #apps then
                     selectID = selectID - #apps -1
                 end
+                print(appSelectID)
                 CellCamMoveFinger(2)
                 Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+            elseif appOpen == 8 then
+                appSelectID = appSelectID + 3
+                if appSelectID > #apps[appOpen] then
+                    appSelectID = appSelectID - #apps[appOpen] -1
+                end
+                CellCamMoveFinger(2)
+                --Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 1, selectID)
+                Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
             else
                 if apps[appOpen].isLeftToRight == false then
                     if appSelectID < #buttons[appOpen] then

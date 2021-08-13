@@ -100,6 +100,12 @@ function runHomepageApp(_event, selectID)
         CellCamMoveFinger(5)
         openSnapmatic(phoneScaleform)
         Citizen.CreateThread(loopGestures())
+    elseif _event == "scalePhone.OpenNumpad" then
+        appOpen = selectID
+        appSelectID = 0
+        apps[appOpen].dataText = ""
+        CellCamMoveFinger(5)
+        openNumpad(phoneScaleform, apps[appOpen].dataText, buttons[appOpen], appSelectID)
     elseif _event == "scalePhone.OpenCustomMenu" then
         appOpen = selectID
         appSelectID = 0
