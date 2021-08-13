@@ -2,6 +2,7 @@ isPhoneActive = false
 phoneScaleform = 0
 cameraScaleform = 0
 appOpen = -1
+lastAppOpen = -1
 selectID = 0
 appSelectID = 0
 renderID = 0
@@ -19,6 +20,7 @@ apps = {
     [5] = {id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
     --[[ CUSTOM APPS ]]--
     [6] = {id = 18, isLeftToRight = false, type = "menu", name = "eJobs", icon = 14, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
+    [7] = {id = 8, isLeftToRight = false, type = "emailList", name = "Server Info", icon = 35, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
 }
 
 buttons = {
@@ -61,6 +63,12 @@ buttons = {
         [4] = {text = "Pilot", event = "phoneJobs.ChangeJob", eventParams = {jobid = 4}},
         [5] = {text = "Hitman", event = "phoneJobs.ChangeJob", eventParams = {jobid = 5}},
     },
+    [7] = { --LSLD Rules & Info
+        [0] = {title = "General Rules", to = "You", from = "admins@critte.ro", message = "\n1.Don't be rude.\n2.Don't cheat?\n3.Don't be weird.\n4.Refer to point 1."},
+        [1] = {title = "Jobs", to = "You", from = "admins@critte.ro", message = "\nJobs are the main way to make money on this server. You can choose between multiple types of activities, like Truker, Farmer or Hitman. Finishing a job will grant you cash, XP and 1 job point.\n\nJob points can be either traded for XP, or kept for bonus cash & XP for that job."},
+        [2] = {title = "Businesses", to = "You", from = "admins@critte.ro", message = "\nExpect banks and rents, every business on the server is player-owned.\n\nWhen a business is owned by the a player, the owner can change the name and description of that business.\n\nThe owner can add funds, retrieve business sales and restock the business.\n\nIf a business is left unstocked, the owner will lose the biz."},
+        [3] = {title = "Timetrials", to = "You", from = "admins@critte.ro", message = "\nTimetrials are timed, single-player races that will grant you cash & XP upon completion.\n\nEvery track has it's on leaderboard that will show the top 10 fastest players"},
+    },
 }
 
 
@@ -71,7 +79,7 @@ RegisterCommand('phone', function()
         SetMobilePhonePosition(45.0,-23.0,-60.0)
         SetMobilePhoneRotation(-90.0,0.0,0.0) --last one is important
         SetPhoneLean(false) --flips the phone in hand
-        SetMobilePhoneScale(250.0)
+        SetMobilePhoneScale(300.0)
         appOpen = -1
         selectID = 0
         phoneScaleform = generateMainPhone(apps, selectID, themeID)
@@ -248,9 +256,10 @@ RegisterCommand('phoneselect', function()
             CellCamMoveFinger(5)
             openMessageViewer(phoneScaleform, buttons[appOpen][appSelectID].contact, buttons[appOpen][appSelectID].message, buttons[appOpen][appSelectID].isentthat)
             appOpen = -3
-        elseif appOpen == 2 then --opens email viewer
+        elseif appOpen == 2 or apps[appOpen].type == "emailList" then --opens email viewer
             CellCamMoveFinger(5)
             openEmailViewer(phoneScaleform, buttons[appOpen][appSelectID].title, buttons[appOpen][appSelectID].from, buttons[appOpen][appSelectID].to, buttons[appOpen][appSelectID].message)
+            lastAppOpen = appOpen
             appOpen = -2
         elseif appOpen == 3 then --takes a photo in snapmatic
             TakePhoto()
@@ -279,13 +288,13 @@ RegisterCommand('phoneback', function()
                     showHomepage(phoneScaleform, apps, selectID, themeID)
                 end
             elseif appOpen == -2 then --from email viewer to emails list
-                appOpen = 2
+                appOpen = lastAppOpen
                 CellCamMoveFinger(5)
-                openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
+                openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID, apps[appOpen].name)
             elseif appOpen == -3 then --from message viewer to message list
                 appOpen = 1
                 CellCamMoveFinger(5)
-                openMessagesMenu(phoneScaleform, buttons[appOpen], appSelectID)
+                openMessagesMenu(phoneScaleform, buttons[appOpen], appSelectID, apps[appOpen].name)
             end
             PlaySoundFrontend(-1, "Menu_Back", "Phone_SoundSet_Michael", 1)
         else

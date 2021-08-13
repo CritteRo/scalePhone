@@ -75,19 +75,19 @@ function runHomepageApp(_event, selectID)
         appSelectID = 0
         apps[appOpen].notif = 0
         CellCamMoveFinger(5)
-        openMessagesMenu(phoneScaleform, buttons[appOpen], appSelectID)
+        openMessagesMenu(phoneScaleform, buttons[appOpen], appSelectID, apps[appOpen].name)
     elseif _event == "scalePhone.OpenContacts" then
         appOpen = selectID
         appSelectID = 0
         apps[appOpen].notif = 0
         CellCamMoveFinger(5)
-        openContactsMenu(phoneScaleform, buttons[appOpen], appSelectID)
+        openContactsMenu(phoneScaleform, buttons[appOpen], appSelectID, apps[appOpen].name)
     elseif _event == "scalePhone.OpenEmails" then
         appOpen = selectID
         appSelectID = 0
         apps[appOpen].notif = 0
         CellCamMoveFinger(5)
-        openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
+        openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID, apps[appOpen].name)
     elseif _event == "scalePhone.OpenStatsMenu" then
         appOpen = selectID
         appSelectID = 0

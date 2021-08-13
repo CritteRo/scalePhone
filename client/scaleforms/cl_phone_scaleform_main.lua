@@ -48,6 +48,7 @@ function showHomepage(scaleform, apps, selectID, theme)
 	CellFrontCamActivate(false)
 
     Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", themes[theme].wallpaper)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 1)
     for i,k in pairs(apps) do
         --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 1, slotID, iconID, notification number, App Name, opacityFloat)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 1, i, k.icon, k.notif, k.name, 500.0)
@@ -56,10 +57,11 @@ function showHomepage(scaleform, apps, selectID, theme)
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 1, selectID)
 end
 
-function openMessagesMenu(scaleform, messages, selectID)
+function openMessagesMenu(scaleform, messages, selectID, title)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
-    Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Messages")
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 6)
     for i,k in pairs(messages) do
         local var = ""
         if k.isentthat == true then
@@ -71,10 +73,11 @@ function openMessagesMenu(scaleform, messages, selectID)
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 6, selectID)
 end
 
-function openContactsMenu(scaleform, contacts, selectID)
+function openContactsMenu(scaleform, contacts, selectID, title)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
-    Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Contacts")
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 2)
     for i,k in pairs(contacts) do
         --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 2, slotID, unk, Contact Name, unk, Contact Mugshot)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 2, i, 0, k.name, "", k.pic)
@@ -83,10 +86,11 @@ function openContactsMenu(scaleform, contacts, selectID)
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 2, selectID)
 end
 
-function openEmailsMenu(scaleform, emails, selectID)
+function openEmailsMenu(scaleform, emails, selectID, title)
     SetMobilePhoneRotation(-90.0,0.0,90.0) -- 75<X<75
     SetPhoneLean(true)
-    Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Emails")
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 8)
     for i,k in pairs(emails) do
         --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, slotID, someIconID, 0, Title, Message)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 8, i, 1, 0, k.title, k.message)
@@ -98,6 +102,7 @@ function openStatsMenu(scaleform, list, selectID)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Stats")
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 14)
     for i,k in pairs(list) do
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 14, i, k.procent, k.title, k.text)
     end
@@ -130,6 +135,7 @@ function openCustomMenu(scaleform, title, buttons, selectID)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 18)
     for i,k in pairs(buttons) do
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 18, i, 0, k.text)
     end
