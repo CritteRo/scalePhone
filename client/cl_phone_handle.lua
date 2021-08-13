@@ -220,56 +220,27 @@ RegisterKeyMapping('phonedown', "Phone Swipe Down", 'keyboard', 'DOWN')
 
 RegisterCommand('phoneselect', function()
     if isPhoneActive then
-        if appOpen == -1 then
+        if appOpen == -1 then --the homepage
             if apps[selectID] ~= nil then
-                if apps[selectID].openEvent == "scalePhone.OpenMessages" then
-                    appOpen = selectID
-                    appSelectID = 0
-                    CellCamMoveFinger(5)
-                    openMessagesMenu(phoneScaleform, buttons[appOpen], appSelectID)
-                elseif apps[selectID].openEvent == "scalePhone.OpenContacts" then
-                    appOpen = selectID
-                    appSelectID = 0
-                    CellCamMoveFinger(5)
-                    openContactsMenu(phoneScaleform, buttons[appOpen], appSelectID)
-                elseif apps[selectID].openEvent == "scalePhone.OpenEmails" then
-                    appOpen = selectID
-                    appSelectID = 0
-                    CellCamMoveFinger(5)
-                    openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
-                elseif apps[selectID].openEvent == "scalePhone.OpenStatsMenu" then
-                    appOpen = selectID
-                    appSelectID = 0
-                    CellCamMoveFinger(5)
-                    openStatsMenu(phoneScaleform, buttons[appOpen], appSelectID)
-                elseif apps[selectID].openEvent == "scalePhone.OpenSnapmatic" then
-                    appOpen = selectID
-                    appSelectID = 0
-                    CellCamMoveFinger(5)
-                    openSnapmatic(phoneScaleform)
-                elseif apps[selectID].openEvent == "scalePhone.OpenCustomMenu" then
-                    appOpen = selectID
-                    appSelectID = 0
-                    CellCamMoveFinger(5)
-                    openCustomMenu(phoneScaleform, apps[selectID].name, buttons[appOpen], appSelectID)
-                elseif apps[selectID].openEvent == 'scalePhone.SendSMS' then
-                    
-                end
+                runHomepageApp(apps[selectID].openEvent, selectID)
             end
-        elseif appOpen == 1 then
+        elseif appOpen == 0 then --sends sms
+            CellCamMoveFinger(5)
+            openMessagePrompt(buttons[appOpen][appSelectID].name)
+        elseif appOpen == 1 then --opens message viewer
             CellCamMoveFinger(5)
             openMessageViewer(phoneScaleform, buttons[appOpen][appSelectID].contact, buttons[appOpen][appSelectID].message, buttons[appOpen][appSelectID].isentthat)
             appOpen = -3
-        elseif appOpen == 2 then
+        elseif appOpen == 2 then --opens email viewer
             CellCamMoveFinger(5)
             openEmailViewer(phoneScaleform, buttons[appOpen][appSelectID].title, buttons[appOpen][appSelectID].from, buttons[appOpen][appSelectID].to, buttons[appOpen][appSelectID].message)
             appOpen = -2
-        elseif appOpen == 3 then
+        elseif appOpen == 3 then --takes a photo in snapmatic
             TakePhoto()
             if (WasPhotoTaken() and SavePhoto(-1)) then
                 ClearPhoto()
             end
-        else
+        else --basically, runs events for custom menus. Event is registered in the button.
             if appOpen ~= -2 and appOpen ~= -3 then
                 TriggerEvent(buttons[appOpen][appSelectID].event, buttons[appOpen][appSelectID].eventParams)
             end
@@ -288,11 +259,11 @@ RegisterCommand('phoneback', function()
                     CellCamMoveFinger(5)
                     showHomepage(phoneScaleform, apps, selectID, themeID)
                 end
-            elseif appOpen == -2 then
+            elseif appOpen == -2 then --from email viewer to emails list
                 appOpen = 2
                 CellCamMoveFinger(5)
                 openEmailsMenu(phoneScaleform, buttons[appOpen], appSelectID)
-            elseif appOpen == -3 then
+            elseif appOpen == -3 then --from message viewer to message list
                 appOpen = 1
                 CellCamMoveFinger(5)
                 openMessagesMenu(phoneScaleform, buttons[appOpen], appSelectID)
