@@ -11,14 +11,14 @@ RequestStreamedTextureDict("shopui_title_casino")
 
 apps = {
     --[[ ESSENTIAL APPS ]]--
-    [0] = {id = 2, isLeftToRight = false, name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.Homepage"},
-    [1] = {id = 6, isLeftToRight = false, name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.Homepage"},
-    [2] = {id = 8, isLeftToRight = false, name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
-    [3] = {id = 0, isLeftToRight = false, name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.Homepage"},
-    [4] = {id = 14, isLeftToRight = false, name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.Homepage"},
-    [5] = {id = 18, isLeftToRight = false, name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
+    [0] = {id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.Homepage"},
+    [1] = {id = 6, isLeftToRight = false, type = "messageList", name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.Homepage"},
+    [2] = {id = 8, isLeftToRight = false, type = "emailList", name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
+    [3] = {id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.Homepage"},
+    [4] = {id = 14, isLeftToRight = false, type = "todoList", name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.Homepage"},
+    [5] = {id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
     --[[ CUSTOM APPS ]]--
-    [6] = {id = 18, isLeftToRight = false, name = "eJobs", icon = 14, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
+    [6] = {id = 18, isLeftToRight = false, type = "menu", name = "eJobs", icon = 14, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
 }
 
 buttons = {
@@ -92,8 +92,10 @@ RegisterKeyMapping('phone', "Open Phone", 'keyboard', 'm')
 Citizen.CreateThread(function()
     while true do
         if isPhoneActive then
+            local coords = GetEntityCoords(PlayerPedId())
             SetTextRenderId(renderID)
             Scaleform.CallFunction(phoneScaleform, false, "SET_TITLEBAR_TIME", GetClockHours(), GetClockMinutes(), day[GetClockDayOfWeek()])
+            Scaleform.CallFunction(phoneScaleform, false, "SET_SIGNAL_STRENGTH", GetZoneScumminess(GetZoneAtCoords(coords.x, coords.y, coords.z)))
             if GetFollowPedCamViewMode() == 4 then
 				SetMobilePhoneScale(0.0)
 			else

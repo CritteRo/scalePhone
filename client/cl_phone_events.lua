@@ -51,29 +51,6 @@ AddEventHandler('scalePhone.Event.UpdateContacts', function(contacts)
     end
 end)
 
-RegisterCommand('sendmail', function(source, args)
-    local email = {title = "", to = "me", from = "me", message = ""}
-    if args[1] ~= nil then
-        email.title = tostring(args[1])
-    else
-        email.title = "unk"
-    end
-    if args[2] ~= nil then
-        email.message = tostring(args[2])
-    else
-        email.message = "unk"
-    end
-    TriggerEvent('scalePhone.Event.ReceiveEmail', email)
-end)
-
-RegisterCommand('sms', function(source, args)
-    local sms = {contact = GetPlayerName(PlayerId()), message = ""}
-    for i,k in pairs(args) do
-        sms.message = sms.message.." "..tostring(k)
-    end
-    TriggerEvent('scalePhone.Event.ReceiveMessage', sms)
-end)
-
 --[[  LSLD CUSTOM EVENTS  ]]--
 
 AddEventHandler('phoneJobs.ChangeJob', function(_data)
