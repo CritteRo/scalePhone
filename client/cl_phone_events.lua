@@ -143,6 +143,12 @@ AddEventHandler('scalePhone.BuildEmailView', function(data)
     end
 end)
 
+AddEventHandler('scalePhone.BuildApp', function(appID, type, name, icon, notif, openEvent, backEvent, data)
+end)
+
+AddEventHandler('scalePhone.BuildHomepageApp', function(appID, type, name, icon, notif, openEvent, backEvent, data)
+end)
+
 
 --[[  LSLD CUSTOM EVENTS  ]]--
 
