@@ -89,9 +89,6 @@ AddEventHandler('scalePhone.HandleInput.homepage', function(input)
     end
 end)
 
-
-
-
 function openSnapmatic(scaleform)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)

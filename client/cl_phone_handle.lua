@@ -13,39 +13,48 @@ RequestStreamedTextureDict("shopui_title_casino")
 
 apps = {
     --[[ HOMEPAGE ]]--
-    [0] = {appID = 'scalePhone.InternalMenu.DontUse.Homepage', 1, type = 'homepage', name = 'Home', icon = 0, notif = 0, openEvent = 'scalePhone.OpenApp', backEvent = 'scalePhone.ClosePhone', data = {},
+    [0] = {appID = 'scalePhone.InternalMenu.DontUse.Homepage', 1, type = 'homepage', name = 'Home', icon = 0, notif = 0, openEvent = 'scalePhone.GoBackApp', backEvent = 'scalePhone.ClosePhone', data = {},
         buttons = {
-            [0] = {appID = 1, id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.Homepage"},
-            [1] = {appID = 2,id = 6, isLeftToRight = false, type = "messagesList", name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.Homepage"},
-            [2] = {appID = 3,id = 8, isLeftToRight = false, type = "emailList", name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
-            [3] = {appID = 4,id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.Homepage"},
-            [4] = {appID = 5,id = 14, isLeftToRight = false, type = "todoList", name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.Homepage"},
-            [5] = {appID = 6,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
+            [0] = {appID = 1, id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.GoToHomepage"},
+            [1] = {appID = 2,id = 6, isLeftToRight = false, type = "messagesList", name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.GoToHomepage"},
+            [2] = {appID = 3,id = 8, isLeftToRight = false, type = "emailList", name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.GoToHomepage"},
+            [3] = {appID = 4,id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.GoToHomepage"},
+            [4] = {appID = 5,id = 14, isLeftToRight = false, type = "todoList", name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.GoToHomepage"},
+            [5] = {appID = 6,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage"},
         },
     },
     --[[ ESSENTIAL APPS ]]--
-    [1] = {appID = 1, id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.GoBackApp", data = {},
+    [1000] = {appID = 1000, id = 7, isLeftToRight = false, type = "messageView", name = "Message", icon = 0, notif = 0, openEvent = "", backEvent = "scalePhone.GoBackApp", data = {contact = "Contact", message = 'unk', fromme = false, backApp = 0},
+    buttons = {
+        }
+    },
+    [1001] = {appID = 1001, id = 9, isLeftToRight = false, type = "emailView", name = "Email", icon = 0, notif = 0, openEvent = "", backEvent = "scalePhone.GoBackApp", data = {title = "Email", message = 'unk', from = "", to = "", backApp = 0},
+    buttons = {
+        }
+    },
+    --[[ CUSTOM APPS ]]--
+    [1] = {appID = 1, id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
     buttons = {
             --[0] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
         }
     },
-    [2] = {appID = 2,id = 6, isLeftToRight = false, type = "messagesList", name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.GoBackApp", data = {},
+    [2] = {appID = 2,id = 6, isLeftToRight = false, type = "messagesList", name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
     buttons = {
-            --[0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = false},
+            [0] = {contact = "Lili", h = 15, m = 10, message = "Nelu tea rugat iulia sa idai si ei osuta dojda mi sa sia tigari si maine ti da", event = "scalePhone.ShowMessage", isentthat = false},
         }
     },
-    [3] = {appID = 3,id = 8, isLeftToRight = false, type = "emailList", name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.GoBackApp", data = {},
+    [3] = {appID = 3,id = 8, isLeftToRight = false, type = "emailList", name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
     buttons = {
             --[0] = {title = "Update 1", to = "fivem.net", from = "homies.net", message = "<img src='img://shopui_title_casino/shopui_title_casino' height='80' width='320'/>"},
         }
     },
-    [4] = {appID = 4,id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.GoBackApp", data = {},
+    [4] = {appID = 4,id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
         buttons = {
             [0] = {selfieOn = false},
             [1] = {selfieOn = true},
         }
     },
-    [5] = {appID = 5,id = 14, isLeftToRight = false, type = "todoList", name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.GoBackApp", data = {},
+    [5] = {appID = 5,id = 14, isLeftToRight = false, type = "todoList", name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
         [0] = {title = "UID", text = "14", procent = 0},
         [1] = {title = "Rank", text = "4", procent = 0},
         [2] = {title = "Level", text = "100", procent = 0},
@@ -53,7 +62,7 @@ apps = {
         [4] = {title = "Faction", text = "FIB", procent = 0},
         [5] = {title = "Heist Points", text = "52", procent = 0},
     },
-    [6] = {appID = 6,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoBackApp", data = {},
+    [6] = {appID = 6,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
         [0] = {text = "Blue", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 0}},
         [1] = {text = "Green", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 1}},
         [2] = {text = "Red", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 2}},
@@ -62,9 +71,6 @@ apps = {
         [5] = {text = "Purple", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 5}},
         [6] = {text = "Pink", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 6}},
     },
-    --[[ CUSTOM APPS ]]--
-    [7] = {appID = "scalePhone.OpenJobs",id = 18, isLeftToRight = false, type = "menu", name = "eJobs", icon = 14, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.Homepage"},
-    [8] = {appID = "scalePhone.OpenServerInfo",id = 8, isLeftToRight = false, type = "emailList", name = "Server Info", icon = 35, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.Homepage"},
 }
 
 buttons = {
@@ -228,7 +234,7 @@ RegisterKeyMapping('phoneselect', "Phone Select", 'keyboard', 'RETURN')
 RegisterCommand('phoneback', function()
     if isPhoneActive then
         if appOpen ~= 0 then
-            TriggerEvent('scalePhone.HandleInput.'..apps[appOpen].type, 'down')
+            TriggerEvent('scalePhone.HandleInput.'..apps[appOpen].type, 'back')
             PlaySoundFrontend(-1, "Menu_Back", "Phone_SoundSet_Michael", 1)
         else
             TriggerEvent('scalePhone.HandleInput.homepage', 'back')

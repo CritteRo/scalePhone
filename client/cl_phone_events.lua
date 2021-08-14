@@ -72,7 +72,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
         if id ~= nil then
             local app = apps[id]
             appSelectID = 0
-            lastAppOpen = appOpen
+            lastAppOpen = apps[appOpen].appID
             appOpen = id
             if app.type == 'homepage' then
                 showHomepage(phoneScaleform, app.buttons, selectID, themeID)
@@ -99,6 +99,27 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
         else
             print("[[  ::  CAN'T FIND THE APP  ::  ]]")
         end
+    end
+end)
+
+AddEventHandler('scalePhone.GoBackApp', function(data)
+    print('am I here?')
+    if appOpen ~= 0 then
+        TriggerEvent('scalePhone.OpenApp', lastAppOpen, false)
+    else
+        ExecuteCommand('phone')
+    end
+end)
+
+AddEventHandler('scalePhone.GoToHomepage', function()
+    TriggerEvent('scalePhone.OpenApp', 'scalePhone.InternalMenu.DontUse.Homepage', false)
+end)
+
+AddEventHandler('scalePhone.BuildMessageView', function(data)
+    if data.contact ~= nil and data.message ~= nil and data.isentthat ~= nil then
+        apps[1000].data = {contact = data.contact, message = data.message, fromme = data.isentthat}
+    else
+        print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "contact" = string, "isentthat" = bool')
     end
 end)
 
