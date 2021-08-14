@@ -52,6 +52,67 @@ AddEventHandler("scalePhone.NumpadAddNumber", function(data)
     end 
 end)
 
+--[[  :: ESSENTIAL MENU EVENTS ::  ]]--
+
+AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
+    if isPhoneActive or isForced then
+        if isForced == true and isPhoneActive == false then
+            ExecuteCommand('phone')
+            Citizen.Wait(1)
+        end
+        local id = nil
+        local isNonHomepage = nil
+        --check if appID is a homepage app
+        for i,k in pairs(apps) do
+            if k.appID == appID then
+                id = i
+                isNonHomepage = false
+            end
+        end
+
+        --if we don't find it there, check if it's a non-homepage app.
+        if id ~= nil then
+            --we got'em. Do nothing for now.
+        else
+            for i,k in pairs(nonHomeApps) do
+                if k.appID == appID then
+                    id = i
+                    isNonHomepage = true
+                end
+            end
+        end
+
+        --if we find it, run code, else throw tantrun in console.
+        if id ~= nil then
+            if isNonHomepage == false then
+                local app = apps[id]
+                appOpenIsNonHome = false
+            else
+                local app = nonHomeApps[id]
+                appOpenIsNonHome = true
+            end
+            appSelectID = 0
+            appOpen = id
+            if app.type == 'homepage' then
+                showHomepage(phoneScaleform, apps, selectID, themeID)
+            elseif app.type == 'contacts' then
+            elseif app.type == 'emailList' then
+            elseif app.type == 'emailView' then
+            elseif app.type == 'messagesList' then
+            elseif app.type == 'messageView' then
+            elseif app.type == 'menu' then
+            elseif app.type == 'todoList' then
+            elseif app.type == 'numpad' then
+            elseif app.type == 'snapmatic' then
+            else
+            end
+        else
+        end
+    end
+end)
+
+
+
 --[[  LSLD CUSTOM EVENTS  ]]--
 
 AddEventHandler('phoneJobs.ChangeJob', function(_data)
