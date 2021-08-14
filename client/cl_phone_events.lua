@@ -3,37 +3,37 @@ RegisterNetEvent('scalePhone.Event.ReceiveMessage')
 RegisterNetEvent('scalePhone.Event.ReceiveEmail')
 
 AddEventHandler('scalePhone.Event.ReceiveEmail', function(email)
-    local count = #buttons[2]
+    local count = #apps[3].buttons
     print(count)
     local addnotif = 1
-    for i,k in pairs(buttons[2]) do
+    for i,k in pairs(apps[3].buttons) do
         print(i)
-        buttons[2][count-i+1] = buttons[2][count-i]
+        apps[3].buttons[count-i+1] = buttons[2][count-i]
     end
-    buttons[2][0] = {title = email.title, to = email.to, from = email.from, message = email.message}
-    apps[2].notif = apps[2].notif + addnotif
+    apps[3].buttons[0] = {title = email.title, to = email.to, from = email.from, message = email.message}
+    apps[0].buttons[2].notif = apps[0].buttons[2].notif + addnotif
 end)
 
 AddEventHandler('scalePhone.Event.ReceiveMessage', function(sms, isMine)
-    local count = #buttons[1]
+    local count = #apps[2].buttons
     print(count)
     local mine = false
     local addnotif = 1
-    for i,k in pairs(buttons[1]) do
-        buttons[1][count-i+1] = buttons[1][count-i]
+    for i,k in pairs(apps[2].buttons) do
+        apps[2].buttons[count-i+1] = apps[2].buttons[count-i]
     end
     if isMine ~= nil and isMine == true then
         mine = true
         addnotif = 0
     end
-    buttons[1][0] = {contact = sms.contact, h = GetClockHours(), m = GetClockMinutes(), message = sms.message, event = "scalePhone.ShowMessage", isentthat = mine}
-    apps[1].notif = apps[1].notif + addnotif
+    apps[2].buttons[0] = {contact = sms.contact, h = GetClockHours(), m = GetClockMinutes(), message = sms.message, event = "scalePhone.ShowMessage", isentthat = mine}
+    apps[0].buttons[1].notif = apps[0].buttons[1].notif + addnotif
 end)
 
 AddEventHandler('scalePhone.Event.UpdateContacts', function(contacts)
-    buttons[0] = {}
+    apps[1].buttons = {}
     for i,k in pairs(contacts) do
-        buttons[0][i] = {name = k.name, pic = k.pic, isBot = k.isBot, event = "scalePhone.SendSMS"}
+        apps[1].buttons[i] = {name = k.name, pic = k.pic, isBot = k.isBot, event = "scalePhone.SendSMS"}
     end
 end)
 
@@ -61,55 +61,35 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             Citizen.Wait(1)
         end
         local id = nil
-        local isNonHomepage = nil
         --check if appID is a homepage app
         for i,k in pairs(apps) do
             if k.appID == appID then
                 id = i
-                isNonHomepage = false
-            end
-        end
-
-        --if we don't find it there, check if it's a non-homepage app.
-        if id ~= nil then
-            --we got'em. Do nothing for now.
-        else
-            for i,k in pairs(nonHomeApps) do
-                if k.appID == appID then
-                    id = i
-                    isNonHomepage = true
-                end
             end
         end
 
         --if we find it, run code, else throw tantrun in console.
         if id ~= nil then
-            if isNonHomepage == false then
-                local app = apps[id]
-                appOpenIsNonHome = false
-            else
-                local app = nonHomeApps[id]
-                appOpenIsNonHome = true
-            end
+            local app = apps[id]
             appSelectID = 0
             lastAppOpen = appOpen
             appOpen = id
             if app.type == 'homepage' then
-                showHomepage(phoneScaleform, apps, selectID, themeID)
+                showHomepage(phoneScaleform, app.buttons, selectID, themeID)
             elseif app.type == 'contacts' then
-                openContactsMenu(phoneScaleform, app.buttons, selectID, app.name)
+                openContactsMenu(phoneScaleform, buttons[id], appSelectID, app.name)
             elseif app.type == 'emailList' then
-                openEmailsMenu(phoneScaleform, app.buttons, selectID, app.name)
+                openEmailsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'emailView' then
                 openEmailView(phoneScaleform, app.name, tostring(app.data.from), tostring(app.data.to), tostring(app.message))
             elseif app.type == 'messagesList' then
-                openMessagesMenu(phoneScaleform, app.buttons, selectID, app.name)
+                openMessagesMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'messageView' then
                 openMessageView(phoneScaleform, tostring(app.data.contact), tostring(app.data.message), app.data.fromme)
             elseif app.type == 'menu' then
-                openCustomMenu(phoneScaleform, app.name, app.buttons, selectID)
+                openCustomMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'todoList' then
-                openStatsMenu(phoneScaleform, app.buttons, selectID)
+                openStatsMenu(phoneScaleform, app.buttons, appSelectID)
             elseif app.type == 'numpad' then
             elseif app.type == 'snapmatic' then
                 openSnapmatic(phoneScaleform)
