@@ -26,6 +26,8 @@ AddEventHandler('sendPhone.SendSMS', function(to, message)
         end
     end
     if senderid ~= 0 then
+        TriggerClientEvent('scalePhone.Event.ReceiveMessage', src, {contact = GetPlayerName(src), message = message}, true)
+        Citizen.Wait(200)
         TriggerClientEvent('scalePhone.Event.ReceiveMessage', senderid, {contact = GetPlayerName(src), message = message}, false)
         local notif = {type = "suggestion", img = 'CHAR_BLANK_ENTRY', title = "New Message!", subtitle = "From: "..GetPlayerName(src), icontype = 1, text = message, colID = 123}
         TriggerClientEvent('core.notify', senderid, notif.type, notif)

@@ -2,8 +2,8 @@ AddEventHandler("scalePhone.ChangePhoneTheme", function(_data)
     if _data.themeID ~= nil then
         themeID = _data.themeID
         if isPhoneActive then
-            phoneScaleform = generateMainPhone(apps, selectID, themeID)
-            appOpen = -1
+            phoneScaleform = generateMainPhone(apps[0].buttons, selectID, themeID)
+            appOpen = 0
         end
     end
 end)

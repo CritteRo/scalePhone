@@ -33,7 +33,7 @@ end)
 AddEventHandler('scalePhone.Event.UpdateContacts', function(contacts)
     apps[1].buttons = {}
     for i,k in pairs(contacts) do
-        apps[1].buttons[i] = {name = k.name, pic = k.pic, isBot = k.isBot, event = "scalePhone.SendSMS"}
+        apps[1].buttons[i] = {name = k.name, pic = k.pic, isBot = k.isBot, event = "scalePhone.Event.SendSMS", eventParams = {name = k.name, isBot = k.isBot}}
     end
 end)
 
@@ -50,6 +50,18 @@ AddEventHandler("scalePhone.NumpadAddNumber", function(data)
             apps[appOpen].dataText = txt
         end
     end 
+end)
+
+AddEventHandler('scalePhone.Event.SendSMS', function(data)
+    DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 150)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local result = GetOnscreenKeyboardResult()
+        TriggerServerEvent('sendPhone.SendSMS', data.name, result)
+    end
 end)
 
 --[[  :: ESSENTIAL MENU EVENTS ::  ]]--
@@ -77,11 +89,11 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             if app.type == 'homepage' then
                 showHomepage(phoneScaleform, app.buttons, selectID, themeID)
             elseif app.type == 'contacts' then
-                openContactsMenu(phoneScaleform, buttons[id], appSelectID, app.name)
+                openContactsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'emailList' then
                 openEmailsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'emailView' then
-                openEmailView(phoneScaleform, app.name, tostring(app.data.from), tostring(app.data.to), tostring(app.message))
+                openEmailView(phoneScaleform, app.name, tostring(app.data.from), tostring(app.data.to), tostring(app.data.message))
             elseif app.type == 'messagesList' then
                 openMessagesMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'messageView' then
@@ -123,6 +135,13 @@ AddEventHandler('scalePhone.BuildMessageView', function(data)
     end
 end)
 
+AddEventHandler('scalePhone.BuildEmailView', function(data)
+    if data.title ~= nil and data.from ~= nil and data.to ~= nil and data.message ~= nil then
+        apps[1001].data = {title = data.title, message = data.message, to = data.to, from = data.from}
+    else
+        print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "title" = string, "to" = string, "from" = string')
+    end
+end)
 
 
 --[[  LSLD CUSTOM EVENTS  ]]--
