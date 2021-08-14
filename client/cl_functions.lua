@@ -24,3 +24,20 @@ function openMessagePrompt(name)
         AddTextEntry('MS_PROMPT_SMS', "Send message: ")
     end)
 end
+
+blacklistID = {
+    1000, 1001, 'scalePhone.InternalMenu.DontUse.Homepage'
+}
+
+typeDetails = {
+    ['homepage'] = {id = 1, isLeftToRight = true},
+    ['contacts'] = {id = 2, isLeftToRight = false},
+    ['messagesList'] = {id = 6, isLeftToRight = false},
+    ['messageView'] = {id = 7, isLeftToRight = false},
+    ['emailList'] = {id = 8, isLeftToRight = false},
+    ['emailView'] = {id = 9, isLeftToRight = false},
+    ['menu'] = {id = 18, isLeftToRight = false},
+    ['snapmatic'] = {id = 16, isLeftToRight = true},
+    ['todoList'] = {id = 14, isLeftToRight = false},
+    ['numpad'] = {id = 11, isLeftToRight = true},
+}

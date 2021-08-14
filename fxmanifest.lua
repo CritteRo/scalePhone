@@ -18,6 +18,7 @@ client_scripts {
     'client/apps/cl_phone_app_menu.lua',
     'client/cl_phone_handle.lua',
     'client/cl_phone_events.lua',
+    'client/cl_phone_example.lua',
 }
 
 server_scripts {

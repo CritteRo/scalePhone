@@ -66,10 +66,11 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             Citizen.Wait(1)
         end
         local id = nil
-        --check if appID is a homepage app
+        --check if appID is valid
         for i,k in pairs(apps) do
             if k.appID == appID then
                 id = i
+                break
             end
         end
 
@@ -136,12 +137,142 @@ AddEventHandler('scalePhone.BuildEmailView', function(data)
     end
 end)
 
-AddEventHandler('scalePhone.BuildApp', function(appID, type, name, icon, notif, openEvent, backEvent, data)
+AddEventHandler('scalePhone.BuildApp', function(appID, type, name, icon, notif, openEvent, backEvent, data) --this will be a "non-homepage app". Probably low level, just like 1000 and 1001
 end)
 
 AddEventHandler('scalePhone.BuildHomepageApp', function(appID, type, name, icon, notif, openEvent, backEvent, data)
+    local allowed = true
+    for i,k in pairs(blacklistID) do
+        if appID == k then
+            allowed = false
+            print('cant use that appID')
+            break
+        end
+    end
+    if allowed then
+        local id = appID
+        local placeHomepage = 0
+        if apps[0].buttons[0] ~= nil then
+            placeHomepage = #apps[0].buttons+1
+        end
+        for i,k in pairs(apps[0].buttons) do
+            if id == k.appID then
+                placeHomepage = i
+                break
+            end 
+        end
+        apps[0].buttons[placeHomepage] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent}
+        apps[appID] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent, buttons = {}}
+    end
 end)
 
+AddEventHandler('scalePhone.BuildSnapmatic', function(appID)
+    local allowed = true
+    for i,k in pairs(blacklistID) do
+        if appID == k then
+            allowed = false
+            print('cant use that appID')
+            break
+        end
+    end
+    if allowed then
+        local id = appID
+        local placeHomepage = 0
+        if apps[0].buttons[0] ~= nil then
+            placeHomepage = #apps[0].buttons+1
+        end
+        for i,k in pairs(apps[0].buttons) do
+            if id == k.appID then
+                placeHomepage = i
+                break
+            end 
+        end
+        apps[0].buttons[placeHomepage] = {appID = appID,id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.GoToHomepage"}
+        apps[appID] = {appID = appID, id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
+            buttons = {
+                [0] = {"blow_kiss"},
+                [1] = {"dock"},
+                [2] = {"jazz_hands"},
+                [3] = {"the_bird"},
+                [4] = {"thumbs_up"},
+                [5] = {"wank"},
+            }
+        }
+    end
+end)
+
+AddEventHandler('scalePhone.BuildThemeSettings', function(appID)
+    local allowed = true
+    for i,k in pairs(blacklistID) do
+        if appID == k then
+            allowed = false
+            print('cant use that appID')
+            break
+        end
+    end
+    if allowed then
+        local id = appID
+        local placeHomepage = 0
+        if apps[0].buttons[0] ~= nil then
+            placeHomepage = #apps[0].buttons+1
+        end
+        for i,k in pairs(apps[0].buttons) do
+            if id == k.appID then
+                placeHomepage = i
+                break
+            end 
+        end
+        apps[0].buttons[placeHomepage] = {appID = appID,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage"}
+        apps[appID] = {appID = appID,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
+            buttons = {
+                [0] = {text = "Blue", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 0}},
+                [1] = {text = "Green", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 1}},
+                [2] = {text = "Red", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 2}},
+                [3] = {text = "Orange", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 3}},
+                [4] = {text = "Gray", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 4}},
+                [5] = {text = "Purple", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 5}},
+                [6] = {text = "Pink", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 6}},
+            }
+        }
+    end
+end)
+
+AddEventHandler('scalePhone.BuildAppButton', function(appID, buttonData, addOnTop, overrideExistingButton)
+    if apps[appID] ~= nil then
+        local placeButton = 0
+        if addOnTop then
+            local count = #apps[appID].buttons
+            if apps[appID].buttons[0] ~= nil then
+                for i,k in pairs(apps[appID].buttons) do
+                    apps[appID].buttons[count-i+1] = apps[appID].buttons[count-i]
+                end
+            end
+            if overrideExistingButton ~= nil and overrideExistingButton > -1 then
+                for i,k in pairs(apps[appID].buttons) do
+                    if overrideExistingButton == i then
+                        placeButton = i
+                        break
+                    end 
+                end
+            end
+        else
+            if apps[appID].buttons[0] ~= nil then
+                placeButton = #apps[appID].buttons+1
+            end
+            if overrideExistingButton ~= nil and overrideExistingButton > -1 then
+                for i,k in pairs(apps[appID].buttons) do
+                    if overrideExistingButton == i then
+                        placeButton = i
+                        break
+                    end 
+                end
+            end
+        end
+        apps[appID].buttons[placeButton] = buttonData
+    else
+        print('[  ::  CANT BUILD BUTTON : APP ID DOES NOT EXIST  ::  ]')
+    end
+end)
 
 --[[  LSLD CUSTOM EVENTS  ]]--
 
