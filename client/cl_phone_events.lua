@@ -55,7 +55,6 @@ end)
 AddEventHandler('scalePhone.Event.SendSMS', function(data)
     AddTextEntry('MS_PROMPT_SMS', "Send message to "..data.name..":")
     openMessagePrompt(data.name)
-    --AddTextEntry('MS_PROMPT_SMS', "Send message: ")
 end)
 
 --[[  :: ESSENTIAL MENU EVENTS ::  ]]--
