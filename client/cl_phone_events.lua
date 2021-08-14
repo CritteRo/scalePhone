@@ -6,9 +6,9 @@ AddEventHandler('scalePhone.Event.ReceiveEmail', function(email)
     local count = #apps[3].buttons
     print(count)
     local addnotif = 1
-    for i,k in pairs(apps[3].buttons) do
+    for i=count,0,-1 do
         print(i)
-        apps[3].buttons[count-i+1] = apps[3].buttons[count-i]
+        apps[3].buttons[i+1] = apps[3].buttons[i]
     end
     apps[3].buttons[0] = {title = email.title, to = email.to, from = email.from, message = email.message}
     apps[0].buttons[2].notif = apps[0].buttons[2].notif + addnotif
@@ -19,8 +19,8 @@ AddEventHandler('scalePhone.Event.ReceiveMessage', function(sms, isMine)
     print(count)
     local mine = false
     local addnotif = 1
-    for i,k in pairs(apps[2].buttons) do
-        apps[2].buttons[count-i+1] = apps[2].buttons[count-i]
+    for i=count,0,-1 do
+        apps[2].buttons[i+1] = apps[2].buttons[i]
     end
     if isMine ~= nil and isMine == true then
         mine = true
@@ -243,8 +243,8 @@ AddEventHandler('scalePhone.BuildAppButton', function(appID, buttonData, addOnTo
         if addOnTop then
             local count = #apps[appID].buttons
             if apps[appID].buttons[0] ~= nil then
-                for i,k in pairs(apps[appID].buttons) do
-                    apps[appID].buttons[count-i+1] = apps[appID].buttons[count-i]
+                for i=count,0,-1 do
+                    apps[appID].buttons[i+1] = apps[appID].buttons[i]
                 end
             end
             if overrideExistingButton ~= nil and overrideExistingButton > -1 then
