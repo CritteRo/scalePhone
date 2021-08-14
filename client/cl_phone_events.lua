@@ -8,7 +8,7 @@ AddEventHandler('scalePhone.Event.ReceiveEmail', function(email)
     local addnotif = 1
     for i,k in pairs(apps[3].buttons) do
         print(i)
-        apps[3].buttons[count-i+1] = buttons[2][count-i]
+        apps[3].buttons[count-i+1] = apps[3].buttons[count-i]
     end
     apps[3].buttons[0] = {title = email.title, to = email.to, from = email.from, message = email.message}
     apps[0].buttons[2].notif = apps[0].buttons[2].notif + addnotif
@@ -53,15 +53,9 @@ AddEventHandler("scalePhone.NumpadAddNumber", function(data)
 end)
 
 AddEventHandler('scalePhone.Event.SendSMS', function(data)
-    DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 150)
-    while (UpdateOnscreenKeyboard() == 0) do
-        DisableAllControlActions(0);
-        Wait(0);
-    end
-    if (GetOnscreenKeyboardResult()) then
-        local result = GetOnscreenKeyboardResult()
-        TriggerServerEvent('sendPhone.SendSMS', data.name, result)
-    end
+    AddTextEntry('MS_PROMPT_SMS', "Send message to "..data.name..":")
+    openMessagePrompt(data.name)
+    --AddTextEntry('MS_PROMPT_SMS', "Send message: ")
 end)
 
 --[[  :: ESSENTIAL MENU EVENTS ::  ]]--

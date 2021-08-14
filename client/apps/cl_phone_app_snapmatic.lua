@@ -36,8 +36,6 @@ ClearPhoto = N_0xd801cc02177fa3f1
 frontCam = 0
 currentGestureDict = 0
 doingGesture = false
-gestureDir = "anim@mp_player_intselfie" .. gestureDicts[currentGestureDict+1]
-
 gestureDicts = {
 	"blow_kiss",
 	"dock",
@@ -46,6 +44,7 @@ gestureDicts = {
 	"thumbs_up",
 	"wank",
 }
+gestureDir = "anim@mp_player_intselfie" .. gestureDicts[currentGestureDict+1]
 
 AddEventHandler('scalePhone.HandleInput.snapmatic', function(input)
     if input == "left" then
