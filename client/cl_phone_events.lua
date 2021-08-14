@@ -92,21 +92,32 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 appOpenIsNonHome = true
             end
             appSelectID = 0
+            lastAppOpen = appOpen
             appOpen = id
             if app.type == 'homepage' then
                 showHomepage(phoneScaleform, apps, selectID, themeID)
             elseif app.type == 'contacts' then
+                openContactsMenu(phoneScaleform, app.buttons, selectID, app.name)
             elseif app.type == 'emailList' then
+                openEmailsMenu(phoneScaleform, app.buttons, selectID, app.name)
             elseif app.type == 'emailView' then
+                openEmailView(phoneScaleform, app.name, tostring(app.data.from), tostring(app.data.to), tostring(app.message))
             elseif app.type == 'messagesList' then
+                openMessagesMenu(phoneScaleform, app.buttons, selectID, app.name)
             elseif app.type == 'messageView' then
+                openMessageView(phoneScaleform, tostring(app.data.contact), tostring(app.data.message), app.data.fromme)
             elseif app.type == 'menu' then
+                openCustomMenu(phoneScaleform, app.name, app.buttons, selectID)
             elseif app.type == 'todoList' then
+                openStatsMenu(phoneScaleform, app.buttons, selectID)
             elseif app.type == 'numpad' then
             elseif app.type == 'snapmatic' then
+                openSnapmatic(phoneScaleform)
             else
+                print("[[  ::  CAN'T FIND APP TYPE  ::  ]]")
             end
         else
+            print("[[  ::  CAN'T FIND THE APP  ::  ]]")
         end
     end
 end)
