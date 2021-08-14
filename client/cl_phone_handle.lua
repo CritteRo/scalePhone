@@ -309,11 +309,11 @@ RegisterCommand('phoneselect', function()
             openMessagePrompt(buttons[appOpen][appSelectID].name)
         elseif appOpen == 1 then --opens message viewer
             CellCamMoveFinger(5)
-            openMessageViewer(phoneScaleform, buttons[appOpen][appSelectID].contact, buttons[appOpen][appSelectID].message, buttons[appOpen][appSelectID].isentthat)
+            openMessageView(phoneScaleform, buttons[appOpen][appSelectID].contact, buttons[appOpen][appSelectID].message, buttons[appOpen][appSelectID].isentthat)
             appOpen = -3
         elseif appOpen == 2 or apps[appOpen].type == "emailList" then --opens email viewer
             CellCamMoveFinger(5)
-            openEmailViewer(phoneScaleform, buttons[appOpen][appSelectID].title, buttons[appOpen][appSelectID].from, buttons[appOpen][appSelectID].to, buttons[appOpen][appSelectID].message)
+            openEmailView(phoneScaleform, buttons[appOpen][appSelectID].title, buttons[appOpen][appSelectID].from, buttons[appOpen][appSelectID].to, buttons[appOpen][appSelectID].message)
             lastAppOpen = appOpen
             appOpen = -2
         elseif appOpen == 3 then --takes a photo in snapmatic

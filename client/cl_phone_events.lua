@@ -1,20 +1,6 @@
 RegisterNetEvent('scalePhone.Event.UpdateContacts')
 RegisterNetEvent('scalePhone.Event.ReceiveMessage')
 RegisterNetEvent('scalePhone.Event.ReceiveEmail')
-RegisterNetEvent("stats.UpdateClient")
-
-
-AddEventHandler("stats.UpdateClient", function(_stats, _checks)
-    buttons[4] = { --stats menu
-    [0] = {title = "UID", text = _stats.UID, procent = 0},
-    [1] = {title = "Rank", text = _stats.rank, procent = 0},
-    [2] = {title = "Level", text = _stats.level, procent = 0},
-    [3] = {title = "Job", text = _stats.job, procent = 0},
-    [4] = {title = "Job Points", text = _stats.jobskill, procent = 0},
-    [5] = {title = "Heist Points", text = _stats.robpoints, procent = 0},
-    [6] = {title = "Language", text = _stats.lang, procent = 0},
-}
-end)
 
 AddEventHandler('scalePhone.Event.ReceiveEmail', function(email)
     local count = #buttons[2]
