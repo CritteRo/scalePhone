@@ -47,45 +47,6 @@ gestureDicts = {
 	"wank",
 }
 
-function loopGestures()
-	while apps[appOpen].type == 'snapmatic' do Wait(0)
-		if not IsControlPressed(0, 186) then
-			if IsControlJustPressed(0, 313) then
-				currentGestureDict = (currentGestureDict + 1) % #gestureDicts
-			end
-			if IsControlJustPressed(0, 312) then
-				if currentGestureDict-1 < 0 then 
-					currentGestureDict = #gestureDicts-1
-				else
-					currentGestureDict = (currentGestureDict - 1)
-				end
-			end
-		end
-		
-		if IsControlPressed(0, 186) then
-			if doingGesture == false then
-					doingGesture = true
-				if not HasAnimDictLoaded(gestureDir) then
-					RequestAnimDict(gestureDir)
-					repeat Wait(0) until HasAnimDictLoaded(gestureDir)
-				end
-				TaskPlayAnim(PlayerPedId(), gestureDir, "enter", 4.0, 4.0, -1, 128, -1.0, false, false, false)
-				Wait(GetAnimDuration(gestureDir, "enter")*1000)
-				TaskPlayAnim(PlayerPedId(), gestureDir, "idle_a", 8.0, 4.0, -1, 129, -1.0, false, false, false)
-			end
-		else
-			if doingGesture == true then
-				doingGesture = false
-				TaskPlayAnim(PlayerPedId(), gestureDir, "exit", 4.0, 4.0, -1, 128, -1.0, false, false, false)
-				Wait(GetAnimDuration(gestureDir, "exit")*1000)
-				RemoveAnimDict(gestureDir)
-			end
-		end
-	end
-	TaskPlayAnim(PlayerPedId(), "", "", 4.0, 4.0, -1, 128, -1.0, false, false, false)
-	RemoveAnimDict(gestureDir)
-end
-
 AddEventHandler('scalePhone.HandleInput.snapmatic', function(input)
     if input == "left" then
         CellCamMoveFinger(4)
@@ -148,14 +109,4 @@ AddEventHandler('scalePhone.HandleInput.snapmatic', function(input)
         RemoveAnimDict(gestureDir)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data, false)
     end
-
-    --local ret = Scaleform.CallFunction(phoneScaleform, true, "GET_CURRENT_SELECTION")
-    --[[while true do
-        if IsScaleformMovieMethodReturnValueReady(ret) then
-            appSelectID = GetScaleformMovieMethodReturnValueInt(ret) --output
-            print(appSelectID)
-            break
-        end
-        Citizen.Wait(0)
-    end]]
 end)
