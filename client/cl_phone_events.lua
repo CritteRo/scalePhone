@@ -1,42 +1,3 @@
-RegisterNetEvent('scalePhone.Event.UpdateContacts')
-RegisterNetEvent('scalePhone.Event.ReceiveMessage')
-RegisterNetEvent('scalePhone.Event.ReceiveEmail')
-
-AddEventHandler('scalePhone.Event.ReceiveEmail', function(email)
-    local count = #apps[3].buttons
-    print(count)
-    local addnotif = 1
-    for i=count,0,-1 do
-        print(i)
-        apps[3].buttons[i+1] = apps[3].buttons[i]
-    end
-    apps[3].buttons[0] = {title = email.title, to = email.to, from = email.from, message = email.message}
-    apps[0].buttons[2].notif = apps[0].buttons[2].notif + addnotif
-end)
-
-AddEventHandler('scalePhone.Event.ReceiveMessage', function(sms, isMine)
-    local count = #apps[2].buttons
-    print(count)
-    local mine = false
-    local addnotif = 1
-    for i=count,0,-1 do
-        apps[2].buttons[i+1] = apps[2].buttons[i]
-    end
-    if isMine ~= nil and isMine == true then
-        mine = true
-        addnotif = 0
-    end
-    apps[2].buttons[0] = {contact = sms.contact, h = GetClockHours(), m = GetClockMinutes(), message = sms.message, event = "scalePhone.ShowMessage", isentthat = mine}
-    apps[0].buttons[1].notif = apps[0].buttons[1].notif + addnotif
-end)
-
-AddEventHandler('scalePhone.Event.UpdateContacts', function(contacts)
-    apps[1].buttons = {}
-    for i,k in pairs(contacts) do
-        apps[1].buttons[i] = {name = k.name, pic = k.pic, isBot = k.isBot, event = "scalePhone.Event.SendSMS", eventParams = {name = k.name, isBot = k.isBot}}
-    end
-end)
-
 AddEventHandler("scalePhone.NumpadAddNumber", function(data)
     local txt = apps[appOpen].dataText
     if isPhoneActive == true and apps[appOpen] ~= nil and apps[appOpen].type == 'numpad' then
@@ -50,11 +11,6 @@ AddEventHandler("scalePhone.NumpadAddNumber", function(data)
             apps[appOpen].dataText = txt
         end
     end 
-end)
-
-AddEventHandler('scalePhone.Event.SendSMS', function(data)
-    AddTextEntry('MS_PROMPT_SMS', "Send message to "..data.name..":")
-    openMessagePrompt(data.name)
 end)
 
 --[[  :: ESSENTIAL MENU EVENTS ::  ]]--
@@ -274,8 +230,26 @@ AddEventHandler('scalePhone.BuildAppButton', function(appID, buttonData, addOnTo
     end
 end)
 
---[[  LSLD CUSTOM EVENTS  ]]--
+AddEventHandler('scalePhone.ResetAppButtons', function(appID)
+    if apps[appID] ~= nil then
+        apps[appID].buttons = {}
+    end
+end)
 
-AddEventHandler('phoneJobs.ChangeJob', function(_data)
-    TriggerServerEvent("jobs.ChangePlayerJob", _data.jobid)
+AddEventHandler('scalePhone.AddAppNotification', function(appID, customValue)
+    if apps[appID] ~= nil then
+        local homePlace = 0
+        for i,k in pairs(apps[0].buttons) do
+            if k.appID == appID then
+                homePlace = i
+                break
+            end
+        end
+        if tonumber(customValue) ~= nil then
+            apps[0].buttons[homePlace].notif = tonumber(customValue)
+        else
+            apps[0].buttons[homePlace].notif = apps[0].buttons[homePlace].notif + 1
+        end
+        
+    end
 end)

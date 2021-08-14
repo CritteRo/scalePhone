@@ -8,22 +8,6 @@ AddEventHandler("scalePhone.ChangePhoneTheme", function(_data)
     end
 end)
 
-AddTextEntry('MS_PROMPT_SMS', "Send message:")
-function openMessagePrompt(name)
-    Citizen.CreateThread(function()
-        DisplayOnscreenKeyboard(1, "MS_PROMPT_SMS", "", "", "", "", "", 150)
-        while (UpdateOnscreenKeyboard() == 0) do
-            DisableAllControlActions(0);
-            Wait(0);
-        end
-        if (GetOnscreenKeyboardResult()) then
-            local result = GetOnscreenKeyboardResult()
-            TriggerServerEvent('sendPhone.SendSMS', name, result)
-        end
-        AddTextEntry('MS_PROMPT_SMS', "Send message: ")
-    end)
-end
-
 blacklistID = {
     1000, 1001, 'scalePhone.InternalMenu.DontUse.Homepage'
 }
