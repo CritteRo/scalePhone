@@ -51,8 +51,12 @@ apps = {
     },
     [4] = {appID = 4,id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
         buttons = {
-            [0] = {selfieOn = false},
-            [1] = {selfieOn = true},
+            [0] = {"blow_kiss"},
+            [1] = {"dock"},
+            [2] = {"jazz_hands"},
+            [3] = {"the_bird"},
+            [4] = {"thumbs_up"},
+            [5] = {"wank"},
         }
     },
     [5] = {appID = 5,id = 14, isLeftToRight = false, type = "todoList", name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
@@ -128,7 +132,7 @@ Citizen.CreateThread(function()
             DrawScaleformMovie(phoneScaleform, 0.1, 0.18, 0.2, 0.35, 255, 255, 255, 255, 0)
             SetTextRenderId(GetDefaultScriptRendertargetRenderId())
 
-            if appOpen == 3 then
+            if apps[appOpen].type == 'snapmatic' then
                 HideHudComponentThisFrame(7)
                 HideHudComponentThisFrame(8)
                 HideHudComponentThisFrame(9)

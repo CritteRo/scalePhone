@@ -8,6 +8,7 @@ client_scripts {
     'client/cl_functions.lua',
     'client/apps/cl_scaleform_functions.lua',
     'client/apps/cl_phone_app_homepage.lua',
+    'client/apps/cl_phone_app_snapmatic.lua',
     'client/apps/cl_phone_app_contacts.lua',
     'client/apps/cl_phone_app_emailList.lua',
     'client/apps/cl_phone_app_emailView.lua',
