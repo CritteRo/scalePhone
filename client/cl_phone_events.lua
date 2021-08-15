@@ -51,7 +51,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'menu' then
                 openCustomMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'todoList' then
-                openStatsMenu(phoneScaleform, app.buttons, appSelectID)
+                openStatsMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'numpad' then
             elseif app.type == 'snapmatic' then
                 openSnapmatic(phoneScaleform)
