@@ -32,7 +32,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'messagesList' then
                 openMessagesMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'messageView' then
-                openMessageView(phoneScaleform, tostring(app.data.contact), tostring(app.data.message), app.data.fromme)
+                openMessageView(phoneScaleform, tostring(app.data.contact), tostring(app.data.message), app.data.fromme, app.data.hasPic)
             elseif app.type == 'menu' then
                 openCustomMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'todoList' then
@@ -89,6 +89,9 @@ end)
 AddEventHandler('scalePhone.BuildMessageView', function(data)
     if data.contact ~= nil and data.message ~= nil and data.isentthat ~= nil then
         apps[1000].data = {contact = data.contact, message = data.message, fromme = data.isentthat}
+        if data.hasPic ~= nil then
+            apps[1000].data.hasPic = tostring(data.hasPic)
+        end
     else
         print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "contact" = string, "isentthat" = bool')
     end

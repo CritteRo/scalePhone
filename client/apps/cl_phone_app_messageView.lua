@@ -1,4 +1,4 @@
-function openMessageView(scaleform, contact, message, fromme)
+function openMessageView(scaleform, contact, message, fromme, hasPic)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Message")
@@ -6,7 +6,12 @@ function openMessageView(scaleform, contact, message, fromme)
     if fromme == true then
         var = "To: "
     end
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 7, 0, var..contact, message, 'CHAR_BLANK_ENTRY')
+    local pic = 'CHAR_BLANK_ENTRY'
+    if hasPic ~= nil then
+        pic = hasPic
+    end
+    print(tostring(hasPic))
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 7, 0, var..contact, message, pic)
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 7, 0)
 end
