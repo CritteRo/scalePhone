@@ -1,7 +1,7 @@
 --[[  :: ESSENTIAL MENU EVENTS ::  ]]--
 
 AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
-    if isPhoneActive or isForced then
+    if isPhoneActive or isForced ~= nil then
         if isForced == true and isPhoneActive == false then
             ExecuteCommand('phone')
             Citizen.Wait(1)
@@ -103,6 +103,18 @@ AddEventHandler('scalePhone.BuildEmailView', function(data)
 end)
 
 AddEventHandler('scalePhone.BuildApp', function(appID, type, name, icon, notif, openEvent, backEvent, data) --this will be a "non-homepage app". Probably low level, just like 1000 and 1001
+    local allowed = true
+    for i,k in pairs(blacklistID) do
+        if appID == k then
+            allowed = false
+            print('cant use that appID')
+            break
+        end
+    end
+    if allowed then
+        local id = appID
+        apps[appID] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent, buttons = {}}
+    end
 end)
 
 AddEventHandler('scalePhone.BuildHomepageApp', function(appID, type, name, icon, notif, openEvent, backEvent, data)

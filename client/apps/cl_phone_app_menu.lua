@@ -28,6 +28,7 @@ AddEventHandler('scalePhone.HandleInput.menu', function(input)
         TriggerEvent(apps[appOpen].buttons[appSelectID].event, apps[appOpen].buttons[appSelectID].eventParams, false)
     elseif input == 'back' then
         CellCamMoveFinger(5)
+        RemoveNotifications(appOpen)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data, false)
     end
 

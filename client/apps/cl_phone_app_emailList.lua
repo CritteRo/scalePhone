@@ -30,7 +30,8 @@ AddEventHandler('scalePhone.HandleInput.emailList', function(input)
         TriggerEvent('scalePhone.OpenApp', 1001, false)
     elseif input == 'back' then
         CellCamMoveFinger(5)
-        apps[0].buttons[2].notif = 0
+        RemoveNotifications(appOpen)
+        --apps[0].buttons[2].notif = 0
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)
     end
 

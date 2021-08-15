@@ -9,7 +9,7 @@ AddEventHandler("scalePhone.ChangePhoneTheme", function(_data)
 end)
 
 blacklistID = {
-    1000, 1001, 'scalePhone.InternalMenu.DontUse.Homepage'
+    0, 1000, 1001, 'scalePhone.InternalMenu.DontUse.Homepage'
 }
 
 typeDetails = {
@@ -24,3 +24,11 @@ typeDetails = {
     ['todoList'] = {id = 14, isLeftToRight = false},
     ['numpad'] = {id = 11, isLeftToRight = true},
 }
+
+function RemoveNotifications(appID)
+    for i,k in pairs(apps[0].buttons) do
+        if appID == k.appID then
+            k.notif = 0
+        end
+    end
+end

@@ -25,6 +25,7 @@ AddEventHandler('scalePhone.HandleInput.todoList', function(input)
     elseif input == 'select' then
     elseif input == 'back' then
         CellCamMoveFinger(5)
+        RemoveNotifications(appOpen)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)
     end
 
