@@ -43,7 +43,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'emailList' then
                 openEmailsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'emailView' then
-                openEmailView(phoneScaleform, app.name, tostring(app.data.from), tostring(app.data.to), tostring(app.data.message))
+                openEmailView(phoneScaleform, tostring(app.data.title), tostring(app.data.from), tostring(app.data.to), tostring(app.data.message))
             elseif app.type == 'messagesList' then
                 openMessagesMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'messageView' then
