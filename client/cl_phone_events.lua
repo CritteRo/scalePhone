@@ -11,6 +11,9 @@ AddEventHandler("scalePhone.NumpadAddNumber", function(data)
             else
                 txt = txt..data.add
             end
+            if data.forceText ~= nil then
+                txt = tostring(data.forceText)
+            end
             Scaleform.CallFunction(phoneScaleform, false, "SET_HEADER", txt)
             apps[appOpen].dataText = txt
             TriggerEvent('scalePhone.Event.GetNumpadNumber', txt)
