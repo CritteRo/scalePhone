@@ -1,14 +1,19 @@
 AddEventHandler("scalePhone.NumpadAddNumber", function(data)
-    local txt = apps[appOpen].dataText
+    local txt = ""
+    if apps[appOpen].dataText ~= nil then
+        txt = apps[appOpen].dataText
+    end
     if isPhoneActive == true and apps[appOpen] ~= nil and apps[appOpen].type == 'numpad' then
         if data.add ~= nil then
-            if data.add == 'del' then
-            elseif data.add == 'can' then
+            if data.add == 'res' then
+                txt = ""
+            elseif data.add == 'go' then
             else
                 txt = txt..data.add
             end
             Scaleform.CallFunction(phoneScaleform, false, "SET_HEADER", txt)
             apps[appOpen].dataText = txt
+            TriggerEvent('scalePhone.Event.GetNumpadNumber', txt)
         end
     end 
 end)
@@ -53,6 +58,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'todoList' then
                 openStatsMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'numpad' then
+                openNumpadMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'snapmatic' then
                 openSnapmatic(phoneScaleform)
             else

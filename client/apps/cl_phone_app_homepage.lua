@@ -77,18 +77,6 @@ AddEventHandler('scalePhone.HandleInput.homepage', function(input)
     end
 end)
 
-function openNumpad(scaleform, title, buttons, selectID)
-    SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
-    SetPhoneLean(false)
-    Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 11)
-    for i,k in pairs(buttons) do
-        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 11, i, k.text)
-    end
-
-    Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 11, 3)
-end
-
 --[[
 APP icons:
 1 = snapmatic,
