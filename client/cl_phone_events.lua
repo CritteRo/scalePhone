@@ -1,26 +1,3 @@
-AddEventHandler("scalePhone.NumpadAddNumber", function(data)
-    local txt = ""
-    if apps[appOpen].dataText ~= nil then
-        txt = apps[appOpen].dataText
-    end
-    if isPhoneActive == true and apps[appOpen] ~= nil and apps[appOpen].type == 'numpad' then
-        if data.add ~= nil then
-            if data.add == 'res' then
-                txt = ""
-            elseif data.add == 'go' then
-            else
-                txt = txt..data.add
-            end
-            if data.forceText ~= nil then
-                txt = tostring(data.forceText)
-            end
-            Scaleform.CallFunction(phoneScaleform, false, "SET_HEADER", txt)
-            apps[appOpen].dataText = txt
-            TriggerEvent('scalePhone.Event.GetNumpadNumber', txt)
-        end
-    end 
-end)
-
 --[[  :: ESSENTIAL MENU EVENTS ::  ]]--
 
 AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
@@ -80,6 +57,29 @@ AddEventHandler('scalePhone.GoBackApp', function(data)
     else
         ExecuteCommand('phone')
     end
+end)
+
+AddEventHandler("scalePhone.NumpadAddNumber", function(data)
+    local txt = ""
+    if apps[appOpen].dataText ~= nil then
+        txt = apps[appOpen].dataText
+    end
+    if isPhoneActive == true and apps[appOpen] ~= nil and apps[appOpen].type == 'numpad' then
+        if data.add ~= nil then
+            if data.add == 'res' then
+                txt = ""
+            elseif data.add == 'go' then
+            else
+                txt = txt..data.add
+            end
+            if data.forceText ~= nil then
+                txt = tostring(data.forceText)
+            end
+            Scaleform.CallFunction(phoneScaleform, false, "SET_HEADER", txt)
+            apps[appOpen].dataText = txt
+            TriggerEvent('scalePhone.Event.GetNumpadNumber', txt)
+        end
+    end 
 end)
 
 AddEventHandler('scalePhone.GoToHomepage', function()

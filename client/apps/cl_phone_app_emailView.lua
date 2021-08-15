@@ -30,7 +30,6 @@ AddEventHandler('scalePhone.HandleInput.emailView', function(input)
     while true do
         if IsScaleformMovieMethodReturnValueReady(ret) then
             appSelectID = GetScaleformMovieMethodReturnValueInt(ret) --output
-            print(appSelectID)
             break
         end
         Citizen.Wait(0)

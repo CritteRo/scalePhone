@@ -9,19 +9,11 @@ appSelectID = 0
 renderID = 0
 themeID = 0
 
-RequestStreamedTextureDict("shopui_title_casino")
-
 apps = {
     --[[ HOMEPAGE ]]--
     [0] = {appID = 'scalePhone.InternalMenu.DontUse.Homepage', 1, type = 'homepage', name = 'Home', icon = 0, notif = 0, openEvent = 'scalePhone.GoBackApp', backEvent = 'scalePhone.ClosePhone', data = {},
         buttons = {
             --[0] = {appID = 1, id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.GoToHomepage"},
-            --[1] = {appID = 2,id = 6, isLeftToRight = false, type = "messagesList", name = "Messages", icon = 2, notif = 0, openEvent = "scalePhone.OpenMessages", backEvent = "scalePhone.GoToHomepage"},
-            --[2] = {appID = 3,id = 8, isLeftToRight = false, type = "emailList", name = "Emails", icon = 4, notif = 0, openEvent = "scalePhone.OpenEmails", backEvent = "scalePhone.GoToHomepage"},
-            --[3] = {appID = 4,id = 0, isLeftToRight = false, type = "snapmatic", name = "Snapmatic", icon = 1, notif = 0, openEvent = "scalePhone.OpenSnapmatic", backEvent = "scalePhone.GoToHomepage"},
-            --[4] = {appID = 5,id = 14, isLeftToRight = false, type = "todoList", name = "Stats", icon = 12, notif = 0, openEvent = "scalePhone.OpenStatsMenu", backEvent = "scalePhone.GoToHomepage"},
-            --[5] = {appID = 6,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage"},
-            --[6] = {appID = 7,id = 18, isLeftToRight = false, type = "menu", name = "eJobs", icon = 35, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage"},
         },
     },
     --[[ ESSENTIAL APPS ]]--
@@ -34,7 +26,7 @@ apps = {
         }
     },
     --[[ CUSTOM APPS ]]--
-    [1] = {appID = 1, id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
+    --[[[1] = {appID = 1, id = 2, isLeftToRight = false, type = "contacts", name = "Contacts", icon = 5, notif = 0, openEvent = "scalePhone.OpenContacts", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
     buttons = {
             --[0] = {name = "Contact", pic = 'CHAR_BLANK_ENTRY', isBot = false, event = ""},
         }
@@ -89,7 +81,7 @@ apps = {
             [4] = {text = "Pilot", event = "phoneJobs.ChangeJob", eventParams = {jobid = 4}},
             [5] = {text = "Hitman", event = "phoneJobs.ChangeJob", eventParams = {jobid = 5}},
         }
-    },
+    },]]
 }
 
 RegisterCommand('phone', function()

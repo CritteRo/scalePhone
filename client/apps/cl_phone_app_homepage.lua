@@ -65,15 +65,15 @@ AddEventHandler('scalePhone.HandleInput.homepage', function(input)
         CellCamMoveFinger(5)
         ExecuteCommand('phone')
     end
-
-    local ret = Scaleform.CallFunction(phoneScaleform, true, "GET_CURRENT_SELECTION")
-    while true do
-        if IsScaleformMovieMethodReturnValueReady(ret) then
-            selectID = GetScaleformMovieMethodReturnValueInt(ret) --output
-            print(selectID)
-            break
+    if input ~= 'select' and input ~= 'back' then
+        local ret = Scaleform.CallFunction(phoneScaleform, true, "GET_CURRENT_SELECTION")
+        while true do
+            if IsScaleformMovieMethodReturnValueReady(ret) then
+                selectID = GetScaleformMovieMethodReturnValueInt(ret) --output
+                break
+            end
+            Citizen.Wait(0)
         end
-        Citizen.Wait(0)
     end
 end)
 
