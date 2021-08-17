@@ -1,8 +1,9 @@
-function openTodoView(scaleform)
+function openTodoView(scaleform, title, todoTitle, line1, line2, footer)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
-    Scaleform.CallFunction(scaleform, false, "SET_HEADER", "View")
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 15, 0, 1)
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 2)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 2, 0, todoTitle, footer, line1, line2)
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 15, 0)
 end

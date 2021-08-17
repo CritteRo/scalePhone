@@ -40,7 +40,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'todoList' then
                 openStatsMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'todoView' then
-                openTodoView(phoneScaleform)
+                openTodoView(phoneScaleform, app.name, app.data.title, app.data.line1, app.data.line2, app.data.footer)
             elseif app.type == 'numpad' then
                 openNumpadMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'snapmatic' then
@@ -57,9 +57,10 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
 end)
 
 AddEventHandler('scalePhone.GoBackApp', function(data)
-    print('am I here?')
+    print('am I here? GoBackApp')
     if appOpen ~= 0 then
         if data ~= nil and data.backApp ~= nil then
+            print('good data? GoBackApp')
             TriggerEvent('scalePhone.OpenApp', data.backApp, false)
         else
             TriggerEvent('scalePhone.OpenApp', lastAppOpen, false)
@@ -131,6 +132,18 @@ AddEventHandler('scalePhone.BuildCallscreenView', function(data, appID)
     end
 end)
 
+AddEventHandler('scalePhone.BuildToDoView', function(data, appID)
+    if data.title ~= nil and data.line1 ~= nil and data.line2 ~= nil and data.footer ~= nil then
+        local id = 1002
+        if appID ~= nil then
+            id = appID
+        end
+        apps[id].data = {title = data.title, line1 = data.line1, line2 = data.line2, footer = data.footer}
+    else
+        print('[[  ::  scalePhone.BuildCallscreenView requires the following array variables: "title" = string, "line1" = string, "line2" = string, "footer" = string')
+    end
+end)
+
 AddEventHandler('scalePhone.BuildApp', function(appID, type, name, icon, notif, openEvent, backEvent, data) --this will be a "non-homepage app". Probably low level, just like 1000 and 1001
     local allowed = true
     for i,k in pairs(blacklistID) do
@@ -142,7 +155,7 @@ AddEventHandler('scalePhone.BuildApp', function(appID, type, name, icon, notif, 
     end
     if allowed then
         local id = appID
-        apps[appID] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent, buttons = {}}
+        apps[appID] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent, buttons = {}, data = data}
     end
 end)
 
@@ -168,7 +181,7 @@ AddEventHandler('scalePhone.BuildHomepageApp', function(appID, type, name, icon,
             end 
         end
         apps[0].buttons[placeHomepage] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent}
-        apps[appID] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent, buttons = {}}
+        apps[appID] = {appID = appID,id = typeDetails[type].id, isLeftToRight = typeDetails[type].isLeftToRight, type = type, name = name, icon = icon, notif = notif, openEvent = openEvent, backEvent = backEvent, buttons = {}, data = data}
     end
 end)
 

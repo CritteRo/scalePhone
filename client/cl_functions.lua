@@ -9,7 +9,7 @@ AddEventHandler("scalePhone.ChangePhoneTheme", function(_data)
 end)
 
 blacklistID = {
-    0, 1000, 1001, 'scalePhone.InternalMenu.DontUse.Homepage'
+    0, 1000, 1001, 1002, 'scalePhone.InternalMenu.DontUse.Homepage'
 }
 
 typeDetails = {

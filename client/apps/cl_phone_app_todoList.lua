@@ -23,6 +23,8 @@ AddEventHandler('scalePhone.HandleInput.todoList', function(input)
         CellCamMoveFinger(2)
         Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
     elseif input == 'select' then
+        CellCamMoveFinger(5)
+        TriggerEvent(apps[appOpen].buttons[appSelectID].event, apps[appOpen].buttons[appSelectID].eventParams)
     elseif input == 'back' then
         CellCamMoveFinger(5)
         RemoveNotifications(appOpen)
