@@ -25,6 +25,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 showHomepage(phoneScaleform, app.buttons, selectID, themeID)
             elseif app.type == 'contacts' then
                 openContactsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
+            elseif app.type == 'callscreen' then
+                openCallscreen(phoneScaleform, app.data.contact, app.data.pic, app.data.status)
             elseif app.type == 'emailList' then
                 openEmailsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'emailView' then
@@ -37,6 +39,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 openCustomMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'todoList' then
                 openStatsMenu(phoneScaleform, app.name, app.buttons, appSelectID)
+            elseif app.type == 'todoView' then
+                openTodoView(phoneScaleform)
             elseif app.type == 'numpad' then
                 openNumpadMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'snapmatic' then
@@ -102,6 +106,14 @@ AddEventHandler('scalePhone.BuildEmailView', function(data)
         apps[1001].data = {title = data.title, message = data.message, to = data.to, from = data.from}
     else
         print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "title" = string, "to" = string, "from" = string')
+    end
+end)
+
+AddEventHandler('scalePhone.BuildCallscreenView', function(app, data)
+    if data.contact ~= nil and data.pic ~= nil and data.status ~= nil then
+        apps[app].data = {contact = data.contact, pic = data.pic, status = data.status}
+    else
+        print('[[  ::  scalePhone.BuildCallscreenView requires the following array variables: "contact" = string, "pic" = string, "status" = string')
     end
 end)
 

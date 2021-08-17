@@ -15,6 +15,7 @@ blacklistID = {
 typeDetails = {
     ['homepage'] = {id = 1, isLeftToRight = true},
     ['contacts'] = {id = 2, isLeftToRight = false},
+    ['callscreen'] = {id = 4, isLeftToRight = false},
     ['messagesList'] = {id = 6, isLeftToRight = false},
     ['messageView'] = {id = 7, isLeftToRight = false},
     ['emailList'] = {id = 8, isLeftToRight = false},
@@ -22,6 +23,7 @@ typeDetails = {
     ['menu'] = {id = 18, isLeftToRight = false},
     ['snapmatic'] = {id = 16, isLeftToRight = true},
     ['todoList'] = {id = 14, isLeftToRight = false},
+    ['todoView'] = {id = 15, isLeftToRight = false},
     ['numpad'] = {id = 11, isLeftToRight = true},
 }
 

@@ -8,6 +8,7 @@ selectID = 0
 appSelectID = 0
 renderID = 0
 themeID = 0
+themeScaleform = {id = "CELLPHONE_IFRUIT", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
 
 apps = {
     --[[ HOMEPAGE ]]--

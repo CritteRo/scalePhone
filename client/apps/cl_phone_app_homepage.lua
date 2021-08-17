@@ -15,7 +15,7 @@ themes = {
 
 --view id 4 = call screen / 11 = numpad / 14 = better todo / 15 = todo 6= sms list / 8 = email list / 24 = weird text
 function generateMainPhone(_apps, _selectID, _theme)
-    local scaleform = Scaleform.Request('CELLPHONE_IFRUIT')
+    local scaleform = Scaleform.Request(themeScaleform.id)
 
     Scaleform.CallFunction(scaleform, false, "SET_THEME", themes[_theme].id)
     Scaleform.CallFunction(scaleform, false, "SET_SLEEP_MODE", 0)
@@ -35,7 +35,11 @@ function showHomepage(scaleform, apps, selectID, theme)
     CellCamActivate(false, false)
 	CellFrontCamActivate(false)
 
-    Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", themes[theme].wallpaper)
+    if themeScaleform.id == "CELLPHONE_IFRUIT" then
+        Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", themes[theme].wallpaper)
+    else
+        Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_IMAGE", themeScaleform.defaultwp)
+    end
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 1)
     for i,k in pairs(apps) do
         --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 1, slotID, iconID, notification number, App Name, opacityFloat)
