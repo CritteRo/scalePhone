@@ -24,6 +24,7 @@ typeDetails = {
     ['snapmatic'] = {id = 16, isLeftToRight = true},
     ['todoList'] = {id = 14, isLeftToRight = false},
     ['todoView'] = {id = 15, isLeftToRight = false},
+    ['bossJobView'] = {id = 19, isLeftToRight = false},
     ['numpad'] = {id = 11, isLeftToRight = true},
 }
 
