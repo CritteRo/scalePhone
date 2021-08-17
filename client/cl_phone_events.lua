@@ -96,28 +96,36 @@ AddEventHandler('scalePhone.GoToHomepage', function()
     TriggerEvent('scalePhone.OpenApp', 'scalePhone.InternalMenu.DontUse.Homepage', false)
 end)
 
-AddEventHandler('scalePhone.BuildMessageView', function(data)
+AddEventHandler('scalePhone.BuildMessageView', function(data, appID)
     if data.contact ~= nil and data.message ~= nil and data.isentthat ~= nil then
-        apps[1000].data = {contact = data.contact, message = data.message, fromme = data.isentthat}
+        local id = 1000
+        if appID ~= nil then
+            id = appID
+        end
+        apps[id].data = {contact = data.contact, message = data.message, fromme = data.isentthat}
         if data.hasPic ~= nil then
-            apps[1000].data.hasPic = tostring(data.hasPic)
+            apps[id].data.hasPic = tostring(data.hasPic)
         end
     else
         print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "contact" = string, "isentthat" = bool')
     end
 end)
 
-AddEventHandler('scalePhone.BuildEmailView', function(data)
+AddEventHandler('scalePhone.BuildEmailView', function(data, appID)
     if data.title ~= nil and data.from ~= nil and data.to ~= nil and data.message ~= nil then
-        apps[1001].data = {title = data.title, message = data.message, to = data.to, from = data.from}
+        local id = 1001
+        if appID ~= nil then
+            id = appID
+        end
+        apps[id].data = {title = data.title, message = data.message, to = data.to, from = data.from}
     else
         print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "title" = string, "to" = string, "from" = string')
     end
 end)
 
-AddEventHandler('scalePhone.BuildCallscreenView', function(app, data)
+AddEventHandler('scalePhone.BuildCallscreenView', function(data, appID)
     if data.contact ~= nil and data.pic ~= nil and data.status ~= nil then
-        apps[app].data = {contact = data.contact, pic = data.pic, status = data.status}
+        apps[appID].data = {contact = data.contact, pic = data.pic, status = data.status}
     else
         print('[[  ::  scalePhone.BuildCallscreenView requires the following array variables: "contact" = string, "pic" = string, "status" = string')
     end

@@ -26,8 +26,8 @@ AddEventHandler('scalePhone.HandleInput.emailList', function(input)
         Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
     elseif input == 'select' then
         CellCamMoveFinger(5)
-        TriggerEvent('scalePhone.BuildEmailView', apps[appOpen].buttons[appSelectID])
-        TriggerEvent('scalePhone.OpenApp', 1001, false)
+        --TriggerEvent('scalePhone.BuildEmailView', apps[appOpen].buttons[appSelectID])
+        TriggerEvent(apps[appOpen].buttons[appSelectID].event, apps[appOpen].buttons[appSelectID].eventParams)
     elseif input == 'back' then
         CellCamMoveFinger(5)
         RemoveNotifications(appOpen)
