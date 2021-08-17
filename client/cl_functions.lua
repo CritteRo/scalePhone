@@ -35,3 +35,11 @@ function RemoveNotifications(appID)
         end
     end
 end
+
+function getAppOpen(isLast)
+    local retval = appOpen
+    if isLast ~= nil and isLast == true then
+        retval = lastAppOpen
+    end
+    return retval
+end

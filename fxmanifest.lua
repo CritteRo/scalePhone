@@ -28,3 +28,7 @@ client_scripts {
 server_scripts {
     'server/sv_phone_handle.lua',
 }
+
+exports {
+    'getAppOpen'
+}
