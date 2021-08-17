@@ -45,8 +45,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 openNumpadMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'snapmatic' then
                 openSnapmatic(phoneScaleform)
-            elseif app.type == 'bossJobView' then
-                openMissionStatsView(phoneScaleform)
+            elseif app.type == 'missionStatsView' then
+                openMissionStatsView(phoneScaleform, app.name, app.buttons, appSelectID)
             else
                 print("[[  ::  CAN'T FIND APP TYPE  ::  ]]")
             end

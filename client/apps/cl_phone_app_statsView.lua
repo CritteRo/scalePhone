@@ -1,30 +1,20 @@
-function openMissionStatsView(scaleform)
+function openMissionStatsView(scaleform, title, buttons, selectID)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
-    Scaleform.CallFunction(scaleform, false, "SET_HEADER", "View")
+    Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
 
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 0, 'Farmen | Civilian', 'CritteR')
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 1, false, 'UID  //  14')
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 2, false, 'Level  //  100')
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 3, false, 'Heist Points  //  54', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 4, false, 'Job Points  //  32', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 5, false, 'Rank  //  4', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 6, false, 'UID  //  14')
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 7, false, 'Level  //  100')
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 8, false, 'Heist Points  //  54', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 9, false, 'Job Points  //  32', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 10, false, 'Rank  //  4', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 11, false, 'UID  //  14')
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 12, false, 'Level  //  100')
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 13, false, 'Heist Points  //  54', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 14, false, 'Job Points  //  32', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 15, false, 'Rank  //  4', 0)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 16, 'Stats Screen', 100, 1)
+    if buttons ~= nil then
+        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 0, buttons[0].title, buttons[0].subtitle)
+        for i=1, #buttons-1, 1 do
+            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, i, false, buttons[i].title)
+        end
+        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, #buttons, buttons[#buttons].title)
+    end
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 19, 0)
 end
 
-AddEventHandler('scalePhone.HandleInput.bossJobView', function(input)
+AddEventHandler('scalePhone.HandleInput.missionStatsView', function(input)
     if input == "left" then
         CellCamMoveFinger(4)
         Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 4)
