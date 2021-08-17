@@ -57,7 +57,11 @@ end)
 AddEventHandler('scalePhone.GoBackApp', function(data)
     print('am I here?')
     if appOpen ~= 0 then
-        TriggerEvent('scalePhone.OpenApp', lastAppOpen, false)
+        if data ~= nil and data.backApp ~= nil then
+            TriggerEvent('scalePhone.OpenApp', data.backApp, false)
+        else
+            TriggerEvent('scalePhone.OpenApp', lastAppOpen, false)
+        end
     else
         ExecuteCommand('phone')
     end

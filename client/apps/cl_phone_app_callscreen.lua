@@ -67,6 +67,7 @@ AddEventHandler('scalePhone.HandleInput.callscreen', function(input)
     elseif input == 'back' then
         CellCamMoveFinger(5)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)
+        PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael", 1)
     end
 
     local ret = Scaleform.CallFunction(phoneScaleform, true, "GET_CURRENT_SELECTION")
