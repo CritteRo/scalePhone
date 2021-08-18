@@ -20,6 +20,7 @@ client_scripts {
     'client/apps/cl_phone_app_menu.lua',
     'client/apps/cl_phone_app_numpad.lua',
     'client/apps/cl_phone_app_statsView.lua',
+    'client/apps/cl_phone_app_gps.lua',
     'client/cl_phone_handle.lua',
     'client/cl_phone_events.lua',
     'client/cl_phone_example.lua',

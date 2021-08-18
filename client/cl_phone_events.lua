@@ -47,6 +47,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 openSnapmatic(phoneScaleform)
             elseif app.type == 'missionStatsView' then
                 openMissionStatsView(phoneScaleform, app.name, app.buttons, appSelectID)
+            elseif app.type == 'gps' then
+                openGPSView(phoneScaleform, app.name)
             else
                 print("[[  ::  CAN'T FIND APP TYPE  ::  ]]")
             end
