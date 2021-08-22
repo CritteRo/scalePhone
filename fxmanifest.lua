@@ -35,3 +35,5 @@ exports {
     'getAppOpen',
     'sleepModeStatus',
 }
+
+stream 'cellphone_facade.ytd'
