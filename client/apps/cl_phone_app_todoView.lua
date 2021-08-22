@@ -5,6 +5,10 @@ function openTodoView(scaleform, title, todoTitle, line1, line2, footer)
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 2)
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 2, 0, todoTitle, footer, line1, line2)
 
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 9)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
+
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 15, 0)
 end
 

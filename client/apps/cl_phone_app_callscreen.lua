@@ -21,6 +21,10 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Call")
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,status.."\n"..wait)
 
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 10)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 6)
+
     Citizen.CreateThread(function()
         local app = appOpen
         while app == appOpen do

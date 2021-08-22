@@ -6,6 +6,9 @@ function openNumpadMenu(scaleform, title, buttons, selectID)
         Scaleform.CallFunction(scaleform, false, "SET_HEADER", apps[appOpen].dataText)
     end
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 11)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, true, 9)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
     for i,k in pairs(buttons) do
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 11, i, k.text)
     end

@@ -11,6 +11,10 @@ function openMissionStatsView(scaleform, title, buttons, selectID)
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, #buttons, buttons[#buttons].title)
     end
 
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 9)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
+
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 19, 0)
 end
 

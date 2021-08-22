@@ -4,6 +4,10 @@ function openEmailView(scaleform, title, from, to, message)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 9, 0, 1, "To: ~b~me~s~,", 'From: ~b~'..from..'~s~', "<c>"..title.."</c>", message)
 
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 10)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
+
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 9, 0)
 end
 

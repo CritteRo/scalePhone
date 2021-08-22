@@ -3,6 +3,9 @@ function openMessagesMenu(scaleform, messages, selectID, title)
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 6)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, true, 10)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
     for i,k in pairs(messages) do
         local var = ""
         if k.isentthat == true then

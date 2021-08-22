@@ -47,6 +47,12 @@ function showHomepage(scaleform, apps, selectID, theme)
     end
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 1, selectID)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 1)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, true, 1)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 1)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS_COLOUR", 1, 200, 200, 200)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS_COLOUR", 2, 200, 200, 200)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS_COLOUR", 3, 200, 200, 200)
 end
 
 AddEventHandler('scalePhone.HandleInput.homepage', function(input)

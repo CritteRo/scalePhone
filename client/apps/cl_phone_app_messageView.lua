@@ -13,6 +13,10 @@ function openMessageView(scaleform, contact, message, fromme, hasPic)
     print(tostring(hasPic))
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 7, 0, var..contact, message, pic)
 
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 10)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
+
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 7, 0)
 end
 

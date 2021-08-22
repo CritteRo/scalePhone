@@ -3,6 +3,9 @@ function openCustomMenu(scaleform, title, buttons, selectID)
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 18)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, true, 13)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
     for i,k in pairs(buttons) do
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 18, i, 0, k.text)
     end

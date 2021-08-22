@@ -8,6 +8,11 @@ function openGPSView(scaleform, title)
     local ped = PlayerPedId()
     local coords = {x = "...", y = "...", z = "..."}
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 24, 0, 1, zone, '', coords.x, '', coords.y, '', coords.z)
+
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 9)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
+
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 24, 0)
     local app = appOpen
     while app == appOpen do
