@@ -17,8 +17,8 @@ function openGPSView(scaleform, title)
     local app = appOpen
     while app == appOpen do
         coords = GetEntityCoords(ped)
-        zone = ActualZoneNames[GetNameOfZone(coords.x,coords.y,coords.z)]
-        if zone ~= nil then
+        zone = GetLabelText(GetNameOfZone(coords.x,coords.y,coords.z))
+        if zone ~= "NULL" then
             Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 24, 0, 1, zone, 0, string.format("%.2f", coords.x), 0, string.format("%.2f", coords.y), 0, string.format("%.2f", coords.z))
         else
             zone = "Location Unknown"
