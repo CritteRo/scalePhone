@@ -37,6 +37,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 openMessageView(phoneScaleform, tostring(app.data.contact), tostring(app.data.message), app.data.fromme, app.data.hasPic)
             elseif app.type == 'menu' then
                 openCustomMenu(phoneScaleform, app.name, app.buttons, appSelectID)
+            elseif app.type == 'settings' then
+                openSettingsList(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'todoList' then
                 openStatsMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'todoView' then
@@ -243,16 +245,23 @@ AddEventHandler('scalePhone.BuildThemeSettings', function(appID)
                 break
             end 
         end
-        apps[0].buttons[placeHomepage] = {appID = appID,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage"}
-        apps[appID] = {appID = appID,id = 18, isLeftToRight = false, type = "menu", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
+        apps[0].buttons[placeHomepage] = {appID = appID,id = 18, isLeftToRight = false, type = "settings", name = "Settings", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage"}
+        apps[appID] = {appID = appID,id = 18, isLeftToRight = false, type = "settings", name = "Settings", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoToHomepage", data = {backApp = 0},
             buttons = {
-                [0] = {text = "Blue", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 0}},
-                [1] = {text = "Green", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 1}},
-                [2] = {text = "Red", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 2}},
-                [3] = {text = "Orange", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 3}},
-                [4] = {text = "Gray", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 4}},
-                [5] = {text = "Purple", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 5}},
-                [6] = {text = "Pink", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 6}},
+                [0] = {text = "Toggle Sleep Mode", event = "scalePhone.TogglePhoneSleepMode", eventParams = '', icon = 26},
+                [1] = {text = "Themes", event = "scalePhone.OpenApp", eventParams = 'scalePhone.Internal.Themes', icon = 23},
+            }
+        }
+        
+        apps['scalePhone.Internal.Themes'] = {appID = 'scalePhone.Internal.Themes',id = 18, isLeftToRight = false, type = "settings", name = "Themes", icon = 24, notif = 0, openEvent = "scalePhone.OpenCustomMenu", backEvent = "scalePhone.GoBackApp", data = {backApp = appID},
+            buttons = {
+                [0] = {text = "Blue", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 0}, icon = 23},
+                [1] = {text = "Green", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 1}, icon = 23},
+                [2] = {text = "Red", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 2}, icon = '23'},
+                [3] = {text = "Orange", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 3}, icon = '23'},
+                [4] = {text = "Gray", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 4}, icon = '23'},
+                [5] = {text = "Purple", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 5}, icon = '23'},
+                [6] = {text = "Pink", event = "scalePhone.ChangePhoneTheme", eventParams = {themeID = 6}, icon = '23'},
             }
         }
     end
@@ -315,6 +324,5 @@ AddEventHandler('scalePhone.AddAppNotification', function(appID, customValue)
         else
             apps[0].buttons[homePlace].notif = apps[0].buttons[homePlace].notif + 1
         end
-        
     end
 end)

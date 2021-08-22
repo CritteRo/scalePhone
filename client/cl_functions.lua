@@ -8,8 +8,13 @@ AddEventHandler("scalePhone.ChangePhoneTheme", function(_data)
     end
 end)
 
+AddEventHandler("scalePhone.TogglePhoneSleepMode", function()
+    sleepMode = not sleepMode
+    Scaleform.CallFunction(phoneScaleform, false, "SET_SLEEP_MODE", sleepMode)
+end)
+
 blacklistID = {
-    0, 1000, 1001, 1002, 'scalePhone.InternalMenu.DontUse.Homepage'
+    0, 1000, 1001, 1002, 'scalePhone.InternalMenu.DontUse.Homepage', 'scalePhone.Internal.Themes'
 }
 
 typeDetails = {
@@ -27,6 +32,7 @@ typeDetails = {
     ['missionStatsView'] = {id = 19, isLeftToRight = false},
     ['numpad'] = {id = 11, isLeftToRight = true},
     ['gps'] = {id = 24, isLeftToRight = false},
+    ['settings'] = {id = 22, isLeftToRight = false},
 }
 
 function RemoveNotifications(appID)
@@ -43,6 +49,10 @@ function getAppOpen(isLast)
         retval = lastAppOpen
     end
     return retval
+end
+
+function sleepModeStatus()
+    return sleepMode
 end
 
 ActualZoneNames = {

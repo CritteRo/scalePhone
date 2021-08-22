@@ -18,7 +18,7 @@ function generateMainPhone(_apps, _selectID, _theme)
     local scaleform = Scaleform.Request(themeScaleform.id)
 
     Scaleform.CallFunction(scaleform, false, "SET_THEME", themes[_theme].id)
-    Scaleform.CallFunction(scaleform, false, "SET_SLEEP_MODE", 0)
+    Scaleform.CallFunction(scaleform, false, "SET_SLEEP_MODE", sleepMode)
     showHomepage(scaleform, _apps, _selectID, _theme)
 
     return scaleform
