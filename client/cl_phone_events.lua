@@ -326,3 +326,18 @@ AddEventHandler('scalePhone.AddAppNotification', function(appID, customValue)
         end
     end
 end)
+
+AddEventHandler('scalePhone.Admins.ChangeOS', function(data)
+    if data.passcode ~= nil and data.passcode == "Ch4Ng30$" then
+        if data.os ~= nil then
+            if data.os == "IFRUIT" then
+                themeScaleform = {id = "CELLPHONE_IFRUIT", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
+            elseif data.os == "BADGER" then
+                themeScaleform = {id = "CELLPHONE_BADGER", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
+            elseif data.os == "FACADE" then
+                themeScaleform = {id = "CELLPHONE_FACADE", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
+            end
+        end
+        print('WARNING :: CHANGING PHONE OS IS NOT RECOMMENDED. SOME APPS MIGHT NOT WORK PROPERLY, OR MIGHT NOT WORK AT ALL.')
+    end
+end)
