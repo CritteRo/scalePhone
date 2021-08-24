@@ -74,6 +74,12 @@ AddEventHandler('scalePhone.GoBackApp', function(data)
     end
 end)
 
+AddEventHandler('scalePhone.ClosePhone', function()
+    if isPhoneActive then
+        ExecuteCommand('phone')
+    end
+end)
+
 AddEventHandler("scalePhone.NumpadAddNumber", function(data)
     local txt = ""
     if apps[appOpen].dataText ~= nil then
