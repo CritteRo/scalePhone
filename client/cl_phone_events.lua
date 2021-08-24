@@ -113,7 +113,9 @@ AddEventHandler('scalePhone.BuildMessageView', function(data, appID)
         if appID ~= nil then
             id = appID
         end
-        apps[id].data = {contact = data.contact, message = data.message, fromme = data.isentthat}
+        apps[id].data.contact = data.contact
+        apps[id].data.message = data.message
+        apps[id].data.fromme = data.isentthat
         if data.hasPic ~= nil then
             apps[id].data.hasPic = tostring(data.hasPic)
         end
@@ -128,7 +130,10 @@ AddEventHandler('scalePhone.BuildEmailView', function(data, appID)
         if appID ~= nil then
             id = appID
         end
-        apps[id].data = {title = data.title, message = data.message, to = data.to, from = data.from}
+        apps[id].data.title = data.title
+        apps[id].data.message = data.message
+        apps[id].data.to = data.to
+        apps[id].data.from = data.from
     else
         print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "title" = string, "to" = string, "from" = string')
     end
@@ -136,7 +141,9 @@ end)
 
 AddEventHandler('scalePhone.BuildCallscreenView', function(data, appID)
     if data.contact ~= nil and data.pic ~= nil and data.status ~= nil then
-        apps[appID].data = {contact = data.contact, pic = data.pic, status = data.status}
+        apps[appID].data.contact = data.contact
+        apps[appID].data.pic = data.pic
+        apps[appID].data.status = data.status
     else
         print('[[  ::  scalePhone.BuildCallscreenView requires the following array variables: "contact" = string, "pic" = string, "status" = string')
     end
@@ -148,7 +155,10 @@ AddEventHandler('scalePhone.BuildToDoView', function(data, appID)
         if appID ~= nil then
             id = appID
         end
-        apps[id].data = {title = data.title, line1 = data.line1, line2 = data.line2, footer = data.footer}
+        apps[id].data.title = data.title
+        apps[id].data.line1 = data.line1
+        apps[id].data.line2 = data.line2
+        apps[id].data.footer = data.footer
     else
         print('[[  ::  scalePhone.BuildCallscreenView requires the following array variables: "title" = string, "line1" = string, "line2" = string, "footer" = string')
     end
