@@ -76,6 +76,7 @@ AddEventHandler('scalePhone.HandleInput.callscreen', function(input)
             PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael", 1)
         end
     elseif input == 'back' then
+        StopPedRingtone(PlayerPedId())
         CellCamMoveFinger(5)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)
         PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael", 1)
