@@ -26,7 +26,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'contacts' then
                 openContactsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'callscreen' then
-                openCallscreen(phoneScaleform, app.data.contact, app.data.pic, app.data.status)
+                openCallscreen(phoneScaleform, app.data.contact, app.data.pic, app.data.status, app.data.canAnswer)
             elseif app.type == 'emailList' then
                 openEmailsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'emailView' then

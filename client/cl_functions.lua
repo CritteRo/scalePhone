@@ -11,6 +11,7 @@ end)
 AddEventHandler("scalePhone.TogglePhoneSleepMode", function()
     sleepMode = not sleepMode
     Scaleform.CallFunction(phoneScaleform, false, "SET_SLEEP_MODE", sleepMode)
+    TriggerEvent('scalePhone.Event.SleepModeChanged', sleepMode)
 end)
 
 blacklistID = {

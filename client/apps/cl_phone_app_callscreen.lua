@@ -1,4 +1,4 @@
-function openCallscreen(scaleform,contactName, contactPic, callStatus)
+function openCallscreen(scaleform,contactName, contactPic, callStatus, canAnswer)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
     local minutes = 00
@@ -8,6 +8,7 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus)
     local name = 'unk'
     local pic = ''
     local status = 'unk'
+    local answer = false
     if contactName ~= nil then
         name = contactName
     end
@@ -17,12 +18,15 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus)
     if callStatus ~= nil then
         status = callStatus
     end
+    if canAnswer ~= nil then
+        answer = canAnswer
+    end
 
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Call")
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,status.."\n"..wait)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
-    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 10)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, answer, 5)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 6)
 
     Citizen.CreateThread(function()
@@ -65,9 +69,11 @@ AddEventHandler('scalePhone.HandleInput.callscreen', function(input)
         CellCamMoveFinger(2)
         Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
     elseif input == 'select' then
-        --CellCamMoveFinger(5)
-        --TriggerEvent('scalePhone.BuildMessageView', apps[appOpen].buttons[appSelectID])
-        --TriggerEvent('scalePhone.OpenApp', 1000, false)
+        if answer == true and apps[appOpen].data.selectEvent ~= nil then
+            CellCamMoveFinger(5)
+            TriggerEvent(apps[appOpen].data.selectEvent, apps[appOpen].data)
+            PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael", 1)
+        end
     elseif input == 'back' then
         CellCamMoveFinger(5)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)
