@@ -23,7 +23,7 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus, canAnswer
     end
 
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Call")
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,status.."\n"..wait)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,callStatus.."\n"..wait)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, answer, 5)
