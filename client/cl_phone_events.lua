@@ -140,13 +140,20 @@ AddEventHandler('scalePhone.BuildEmailView', function(data, appID)
 end)
 
 AddEventHandler('scalePhone.BuildCallscreenView', function(data, appID)
-    if data.contact ~= nil and data.pic ~= nil and data.status ~= nil then
+    if data.contact ~= nil and data.pic ~= nil and data.status ~= nil and data.canAnswer ~= nil then
         apps[appID].data.contact = data.contact
         apps[appID].data.pic = data.pic
         apps[appID].data.status = data.status
+        apps[appID].data.canAnswer = data.canAnswer
+        if data.selectEvent ~= nil then
+            apps[appID].data.canAnswer = data.canAnswer
+        else
+            print('[[  ::  scalePhone.BuildCallscreenView might need a selectEvent variable in data, if canAnswer = true')
+        end
     else
         print('[[  ::  scalePhone.BuildCallscreenView requires the following array variables: "contact" = string, "pic" = string, "status" = string')
     end
+    apps[appID].data = data
 end)
 
 AddEventHandler('scalePhone.BuildToDoView', function(data, appID)
