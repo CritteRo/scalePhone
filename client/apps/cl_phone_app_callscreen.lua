@@ -23,13 +23,16 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus, canAnswer
     end
 
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Call")
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,callStatus.."\n"..wait)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 4)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,callStatus--[[.."\n"..wait]])
+    Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 4, 0)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, answer, 5)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 6)
+    --[[ Having the clock ticking caused some weird things with when showing the status message. I will find a work around an update.]]--
 
-    Citizen.CreateThread(function()
+    --[[Citizen.CreateThread(function()
         local app = appOpen
         while app == appOpen do
             seconds = seconds + 1
@@ -48,11 +51,12 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus, canAnswer
             else
                 wait = wait..seconds
             end
-            Scaleform.CallFunction(phoneScaleform, false, "SET_DATA_SLOT", 4, 0, 0, contactName,contactPic,callStatus.."\n"..wait)
+            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 4)
+            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, contactName,contactPic,callStatus.."\n"..wait)
             Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 4, 0)
             Wait(1000)
         end
-    end)
+    end)]]
 end
 
 AddEventHandler('scalePhone.HandleInput.callscreen', function(input)
