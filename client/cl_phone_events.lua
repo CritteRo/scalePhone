@@ -146,7 +146,7 @@ AddEventHandler('scalePhone.BuildCallscreenView', function(data, appID)
         apps[appID].data.status = data.status
         apps[appID].data.canAnswer = data.canAnswer
         if data.selectEvent ~= nil then
-            apps[appID].data.canAnswer = data.canAnswer
+            apps[appID].data.selectEvent = data.selectEvent
         else
             print('[[  ::  scalePhone.BuildCallscreenView might need a selectEvent variable in data, if canAnswer = true')
         end
