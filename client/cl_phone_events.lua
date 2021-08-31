@@ -4,7 +4,7 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
     if isPhoneActive or isForced ~= nil then
         if isForced == true and isPhoneActive == false then
             ExecuteCommand('phone')
-            Citizen.Wait(1)
+            Citizen.Wait(100) --this is still retarded, btw. Here, I need to wait for the scaleform to load, so I can then push the new app. This wait is arbitrary, and I basically hope that the scaleform will be ready in under 100ms.
         end
         local id = nil
         --check if appID is valid
