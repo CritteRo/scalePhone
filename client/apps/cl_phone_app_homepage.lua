@@ -8,7 +8,7 @@ themes = {
     [1] = {name = "Green", id = 2, wallpaper = "Phone_Wallpaper_greenshards"},
     [2] = {name = "Red", id = 3, wallpaper = "Phone_Wallpaper_orangeherringbone"},
     [3] = {name = "Orange", id = 4, wallpaper = "Phone_Wallpaper_orangetriangles"},
-    [4] = {name = "Gray", id = 5, wallpaper = "Phone_Wallpaper_diamonds"},
+    [4] = {name = "Gray", id = 5, wallpaper = "Phone_Wallpaper_snaily"},
     [5] = {name = "Purple", id = 6, wallpaper = "Phone_Wallpaper_purpleglow"},
     [6] = {name = "Pink", id = 7, wallpaper = "Phone_Wallpaper_purpletartan"},
 }

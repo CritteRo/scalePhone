@@ -36,4 +36,7 @@ exports {
     'sleepModeStatus',
 }
 
-stream 'cellphone_facade.ytd'
+streams {
+    'cellphone_facade.ytd',
+    'phone_wallpaper_snaily.ytd',
+}
