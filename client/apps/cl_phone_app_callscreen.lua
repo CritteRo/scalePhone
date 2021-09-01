@@ -1,4 +1,13 @@
+local lastRunId = null
 function openCallscreen(scaleform,contactName, contactPic, callStatus, canAnswer)
+    math.randomseed(GetGameTimer())
+    local newId = math.random(100000,999999)
+    while newId == lastRunId do
+        newId = math.random(100000,999999)
+    end
+
+    lastRunId = newId
+
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
     local minutes = 00
@@ -24,17 +33,20 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus, canAnswer
 
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Call")
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 4)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,callStatus--[[.."\n"..wait]])
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 4, 0, 0, name,pic,callStatus.."\n"..wait)
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 4, 0)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, answer, 5)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 6)
-    --[[ Having the clock ticking caused some weird things with when showing the status message. I will find a work around an update.]]--
 
-    --[[Citizen.CreateThread(function()
+    Citizen.CreateThread(function()
         local app = appOpen
+        local lastId = lastRunId
         while app == appOpen do
+            if lastId ~= lastRunId then
+                break;
+            end
             seconds = seconds + 1
             if seconds == 60 then
                 seconds = 0
@@ -56,7 +68,7 @@ function openCallscreen(scaleform,contactName, contactPic, callStatus, canAnswer
             Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 4, 0)
             Wait(1000)
         end
-    end)]]
+    end)
 end
 
 AddEventHandler('scalePhone.HandleInput.callscreen', function(input)
