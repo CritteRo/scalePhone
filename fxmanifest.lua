@@ -34,6 +34,8 @@ server_scripts {
 exports {
     'getAppOpen',
     'sleepModeStatus',
+    'findButtonIdUsingData',
+    'reorderAppButtons',
 }
 
 streams {

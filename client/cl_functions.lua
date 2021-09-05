@@ -55,3 +55,71 @@ end
 function sleepModeStatus()
     return sleepMode
 end
+
+function findButtonIdUsingData(appID, dataSample) --this approach might get....ummm....laggy.
+    if apps[appID] ~= nil then
+        if apps[appID].buttons ~= nil then
+            local id = nil
+            for i,k in pairs(apps[appID].buttons) do
+                if k.eventParams ~= nil then
+                    if type(k.eventParams) == 'table' and type(dataSample) ~= 'table' then
+                        for j,v in pairs(k.eventParams) do
+                            if v == dataSample then
+                                id = i
+                                break
+                            end
+                        end
+                    elseif type(k.eventParams) ~= 'table' and type(dataSample) ~= 'table' then
+                        if k.eventParams == dataSample then
+                            id = i
+                            break
+                        end
+                    elseif type(k.eventParams) == 'table' and type(dataSample) == 'table' then
+                        if k.eventParams == dataSample then
+                            id = i
+                            break
+                        end
+                    end
+                end
+            end
+
+            if id ~= nil then
+                return id
+            else
+                print('[[  ::  ERROR  ::  WE COULD NOT FIND YOUR BUTTON ID. MAKE SURE THE SAMPLE DATA MATCHES ANY VALUE IN "eventParams" OR IS EQUAL TO "eventParams"  ::  ]]')
+            end
+        end
+    else
+        print('[[  ::  ERROR  ::  INVALID APP ID WHEN SEARCHING FOR A BUTTON ID  ::  ]]')
+    end
+end
+
+function reorderAppButtons(appID)
+    local row = 0
+    local placeholder = {}
+    local IsFirstItemANill = false
+    if apps[appID].buttons[0] ~= nil then
+        IsFirstItemANill = false
+    else
+        IsFirstItemANill = true
+    end
+    for i,k in pairs(apps[appID].buttons) do
+        if apps[appID].buttons[i] ~= nil then
+            placeholder[row] = apps[appID].buttons[i]
+            row = row + 1
+        else
+            if i == 0 then
+                IsFirstItemANill = true
+            end
+        end
+    end
+    if IsFirstItemANill == false then
+        for i = #placeholder, 0, -1 do
+            placeholder[i+1] = placeholder[i]
+        end
+        placeholder[0] = placeholder[#placeholder]
+        placeholder[#placeholder] = nil
+    end
+
+    apps[appID].buttons = placeholder
+end

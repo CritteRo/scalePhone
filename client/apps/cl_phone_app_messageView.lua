@@ -1,4 +1,4 @@
-function openMessageView(scaleform, contact, message, fromme, hasPic)
+function openMessageView(scaleform, contact, message, fromme, hasPic, canOpenMenu)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", "Message")
@@ -7,14 +7,17 @@ function openMessageView(scaleform, contact, message, fromme, hasPic)
         var = "To: "
     end
     local pic = 'CHAR_BLANK_ENTRY'
+    local _canOpenMenu = false
     if hasPic ~= nil then
         pic = hasPic
     end
-    print(tostring(hasPic))
+    if canOpenMenu ~= nil then
+        _canOpenMenu = canOpenMenu
+    end
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 7, 0, var..contact, message, pic)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
-    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 10)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, _canOpenMenu, 11)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 7, 0)
@@ -34,9 +37,10 @@ AddEventHandler('scalePhone.HandleInput.messageView', function(input)
         CellCamMoveFinger(2)
         Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
     elseif input == 'select' then
-        --CellCamMoveFinger(5)
-        --TriggerEvent('scalePhone.BuildMessageView', apps[appOpen].buttons[appSelectID])
-        --TriggerEvent('scalePhone.OpenApp', 1000, false)
+        if apps[appOpen].data.canOpenMenu ~= nil and apps[appOpen].data.canOpenMenu == true and apps[appOpen].data.selectEvent ~= nil then
+            CellCamMoveFinger(5)
+            TriggerEvent(apps[appOpen].data.selectEvent, apps[appOpen].data)
+        end
     elseif input == 'back' then
         CellCamMoveFinger(5)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)

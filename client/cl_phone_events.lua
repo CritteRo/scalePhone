@@ -30,11 +30,11 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'emailList' then
                 openEmailsMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'emailView' then
-                openEmailView(phoneScaleform, tostring(app.data.title), tostring(app.data.from), tostring(app.data.to), tostring(app.data.message))
+                openEmailView(phoneScaleform, tostring(app.data.title), tostring(app.data.from), tostring(app.data.to), tostring(app.data.message), app.data.canOpenMenu)
             elseif app.type == 'messagesList' then
                 openMessagesMenu(phoneScaleform, app.buttons, appSelectID, app.name)
             elseif app.type == 'messageView' then
-                openMessageView(phoneScaleform, tostring(app.data.contact), tostring(app.data.message), app.data.fromme, app.data.hasPic)
+                openMessageView(phoneScaleform, tostring(app.data.contact), tostring(app.data.message), app.data.fromme, app.data.hasPic, app.data.canOpenMenu)
             elseif app.type == 'menu' then
                 openCustomMenu(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'settings' then
@@ -52,19 +52,17 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
             elseif app.type == 'gps' then
                 openGPSView(phoneScaleform, app.name)
             else
-                print("[[  ::  CAN'T FIND APP TYPE  ::  ]]")
+                print("[[  ::  ERROR IN scalePhone.OpenApp  ::  CAN'T FIND APP TYPE  ::  ]]")
             end
         else
-            print("[[  ::  CAN'T FIND THE APP  ::  ]]")
+            print("[[  ::  ERROR IN scalePhone.OpenApp  ::  CAN'T FIND THE APP ID  ::  ]]")
         end
     end
 end)
 
 AddEventHandler('scalePhone.GoBackApp', function(data)
-    print('am I here? GoBackApp')
     if appOpen ~= 0 then
         if data ~= nil and data.backApp ~= nil then
-            print('good data? GoBackApp')
             TriggerEvent('scalePhone.OpenApp', data.backApp, false)
         else
             TriggerEvent('scalePhone.OpenApp', lastAppOpen, false)
@@ -108,39 +106,50 @@ AddEventHandler('scalePhone.GoToHomepage', function()
 end)
 
 AddEventHandler('scalePhone.BuildMessageView', function(data, appID)
-    if data.contact ~= nil and data.message ~= nil and data.isentthat ~= nil then
+    if data.contact ~= nil and data.message ~= nil and data.isentthat ~= nil and data.canOpenMenu ~= nil and data.selectEvent ~= nil then
         local id = 1000
         if appID ~= nil then
             id = appID
         end
+        apps[appID].data = data
         apps[id].data.contact = data.contact
         apps[id].data.message = data.message
         apps[id].data.fromme = data.isentthat
+        apps[id].data.canOpenMenu = data.canOpenMenu
         if data.hasPic ~= nil then
             apps[id].data.hasPic = tostring(data.hasPic)
         end
+        if data.canOpenMenu == true then
+            apps[id].data.selectEvent = data.selectEvent
+        end
     else
-        print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "contact" = string, "isentthat" = bool')
+        print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "contact" = string, "isentthat" = bool, "canOpenMenu" = bool, "selectEvent" = string')
     end
 end)
 
 AddEventHandler('scalePhone.BuildEmailView', function(data, appID)
-    if data.title ~= nil and data.from ~= nil and data.to ~= nil and data.message ~= nil then
+    if data.title ~= nil and data.from ~= nil and data.to ~= nil and data.message ~= nil and data.canOpenMenu ~= nil and data.selectEvent ~= nil then
         local id = 1001
         if appID ~= nil then
             id = appID
         end
+        apps[appID].data = data
         apps[id].data.title = data.title
         apps[id].data.message = data.message
         apps[id].data.to = data.to
         apps[id].data.from = data.from
+        apps[id].data.canOpenMenu = data.canOpenMenu
+        if apps[id].data.canOpenMenu == true then
+            apps[id].data.selectEvent = data.selectEvent
+        end
     else
-        print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "title" = string, "to" = string, "from" = string')
+        print('[[  ::  scalePhone.BuildMessageView requires the following array variables: "message" = string, "title" = string, "to" = string, "from" = string, "canOpenMenu" = bool, "selectEvent" = string')
     end
 end)
 
 AddEventHandler('scalePhone.BuildCallscreenView', function(data, appID)
     if data.contact ~= nil and data.pic ~= nil and data.status ~= nil and data.canAnswer ~= nil then
+        apps[appID].data = data
         apps[appID].data.contact = data.contact
         apps[appID].data.pic = data.pic
         apps[appID].data.status = data.status
@@ -153,7 +162,6 @@ AddEventHandler('scalePhone.BuildCallscreenView', function(data, appID)
     else
         print('[[  ::  scalePhone.BuildCallscreenView requires the following array variables: "contact" = string, "pic" = string, "status" = string')
     end
-    apps[appID].data = data
 end)
 
 AddEventHandler('scalePhone.BuildToDoView', function(data, appID)
@@ -162,6 +170,7 @@ AddEventHandler('scalePhone.BuildToDoView', function(data, appID)
         if appID ~= nil then
             id = appID
         end
+        apps[appID].data = data
         apps[id].data.title = data.title
         apps[id].data.line1 = data.line1
         apps[id].data.line2 = data.line2
@@ -176,7 +185,7 @@ AddEventHandler('scalePhone.BuildApp', function(appID, type, name, icon, notif, 
     for i,k in pairs(blacklistID) do
         if appID == k then
             allowed = false
-            print('cant use that appID')
+            print('[[  ::  ERROR IN scalePhone.BuildApp  ::  YOU CANNOT USE THAT appID  ::  ]]')
             break
         end
     end
@@ -191,7 +200,7 @@ AddEventHandler('scalePhone.BuildHomepageApp', function(appID, type, name, icon,
     for i,k in pairs(blacklistID) do
         if appID == k then
             allowed = false
-            print('cant use that appID')
+            print('[[  ::  ERROR IN scalePhone.BuildHomepageApp  ::  YOU CANNOT USE THAT appID  ::  ]]')
             break
         end
     end
@@ -217,7 +226,7 @@ AddEventHandler('scalePhone.BuildSnapmatic', function(appID)
     for i,k in pairs(blacklistID) do
         if appID == k then
             allowed = false
-            print('cant use that appID')
+            print('[[  ::  ERROR IN scalePhone.BuildSnapmatic  ::  YOU CANNOT USE THAT appID  ::  ]]')
             break
         end
     end
@@ -252,7 +261,7 @@ AddEventHandler('scalePhone.BuildThemeSettings', function(appID)
     for i,k in pairs(blacklistID) do
         if appID == k then
             allowed = false
-            print('cant use that appID')
+            print('[[  ::  ERROR IN scalePhone.BuildThemeSettings  ::  YOU CANNOT USE THAT appID  ::  ]]')
             break
         end
     end
@@ -327,6 +336,20 @@ AddEventHandler('scalePhone.BuildAppButton', function(appID, buttonData, addOnTo
     end
 end)
 
+AddEventHandler('scalePhone.RemoveButtonUsingData', function(data)
+    if data.appID ~= nil and data.dataSample ~= nil then
+        local buttonID = findButtonIdUsingData(data.appID, data.dataSample)
+        if buttonID ~= nil then
+            apps[data.appID].buttons[buttonID] = nil
+            reorderAppButtons(data.appID)
+        else
+            print('[[  ::  ERROR IN scalePhone.RemoveButtonUsingData  ::  WE COULD NOT FIND THE BUTTON ID  ::  ]]')
+        end
+    else
+        print('[[  ::  ERROR IN scalePhone.RemoveButtonUsingData  ::  appID OR dataSample VARIABLES ARE RETURNING NIL  ::  ]]')
+    end
+end)
+
 AddEventHandler('scalePhone.ResetAppButtons', function(appID)
     if apps[appID] ~= nil then
         apps[appID].buttons = {}
@@ -361,6 +384,6 @@ AddEventHandler('scalePhone.Admins.ChangeOS', function(data)
                 themeScaleform = {id = "CELLPHONE_FACADE", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
             end
         end
-        print('WARNING :: CHANGING PHONE OS IS NOT RECOMMENDED. SOME APPS MIGHT NOT WORK PROPERLY, OR MIGHT NOT WORK AT ALL.')
+        print('[[  ::  WARNING IN scalePhone.Admins.ChangeOS  ::  CHANGING PHONE OS IS NOT RECOMMENDED. SOME APPS MIGHT NOT WORK PROPERLY, OR MIGHT NOT WORK AT ALL.]]')
     end
 end)

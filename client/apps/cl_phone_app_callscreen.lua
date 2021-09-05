@@ -88,7 +88,6 @@ AddEventHandler('scalePhone.HandleInput.callscreen', function(input)
         if apps[appOpen].data.canAnswer ~= nil and apps[appOpen].data.canAnswer == true and apps[appOpen].data.selectEvent ~= nil then
             CellCamMoveFinger(5)
             TriggerEvent(apps[appOpen].data.selectEvent, apps[appOpen].data)
-            print('test')
             PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael", 1)
         end
     elseif input == 'back' then

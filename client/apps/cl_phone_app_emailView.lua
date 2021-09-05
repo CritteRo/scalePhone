@@ -1,11 +1,11 @@
-function openEmailView(scaleform, title, from, to, message)
+function openEmailView(scaleform, title, from, to, message, canOpenMenu)
     SetMobilePhoneRotation(-90.0,0.0,90.0) -- 75<X<75
     SetPhoneLean(true)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 9, 0, 1, "To: ~b~me~s~,", 'From: ~b~'..from..'~s~', "<c>"..title.."</c>", message)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 9, 0, 1, to, from, "<c>"..title.."</c>", message)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
-    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, false, 10)
+    Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, canOpenMenu, 11)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 3, true, 4)
 
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 9, 0)
@@ -25,6 +25,10 @@ AddEventHandler('scalePhone.HandleInput.emailView', function(input)
         CellCamMoveFinger(2)
         Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
     elseif input == 'select' then
+        if apps[appOpen].data.canOpenMenu ~= nil and apps[appOpen].data.canOpenMenu == true and apps[appOpen].data.selectEvent ~= nil then
+            CellCamMoveFinger(5)
+            TriggerEvent(apps[appOpen].data.selectEvent, apps[appOpen].data)
+        end
     elseif input == 'back' then
         CellCamMoveFinger(5)
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)
