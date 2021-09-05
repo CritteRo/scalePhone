@@ -111,7 +111,7 @@ AddEventHandler('scalePhone.BuildMessageView', function(data, appID)
         if appID ~= nil then
             id = appID
         end
-        apps[appID].data = data
+        apps[id].data = data
         apps[id].data.contact = data.contact
         apps[id].data.message = data.message
         apps[id].data.fromme = data.isentthat
@@ -133,7 +133,7 @@ AddEventHandler('scalePhone.BuildEmailView', function(data, appID)
         if appID ~= nil then
             id = appID
         end
-        apps[appID].data = data
+        apps[id].data = data
         apps[id].data.title = data.title
         apps[id].data.message = data.message
         apps[id].data.to = data.to
@@ -170,7 +170,7 @@ AddEventHandler('scalePhone.BuildToDoView', function(data, appID)
         if appID ~= nil then
             id = appID
         end
-        apps[appID].data = data
+        apps[id].data = data
         apps[id].data.title = data.title
         apps[id].data.line1 = data.line1
         apps[id].data.line2 = data.line2
