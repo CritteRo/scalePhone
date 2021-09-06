@@ -34,6 +34,7 @@ typeDetails = {
     ['numpad'] = {id = 11, isLeftToRight = true},
     ['gps'] = {id = 24, isLeftToRight = false},
     ['settings'] = {id = 22, isLeftToRight = false},
+    ['tv'] = {id = -1, isLeftToRight = false},
 }
 
 function RemoveNotifications(appID)

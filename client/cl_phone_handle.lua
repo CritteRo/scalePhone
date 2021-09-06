@@ -70,7 +70,14 @@ Citizen.CreateThread(function()
 			else
 				SetMobilePhoneScale(250.0)
 			end
-            DrawScaleformMovie(phoneScaleform, 0.1, 0.18, 0.2, 0.35, 255, 255, 255, 255, 0)
+            if apps[appOpen].type == "tv" then
+                SetTvAudioFrontend(true)
+                Set_2dLayer(4)
+                Citizen.InvokeNative(0xC6372ECD45D73BCD, 1)
+                DrawTvChannel(0.5, 0.5, 1.0, 1.0, 90.0, 255, 255, 255, 255)
+            else
+                DrawScaleformMovie(phoneScaleform, 0.1, 0.18, 0.2, 0.35, 255, 255, 255, 255, 0)
+            end
             SetTextRenderId(GetDefaultScriptRendertargetRenderId())
 
             if apps[appOpen].type == 'snapmatic' then

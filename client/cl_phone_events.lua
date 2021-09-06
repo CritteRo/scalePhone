@@ -51,6 +51,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 openMissionStatsView(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'gps' then
                 openGPSView(phoneScaleform, app.name)
+            elseif app.type == 'tv' then
+                openTvApp()
             else
                 print("[[  ::  ERROR IN scalePhone.OpenApp  ::  CAN'T FIND APP TYPE  ::  ]]")
             end
