@@ -8,8 +8,19 @@ selectID = 0
 appSelectID = 0
 renderID = 0
 themeID = 0
+phoneScale = 250.0 --250.0
 sleepMode = false
 themeScaleform = {id = "CELLPHONE_IFRUIT", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
+--overrideWallpaper = {
+    --["all"] = {""--[[texture, file, or link for DUI]], txd = CreateRuntimeTxd('phone_wallpaper_override')--[[texture directory]], txn = ""--[[texture name. Should be the same as txd]]}
+    --[0] = "",
+    --[1] = "",
+    --[2] = "",
+    --[3] = "",
+    --[4] = "",
+    --[5] = "",
+    --[6] = "",
+--}
 
 apps = {
     --[[ HOMEPAGE ]]--
@@ -40,7 +51,7 @@ RegisterCommand('phone', function()
         SetMobilePhonePosition(45.0,-23.0,-60.0)
         SetMobilePhoneRotation(-90.0,0.0,0.0) --last one is important
         SetPhoneLean(false) --flips the phone in hand
-        SetMobilePhoneScale(250.0)
+        SetMobilePhoneScale(tonumber(phoneScale) + 0.0)
         appOpen = 0
         selectID = 0
         phoneScaleform = generateMainPhone(apps[appOpen].buttons, selectID, themeID)
@@ -68,7 +79,7 @@ Citizen.CreateThread(function()
             if GetFollowPedCamViewMode() == 4 then
 				SetMobilePhoneScale(0.0)
 			else
-				SetMobilePhoneScale(250.0)
+				SetMobilePhoneScale(tonumber(phoneScale) + 0.0)
 			end
             if apps[appOpen].type == "tv" then
                 SetTvAudioFrontend(true)

@@ -124,3 +124,14 @@ function reorderAppButtons(appID)
 
     apps[appID].buttons = placeholder
 end
+
+function setPhoneScale(scale)
+    local _scale = 250.0
+    if tonumber(scale) ~= nil then
+        _scale = tonumber(scale) + 0.0
+    elseif scale = "default" then
+    else
+        print('[  ::  ERROR IN setPhoneScale  ::  parameter is not a number. Setting phone scale to default 250.0  ::  ]')
+    end
+    phoneScale = _scale
+end

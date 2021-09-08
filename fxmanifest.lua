@@ -37,6 +37,7 @@ exports {
     'sleepModeStatus',
     'findButtonIdUsingData',
     'reorderAppButtons',
+    'setPhoneScale',
 }
 
 streams {
