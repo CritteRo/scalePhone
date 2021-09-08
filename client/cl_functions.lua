@@ -127,11 +127,20 @@ end
 
 function setPhoneScale(scale)
     local _scale = 250.0
+    local _pos = {x = 47.0, y = -22.0, z = -60.0}
     if tonumber(scale) ~= nil then
         _scale = tonumber(scale) + 0.0
-    elseif scale = "default" then
+        _pos.y = -16.0
+        print('[  ::  WARNING IN setPhoneScale  ::  Setting a custom phone scale value might cause a unexpected behavior. Please use "large" or "default" instead.  ::  ]')
+    elseif scale == "default" then
+    elseif scale == "large" then
+        _scale = 350.0
+        _pos.y = -16.0
+        --_pos.x = 55.0
     else
-        print('[  ::  ERROR IN setPhoneScale  ::  parameter is not a number. Setting phone scale to default 250.0  ::  ]')
+        print('[  ::  ERROR IN setPhoneScale  ::  parameter is not a number. Setting phone scale to "default"  ::  ]')
     end
     phoneScale = _scale
+    phonePos = _pos
+    SetMobilePhonePosition(phonePos.x, phonePos.y, phonePos.z)
 end

@@ -9,6 +9,7 @@ appSelectID = 0
 renderID = 0
 themeID = 0
 phoneScale = 250.0 --250.0
+phonePos = {x = 47.0, y = -22.0, z = -60.0}
 sleepMode = false
 themeScaleform = {id = "CELLPHONE_IFRUIT", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
 --overrideWallpaper = {
@@ -48,7 +49,7 @@ RegisterCommand('phone', function()
     if isPhoneActive == false then
         CreateMobilePhone(0)
         renderID = GetMobilePhoneRenderId() --render id for both the phone AND the frontend render.
-        SetMobilePhonePosition(45.0,-23.0,-60.0)
+        SetMobilePhonePosition(phonePos.x, phonePos.y, phonePos.z)
         SetMobilePhoneRotation(-90.0,0.0,0.0) --last one is important
         SetPhoneLean(false) --flips the phone in hand
         SetMobilePhoneScale(tonumber(phoneScale) + 0.0)
