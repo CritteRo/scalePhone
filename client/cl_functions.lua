@@ -131,7 +131,7 @@ function setPhoneScale(scale)
     if tonumber(scale) ~= nil then
         _scale = tonumber(scale) + 0.0
         _pos.y = -16.0
-        print('[  ::  WARNING IN setPhoneScale  ::  Setting a custom phone scale value might cause a unexpected behavior. Please use "large" or "default" instead.  ::  ]')
+        print('[  ::  WARNING IN setPhoneScale  ::  Setting a custom phone scale value might cause a unexpected behavior. Please use "huge", "large", "small" or "default" instead.  ::  ]')
     elseif scale == "default" then
     elseif scale == "huge" then
         _scale = 350.0
