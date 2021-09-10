@@ -125,30 +125,59 @@ function reorderAppButtons(appID)
     apps[appID].buttons = placeholder
 end
 
-function setPhoneScale(scale)
+function setPhoneDimensions(text, scale, x, y, z)
     local _scale = 250.0
     local _pos = {x = 47.0, y = -22.0, z = -60.0}
-    if tonumber(scale) ~= nil then
-        _scale = tonumber(scale) + 0.0
-        _pos.y = -16.0
-        print('[  ::  WARNING IN setPhoneScale  ::  Setting a custom phone scale value might cause a unexpected behavior. Please use "huge", "large", "small" or "default" instead.  ::  ]')
-    elseif scale == "default" then
-    elseif scale == "huge" then
-        _scale = 350.0
+    if text == "default" then
+    elseif text == "huge" then
+        _scale = 400.0
         _pos.y = -16.0
         --_pos.x = 55.0
-    elseif scale == "large" then
+    elseif text == "large" then
         _scale = 300.0
         _pos.y = -20.0
         --_pos.x = 55.0
-    elseif scale == "small" then
+    elseif text == "small" then
         _scale = 200.0
         _pos.y = -24.0
         --_pos.x = 55.0
+    elseif text == "custom" then
+        if tonumber(scale) ~= nil and tonumber(x) ~= nil and tonumber(y) ~= nil and tonumber(z) ~= nil then
+            _scale = tonumber(scale) + 0.0
+            _pos.x = tonumber(x) + 0.0
+            _pos.y = tonumber(y) + 0.0
+            _pos.z = tonumber(z) + 0.0
+        else
+            print('[  ::  ERROR IN setPhoneDimensions  ::  Missing scale, x, y and z NUMBER parameters. Setting phone dimensions to "default"  ::  ]')
+            print('[  ::  WARNING IN setPhoneDimensions  ::  Correct syntax: setPhoneDimensions(text, scale, x, y, z) : text = "default", "custom", "small", "large", "huge" ::  ]')
+            print('[  ::  WARNING IN setPhoneDimensions  ::  `scale`, `x`, `y`, `z` params are only used when `text` = "custom" ::  ]')
+        end
     else
-        print('[  ::  ERROR IN setPhoneScale  ::  parameter is not a number. Setting phone scale to "default"  ::  ]')
+        print('[  ::  ERROR IN setPhoneDimensions  ::  unknown `text` parameter. Setting phone dimensions to "default"  ::  ]')
+        print('[  ::  WARNING IN setPhoneDimensions  ::  Correct syntax: setPhoneDimensions(text, scale, x, y, z) : text = "default", "custom", "small", "large", "huge" ::  ]')
+        print('[  ::  WARNING IN setPhoneDimensions  ::  `scale`, `x`, `y`, `z` params are only used when `text` = "custom" ::  ]')
     end
     phoneScale = _scale
     phonePos = _pos
     SetMobilePhonePosition(phonePos.x, phonePos.y, phonePos.z)
+end
+
+function getPhoneDimensions()
+    return phoneScale, phonePos.x, phonePos.y, phonePos.z
+end
+
+function isPhoneOpened()
+    return isPhoneActive
+end
+
+function shouldPhoneBeOpened(bool)
+    if bool == true or bool == false then
+        canPhoneBeOpened = bool
+    else
+        print('[  ::  ERROR IN shouldPhoneBeOpened  ::  Parameter should be a boolean. (either `true` or `false`)  ::  ]')
+    end
+end
+
+function canPhoneBeOpened()
+    return canPhoneBeOpened
 end

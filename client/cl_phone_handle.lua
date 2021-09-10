@@ -1,4 +1,5 @@
 isPhoneActive = false
+canPhoneBeOpened = true
 phoneScaleform = 0
 cameraScaleform = 0
 appOpen = 0
@@ -46,26 +47,10 @@ apps = {
 }
 
 RegisterCommand('phone', function()
-    if isPhoneActive == false then
-        CreateMobilePhone(0)
-        renderID = GetMobilePhoneRenderId() --render id for both the phone AND the frontend render.
-        SetMobilePhonePosition(phonePos.x, phonePos.y, phonePos.z)
-        SetMobilePhoneRotation(-90.0,0.0,0.0) --last one is important
-        SetPhoneLean(false) --flips the phone in hand
-        SetMobilePhoneScale(tonumber(phoneScale) + 0.0)
-        appOpen = 0
-        selectID = 0
-        phoneScaleform = generateMainPhone(apps[appOpen].buttons, selectID, themeID)
-        isPhoneActive = true
-        SetPedConfigFlag(PlayerPedId(), 242, not true)
-		SetPedConfigFlag(PlayerPedId(), 243, not true)
-		SetPedConfigFlag(PlayerPedId(), 244, true)
-		N_0x83a169eabcdb10a2(PlayerPedId(), 0)
-        PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Michael", 1)
+    if isPhoneActive == false and canPhoneBeOpened == true then
+        TriggerEvent('scalePhone.OpenPhone')
     elseif isPhoneActive == true then
-        DestroyMobilePhone()
-        isPhoneActive = false
-        PlaySoundFrontend(-1, "Put_Away", "Phone_SoundSet_Michael", 1)
+        TriggerEvent('scalePhone.ClosePhone')
     end
 end)
 RegisterKeyMapping('phone', "Open Phone", 'keyboard', 'm')
