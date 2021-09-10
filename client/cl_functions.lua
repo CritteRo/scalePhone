@@ -131,7 +131,8 @@ function setPhoneDimensions(text, scale, x, y, z)
     if text == "default" then
     elseif text == "huge" then
         _scale = 400.0
-        _pos.y = -16.0
+        _pos.y = -14.0
+        _pos.x = 46.0
         --_pos.x = 55.0
     elseif text == "large" then
         _scale = 300.0
