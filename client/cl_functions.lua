@@ -33,7 +33,8 @@ typeDetails = {
     ['missionStatsView'] = {id = 19, isLeftToRight = false},
     ['numpad'] = {id = 11, isLeftToRight = true},
     ['gps'] = {id = 24, isLeftToRight = false},
-    ['trackifyView'] = {id = 27, isLeftToRight = false},
+    ['trackifyView'] = {id = 23, isLeftToRight = false},
+    ['securoHack'] = {id = 27, isLeftToRight = false},
     ['settings'] = {id = 22, isLeftToRight = false},
     ['tv'] = {id = -1, isLeftToRight = false},
 }

@@ -53,6 +53,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 openGPSView(phoneScaleform, app.name)
             elseif app.type == 'trackifyView' then
                 openTrackifyView(phoneScaleform, app.name, app.buttons, appSelectID)
+            elseif app.type == 'securoHack' then
+                openSecuroHackView(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'tv' then
                 openTvApp()
             else
