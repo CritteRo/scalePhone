@@ -51,6 +51,8 @@ AddEventHandler('scalePhone.OpenApp', function(appID, isForced)
                 openMissionStatsView(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'gps' then
                 openGPSView(phoneScaleform, app.name)
+            elseif app.type == 'trackifyView' then
+                openTrackifyView(phoneScaleform, app.name, app.buttons, appSelectID)
             elseif app.type == 'tv' then
                 openTvApp()
             else

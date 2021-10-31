@@ -1,0 +1,1 @@
+--TriggerEvent('scalePhone.BuildHomepageApp', 'app_secure', "trackifyView", "Trackify", 58, 0, "", "scalePhone.GoToHomepage", {}) -- 6
