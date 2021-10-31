@@ -27,7 +27,7 @@ function openTrackifyView(scaleform, title, buttons, selectID)
     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, -1, 0, 0, 1, 1, 1)
     Wait(100) -- not sure why we wait, but it doesn't work otherwise.
     Citizen.CreateThread(function()
-        while app == appOpen do
+        while app == appOpen and isPhoneActive == true do
             if lastRunId ~= nil and newId ~= lastRunId then
                 break
             end
