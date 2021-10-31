@@ -12,16 +12,9 @@ function openTrackifyView(scaleform, title, buttons, selectID)
     end
 
     lastRunId = newId
-
-    --[[if buttons ~= nil then
-        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 0, buttons[0].title, buttons[0].subtitle)
-        for i=1, #buttons-1, 1 do
-            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, i, false, buttons[i].title)
-        end
-        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, #buttons, buttons[#buttons].title)
-    end]]
     local app = appOpen
     local appSession = 0
+    local range = 100
     local _coords= vector3(0.0,0.0,0.0)
     local dist = #(_coords - GetEntityCoords(PlayerPedId()))
 
@@ -31,7 +24,7 @@ function openTrackifyView(scaleform, title, buttons, selectID)
 
     --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, 0, 0, 0, dontShowIntro, 1, 1)
     Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 23, 1)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, 0, 0, 0, 0, 1, 1)
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, -1, 0, 0, 1, 1, 1)
     Wait(100) -- not sure why we wait, but it doesn't work otherwise.
     Citizen.CreateThread(function()
         while app == appOpen do
@@ -39,15 +32,26 @@ function openTrackifyView(scaleform, title, buttons, selectID)
                 break
             end
             pedPos = GetEntityCoords(PlayerPedId())
-            dist = #(_coords.xy - pedPos.xy)
-            local _x = _coords.x - pedPos.x
-            local _y = _coords.y - pedPos.y
-            local _heading = GetEntityHeading(PlayerPedId()) - GetHeadingFromVector_2d(_x, _y)
-            if _heading <=0 then
-                _heading = _heading + 360
+            local row = 0
+            for i,k in pairs(buttons) do
+                --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 23, row) breaks the scaleform
+                dist = #(k.coords.xy - pedPos.xy)
+                local _x = k.coords.x - pedPos.x
+                local _y = k.coords.y - pedPos.y
+                local _heading = GetEntityHeading(PlayerPedId()) - GetHeadingFromVector_2d(_x, _y)
+                if _heading <=0 then
+                    _heading = _heading + 360
+                end
+                --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, _rotation, _distance, _distanceOnPhone(smaller = accurate), 1, 1.0, 10)
+                if dist <= range or k.alwaysOnScreen == true then
+                    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, row, _heading, dist, range, 1, 10.0, 1)
+                elseif k.range ~= nil and type(k.range) == 'number' and dist <= k.range then
+                    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, row, _heading, dist, range, 1, 10.0, 1)
+                else
+                    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, row, -1, 0, 0, 1, 1.0, 1)
+                end
+                row = row + 1
             end
-            --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, _rotation, _distance, _distanceOnPhone(smaller = accurate), 1, 1.0, 10)
-            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, _heading, dist, 100, 60, 10.0, 50)
             Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 23,1)
             Wait(1000)
         end
@@ -74,7 +78,6 @@ AddEventHandler('scalePhone.HandleInput.trackifyView', function(input)
     elseif input == 'back' then
         CellCamMoveFinger(5)
         lastRunId = nil
-        isAppOpen = false
         TriggerEvent(apps[appOpen].backEvent, apps[appOpen].data)
     end
 
