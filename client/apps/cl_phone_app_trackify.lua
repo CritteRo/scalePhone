@@ -44,11 +44,9 @@ function openTrackifyView(scaleform, title, buttons, selectID)
                 end
                 --Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, 0, _rotation, _distance, _distanceOnPhone(smaller = accurate), 1, 1.0, 10)
                 if dist <= range or k.alwaysOnScreen == true then
-                    print(dist)
                     if dist >= 400.0 then
                         dist = 400.0
                     end
-                    print(dist)
                     Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 23, row, _heading, dist, range, 1, 10.0, 1)
                 elseif k.range ~= nil and type(k.range) == 'number' and dist <= k.range then
                     if dist >= 400.0 then
