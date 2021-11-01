@@ -1,5 +1,7 @@
 local lastRunId = nil
+
 local _stage = 0 --(0 = no signal, 1 = hacking, 2 = complete, 3 = custom message or HACK IN PROGRESS, 4 = custome message or WEAK SIGNAL)
+local hackingInProgress = false
 
 function openSecuroHackView(scaleform, title, buttons, selectID)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
@@ -31,27 +33,29 @@ function openSecuroHackView(scaleform, title, buttons, selectID)
             end
             Wait(1000)
             local pedPos = GetEntityCoords(PlayerPedId())
-            _stage = 0 --NO SIGNAL, at first
-            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0)
-            for i,k in pairs(buttons) do
-                dist = #(k.coords - pedPos)
-                if dist <= k.weakSignalDist then
-                    _stage = 4
-                    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0)
-                    if k.weakSignalMessage ~= nil then
-                        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, tostring(k.weakSignalMessage))
+            if hackingInProgress == false then
+                _stage = 0 --NO SIGNAL, at first
+                Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0)
+                for i,k in pairs(buttons) do
+                    dist = #(k.coords - pedPos)
+                    if dist <= k.weakSignalDist then
+                        _stage = 4
+                        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0)
+                        if k.weakSignalMessage ~= nil then
+                            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, tostring(k.weakSignalMessage))
+                        end
+                    end
+                    if dist <= k.strongSignalDist then
+                        _stage = 3
+                        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, _startMsg)
+                        if k.strongSignalMessage ~= nil then
+                            Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, tostring(k.strongSignalMessage))
+                        end
                     end
                 end
-                if dist <= k.strongSignalDist then
-                    _stage = 3
-                    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, _startMsg)
-                    if k.strongSignalMessage ~= nil then
-                        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, tostring(k.strongSignalMessage))
-                    end
+                if app == appOpen and isPhoneActive == true then
+                    Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 27, 0)
                 end
-            end
-            if app == appOpen and isPhoneActive == true then
-                Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 27, 0)
             end
         end
     end)
@@ -71,24 +75,34 @@ AddEventHandler('scalePhone.HandleInput.securoHack', function(input)
         CellCamMoveFinger(2)
         --Scaleform.CallFunction(phoneScaleform, false, "SET_INPUT_EVENT", 3)
     elseif input == 'select' then
-        if _stage ~= 1 then
+        if hackingInProgress == false then
             CellCamMoveFinger(5)
             local pedPos = GetEntityCoords(PlayerPedId())
             for i,k in pairs(apps[appOpen].buttons) do
                 local dist = #(k.coords - pedPos)
                 if dist <= k.strongSignalDist then
                     _stage = 1
+                    hackingInProgress = true
                     local time = k.timeNeeded * 10
                     local progress = 0
-                    while progress <= 100 do
-                        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, tostring(k.weakSignalMessage))
-                        Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 27, 0)
+                    Scaleform.CallFunction(phoneScaleform, false, "SET_DATA_SLOT", 27, 0, _stage,progress)
+                    for i=0, 100, 1 do
+                        Scaleform.CallFunction(phoneScaleform, false, "SET_DATA_SLOT", 27, 0, _stage,progress)
+                        Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 27, 0)
+
+                        progress = progress + 1
+
                         Wait(time)
                     end
                     _stage = 2
-                    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0)
-                    Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", 27, 0)
+                    Scaleform.CallFunction(phoneScaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0,0)
+                    if k.hackCompleteMessage ~= nil then
+                        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, 3,0, tostring(k.hackCompleteMessage))
+                    end
+                    Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 27, 0)
                     TriggerEvent(k.event, k.eventParams)
+                    Wait(3000)
+                    hackingInProgress = false
                 end
             end
         end
