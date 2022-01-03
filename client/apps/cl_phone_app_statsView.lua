@@ -2,7 +2,7 @@ function openMissionStatsView(scaleform, title, buttons, selectID)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
     SetPhoneLean(false)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
-
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT_EMPTY", 19)
     if buttons ~= nil then
         Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 19, 0, buttons[0].title, buttons[0].subtitle)
         for i=1, #buttons-1, 1 do
