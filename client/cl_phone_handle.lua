@@ -18,6 +18,13 @@ TextToTexture = {
     ['_RP_BANNER_'] = {'_RP_BANNER_', 'emailads_rp','emailads_rp'},
     ['_MAZEB_BANNER_'] = {'_MAZEB_BANNER_', 'emailads_maze_bank','emailads_maze_bank'},
     ['_FLEC_BANNER_'] = {'_FLEC_BANNER_', 'thumbnail_fleeca_com','thumbnail_fleeca_com'},
+    ['_AMMU_BANNER_'] = {'_AMMU_BANNER_', 'emailads_ammunation','emailads_ammunation'},
+    ['_ARENA_BANNER_'] = {'_ARENA_BANNER_', 'emailads_arena','emailads_arena'},
+    ['_BENNYS_BANNER_'] = {'_BENNY_BANNER_', 'emailads_bennys','emailads_bennys'},
+    ['_LSCUSTOM_BANNER_'] = {'_LSCUSTOM_BANNER_', 'emailads_ls_customs','emailads_ls_customs'},
+    ['_LI_BANNER_'] = {'_LI_BANNER_', 'emailads_lifeinvader','emailads_lifeinvader'},
+    ['_LSTI_BANNER_'] = {'_LSTI_BANNER_', 'emailads_ls_tourist_info','emailads_ls_tourist_info'},
+    ['_WAR_BANNER_'] = {'_WAR_BANNER_', 'emailads_warstock','emailads_warstock'},
 }
 
 --overrideWallpaper = {
