@@ -2,7 +2,22 @@ function openEmailView(scaleform, title, from, to, message, canOpenMenu)
     SetMobilePhoneRotation(-90.0,0.0,90.0) -- 75<X<75
     SetPhoneLean(true)
     Scaleform.CallFunction(scaleform, false, "SET_HEADER", title)
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 9, 0, 1, to, from, "<c>"..title.."</c>", message)
+
+    local _mes = message
+    local imgs = {}
+    for i,k in pairs(TextToTexture) do
+        local found, _ = string.find(_mes, k[1])
+        if found ~= nil then
+            table.insert(imgs, k[1])
+        end
+    end
+
+    for i,k in pairs(imgs) do
+        RequestStreamedTextureDict(TextToTexture[k][2])
+        _mes = string.gsub(_mes, k, "\n<img src='img://"..TextToTexture[k][2].."/"..TextToTexture[k][3].."' height='80' width='320'/>\n")
+    end
+
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 9, 0, 1, to, from, "<c>"..title.."</c>", _mes)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, canOpenMenu, 11)

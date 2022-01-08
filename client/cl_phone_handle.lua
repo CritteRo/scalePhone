@@ -13,6 +13,13 @@ phoneScale = 250.0 --250.0
 phonePos = {x = 47.0, y = -22.0, z = -60.0}
 sleepMode = false
 themeScaleform = {id = "CELLPHONE_IFRUIT", defaultwp = 'Phone_Wallpaper_ifruitdefault'}
+
+TextToTexture = {
+    ['_RP_BANNER_'] = {'_RP_BANNER_', 'emailads_rp','emailads_rp'},
+    ['_MAZEB_BANNER_'] = {'_MAZEB_BANNER_', 'emailads_maze_bank','emailads_maze_bank'},
+    ['_FLEC_BANNER_'] = {'_FLEC_BANNER_', 'thumbnail_fleeca_com','thumbnail_fleeca_com'},
+}
+
 --overrideWallpaper = {
     --["all"] = {""--[[texture, file, or link for DUI]], txd = CreateRuntimeTxd('phone_wallpaper_override')--[[texture directory]], txn = ""--[[texture name. Should be the same as txd]]}
     --[0] = "",

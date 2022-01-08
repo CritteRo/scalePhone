@@ -14,7 +14,23 @@ function openMessageView(scaleform, contact, message, fromme, hasPic, canOpenMen
     if canOpenMenu ~= nil then
         _canOpenMenu = canOpenMenu
     end
-    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 7, 0, var..contact, message, pic)
+
+    -- Find images in message string
+    local _mes = message
+    local imgs = {}
+    for i,k in pairs(TextToTexture) do
+        local found, _ = string.find(_mes, k[1])
+        if found ~= nil then
+            table.insert(imgs, k[1])
+        end
+    end
+
+    for i,k in pairs(imgs) do
+        RequestStreamedTextureDict(TextToTexture[k][2])
+        _mes = string.gsub(_mes, k, "\n<img src='img://"..TextToTexture[k][2].."/"..TextToTexture[k][3].."' height='64' width='256'/>\n")
+    end
+
+    Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 7, 0, var..contact, _mes, pic)
 
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 1, false, 4)
     Scaleform.CallFunction(scaleform, false, "SET_SOFT_KEYS", 2, _canOpenMenu, 11)
