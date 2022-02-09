@@ -81,9 +81,15 @@ end)
 AddEventHandler('scalePhone.ClosePhone', function()
     if not WasEventCanceled() then
         if isPhoneActive then
-            DestroyMobilePhone()
-            isPhoneActive = false
             PlaySoundFrontend(-1, "Put_Away", "Phone_SoundSet_Michael", 1)
+            isPhoneActive = false
+            local tempy = phonePos.y
+            while tempy >= -40.0 do
+                tempy = tempy - 1.5
+                SetMobilePhonePosition(phonePos.x, tempy, phonePos.z)
+                Citizen.Wait(0)
+            end
+            DestroyMobilePhone()
         end
     end
 end)
@@ -93,6 +99,14 @@ AddEventHandler('scalePhone.OpenPhone', function()
         if isPhoneActive == false and canPhoneBeOpened == true then
             CreateMobilePhone(0)
             renderID = GetMobilePhoneRenderId() --render id for both the phone AND the frontend render.
+            local tempy = -40.0
+            SetMobilePhonePosition(phonePos.x, tempy, phonePos.z)
+            PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Michael", 1)
+            while tempy <= phonePos.y do
+                tempy = tempy + 1.5
+                SetMobilePhonePosition(phonePos.x, tempy, phonePos.z)
+                Citizen.Wait(0)
+            end
             SetMobilePhonePosition(phonePos.x, phonePos.y, phonePos.z)
             SetMobilePhoneRotation(-90.0,0.0,0.0) --last one is important
             SetPhoneLean(false) --flips the phone in hand
@@ -105,7 +119,6 @@ AddEventHandler('scalePhone.OpenPhone', function()
             SetPedConfigFlag(PlayerPedId(), 243, not true)
             SetPedConfigFlag(PlayerPedId(), 244, true)
             N_0x83a169eabcdb10a2(PlayerPedId(), 0)
-            PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Michael", 1)
         end
     end
 end)
