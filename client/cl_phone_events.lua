@@ -102,12 +102,6 @@ AddEventHandler('scalePhone.OpenPhone', function()
             local tempy = -40.0
             SetMobilePhonePosition(phonePos.x, tempy, phonePos.z)
             PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Michael", 1)
-            while tempy <= phonePos.y do
-                tempy = tempy + 1.5
-                SetMobilePhonePosition(phonePos.x, tempy, phonePos.z)
-                Citizen.Wait(0)
-            end
-            SetMobilePhonePosition(phonePos.x, phonePos.y, phonePos.z)
             SetMobilePhoneRotation(-90.0,0.0,0.0) --last one is important
             SetPhoneLean(false) --flips the phone in hand
             SetMobilePhoneScale(tonumber(phoneScale) + 0.0)
@@ -119,6 +113,12 @@ AddEventHandler('scalePhone.OpenPhone', function()
             SetPedConfigFlag(PlayerPedId(), 243, not true)
             SetPedConfigFlag(PlayerPedId(), 244, true)
             N_0x83a169eabcdb10a2(PlayerPedId(), 0)
+            while tempy <= phonePos.y do
+                tempy = tempy + 1.5
+                SetMobilePhonePosition(phonePos.x, tempy, phonePos.z)
+                Citizen.Wait(0)
+            end
+            SetMobilePhonePosition(phonePos.x, phonePos.y, phonePos.z)
         end
     end
 end)
