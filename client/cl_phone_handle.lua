@@ -25,6 +25,8 @@ TextToTexture = {
     ['_LI_BANNER_'] = {'_LI_BANNER_', 'emailads_lifeinvader','emailads_lifeinvader'},
     ['_LSTI_BANNER_'] = {'_LSTI_BANNER_', 'emailads_ls_tourist_info','emailads_ls_tourist_info'},
     ['_WAR_BANNER_'] = {'_WAR_BANNER_', 'emailads_warstock','emailads_warstock'},
+    ['_LS_CARMEET_BANNER_'] = {'_LS_CARMEET_BANNER_', 'emailads_ls_car_meet','emailads_ls_car_meet'},
+    ['_CASINO_BANNER_'] = {'_CASINO_BANNER_', 'emailads_diamond','emailads_diamond'},
 }
 
 --overrideWallpaper = {
