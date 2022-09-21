@@ -420,6 +420,10 @@ AddEventHandler('scalePhone.AddAppNotification', function(appID, customValue)
     end
 end)
 
+AddEventHandler('scalePhone.RegisterTextToTexture', function(tag, dictionary, texture)
+    TextToTexture[tag] = {tag, dictionary, texture}
+end)
+
 AddEventHandler('scalePhone.Admins.ChangeOS', function(data)
     if data.passcode ~= nil and data.passcode == "Ch4Ng30$" then
         if data.os ~= nil then
