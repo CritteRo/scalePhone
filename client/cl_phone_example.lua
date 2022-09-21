@@ -6,4 +6,10 @@ TriggerEvent('scalePhone.BuildAppButton', 'app_hackerman', {coords = vector3(233
 AddEventHandler('scalePhone.Lol', function(msg)
     print('works')
     TriggerEvent('scalePhone.RemoveButtonUsingData', {appID = 'app_hackerman', dataSample = 'button1'})
-end)]]
+end)
+
+RegisterCommand('changepic', function(source, args)
+    TriggerEvent('scalePhone.OverrideWallpaper', tostring(args[1]), tostring(args[2]), tostring(args[3]))
+    --/changepic type theme url/txd nil/txn
+end)
+]]

@@ -36,7 +36,13 @@ function showHomepage(scaleform, apps, selectID, theme)
 	CellFrontCamActivate(false)
 
     if themeScaleform.id == "CELLPHONE_IFRUIT" then
-        Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", themes[theme].wallpaper)
+        if type(overrideWallpaper['all']) == 'table' and overrideWallpaper['all'].type ~= 'clear' then
+            Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", overrideWallpaper['all'].img)
+        elseif type(overrideWallpaper[theme]) == 'table' and overrideWallpaper[theme].type ~= 'clear' then
+            Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", overrideWallpaper[theme].img)
+        else
+            Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_CREW_IMAGE", themes[theme].wallpaper)
+        end
     else
         Scaleform.CallFunction(scaleform, false, "SET_BACKGROUND_IMAGE", themeScaleform.defaultwp)
     end

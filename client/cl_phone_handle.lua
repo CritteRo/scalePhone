@@ -29,8 +29,8 @@ TextToTexture = {
     ['_CASINO_BANNER_'] = {'_CASINO_BANNER_', 'emailads_diamond','emailads_diamond'},
 }
 
---overrideWallpaper = {
-    --["all"] = {""--[[texture, file, or link for DUI]], txd = CreateRuntimeTxd('phone_wallpaper_override')--[[texture directory]], txn = ""--[[texture name. Should be the same as txd]]}
+overrideWallpaper = {
+    --["all"] = {type = ""--[[texture, file, or link]], txd = CreateRuntimeTxd('phone_wallpaper_override')--[[texture directory]], txn = "phone_wallpaper_override"--[[texture name. Should be the same as txd]]}
     --[0] = "",
     --[1] = "",
     --[2] = "",
@@ -38,7 +38,49 @@ TextToTexture = {
     --[4] = "",
     --[5] = "",
     --[6] = "",
---}
+}
+--LOADING WALLPAPERS ON FIRST LOAD--
+------------------------------------
+Citizen.CreateThread(function()
+    local wpType = GetResourceKvpString('scalePhone_wp_type_all')
+    local wpImgsource = GetResourceKvpString('scalePhone_wp_imgsource_all')
+    local wpImgsource2 = GetResourceKvpString('scalePhone_wp_imgsource2_all')
+    if wpType then
+        if wpType == 'url' then
+            if wpImgsource then
+                TriggerEvent('scalePhone.OverrideWallpaper', wpType, 'all', wpImgsource)
+            end
+        elseif wpType == 'texture' then
+            if wpImgsource and wpImgsource2 then
+                TriggerEvent('scalePhone.OverrideWallpaper', wpType, 'all', wpImgsource, wpImgsource2)
+            end
+        elseif wpType == 'clear' then
+            TriggerEvent('scalePhone.OverrideWallpaper', wpType, 'all')
+        end
+    else
+        print('cant find wpType')
+    end
+
+    for i=0, 6, 1 do
+        local wpType = GetResourceKvpString('scalePhone_wp_type_'..i)
+        local wpImgsource = GetResourceKvpString('scalePhone_wp_imgsource_'..i)
+        local wpImgsource2 = GetResourceKvpString('scalePhone_wp_imgsource2_'..i)
+        if wpType then
+            if wpType == 'url' then
+                if wpImgsource then
+                    TriggerEvent('scalePhone.OverrideWallpaper', wpType, i, wpImgsource)
+                end
+            elseif wpType == 'texture' then
+                if wpImgsource and wpImgsource2 then
+                    TriggerEvent('scalePhone.OverrideWallpaper', wpType, i, wpImgsource, wpImgsource2)
+                end
+            elseif wpType == 'clear' then
+                TriggerEvent('scalePhone.OverrideWallpaper', wpType, i)
+            end
+        end
+    end
+end)
+------------------------------------
 
 apps = {
     --[[ HOMEPAGE ]]--

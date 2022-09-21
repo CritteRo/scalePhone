@@ -424,6 +424,48 @@ AddEventHandler('scalePhone.RegisterTextToTexture', function(tag, dictionary, te
     TextToTexture[tag] = {tag, dictionary, texture}
 end)
 
+AddEventHandler('scalePhone.OverrideWallpaper', function(_type, theme, _imgsource, _imgsource2)
+    local _theme = 'all'
+    if tonumber(theme) ~= nil then
+        _theme = tonumber(theme)
+    end
+    if type(_type) == 'string' then
+        if _type == 'clear' then
+            overrideWallpaper[_theme] = {type = "clear", img = "phone_wallpaper_override", txd = "phone_wallpaper_override", txn = "phone_wallpaper_override"}
+            SetResourceKvp('scalePhone_wp_type_'..tostring(_theme), 'clear')
+        elseif _type == "url" then
+            if type(_imgsource) == 'string' then
+                overrideWallpaper[_theme] = {type = "url", img = "phone_wallpaper_override", txd = CreateRuntimeTxd('phone_wallpaper_override'), txn = "phone_wallpaper_override"}
+                local dui = CreateDui(_imgsource, 256, 256)
+                local dui_handle = GetDuiHandle(dui)
+                overrideWallpaper[_theme].txn = CreateRuntimeTextureFromDuiHandle(overrideWallpaper[_theme].txd, "phone_wallpaper_override", dui_handle)
+                --DestroyDui(dui)
+                SetResourceKvp('scalePhone_wp_type_'..tostring(_theme), 'url')
+                SetResourceKvp('scalePhone_wp_imgsource_'..tostring(_theme), _imgsource)
+            else
+                print('[[  ::  ERROR IN scalePhone.OverrideWallpaper  ::  _imgsource IS NOT A STRING  ::  ]]')
+            end
+            
+        elseif _type == "texture" then
+            if type(_imgsource) == 'string' and type(_imgsource2) == 'string' then
+                overrideWallpaper[_theme] = {type = "texture", img = "phone_wallpaper_override", txd = CreateRuntimeTxd('phone_wallpaper_override'), txn = "phone_wallpaper_override"}
+                AddReplaceTexture(_imgsource, _imgsource2, overrideWallpaper[_theme].txd, overrideWallpaper[_theme].txn)
+
+                SetResourceKvp('scalePhone_wp_type_'..tostring(_theme), 'url')
+                SetResourceKvp('scalePhone_wp_imgsource_'..tostring(_theme), _imgsource)
+                SetResourceKvp('scalePhone_wp_imgsource2_'..tostring(_theme), _imgsource2)
+            else
+                print('[[  ::  ERROR IN scalePhone.OverrideWallpaper  ::  _imgsource AND _imgsource2 ARE NOT STRINGS  ::  ]]')
+            end
+        else
+            print('[[  ::  ERROR IN scalePhone.OverrideWallpaper  ::  "'.._type..'" _type IS NOT VALID  ::  ]]')
+        end
+    else
+        print('[[  ::  ERROR IN scalePhone.OverrideWallpaper  ::  _type IS NOT A STRING  ::  ]]')
+    end
+    
+end)
+
 AddEventHandler('scalePhone.Admins.ChangeOS', function(data)
     if data.passcode ~= nil and data.passcode == "Ch4Ng30$" then
         if data.os ~= nil then
