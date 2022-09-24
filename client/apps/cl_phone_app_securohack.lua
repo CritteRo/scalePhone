@@ -2,6 +2,7 @@ local lastRunId = nil
 
 local _stage = 0 --(0 = no signal, 1 = hacking, 2 = complete, 3 = custom message or HACK IN PROGRESS, 4 = custome message or WEAK SIGNAL)
 local hackingInProgress = false
+local lastHackingCompleteMessage = nil
 
 function openSecuroHackView(scaleform, title, buttons, selectID)
     SetMobilePhoneRotation(-90.0,0.0,0.0) -- 75<X<75
@@ -51,6 +52,11 @@ function openSecuroHackView(scaleform, title, buttons, selectID)
                         if k.strongSignalMessage ~= nil then
                             Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0, tostring(k.strongSignalMessage))
                         end
+                        if k.hackCompleteMessage ~= nil then
+                            lastHackingCompleteMessage = k.hackCompleteMessage
+                        else
+                            lastHackingCompleteMessage = nil
+                        end
                     end
                 end
                 if app == appOpen and isPhoneActive == true then
@@ -96,8 +102,8 @@ AddEventHandler('scalePhone.HandleInput.securoHack', function(input)
                     end
                     _stage = 2
                     Scaleform.CallFunction(phoneScaleform, false, "SET_DATA_SLOT", 27, 0, _stage,0,0)
-                    if k.hackCompleteMessage ~= nil then
-                        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT", 27, 0, 3,0, tostring(k.hackCompleteMessage))
+                    if lastHackingCompleteMessage ~= nil then
+                        Scaleform.CallFunction(phoneScaleform, false, "SET_DATA_SLOT", 27, 0, 3,0, tostring(lastHackingCompleteMessage))
                     end
                     Scaleform.CallFunction(phoneScaleform, false, "DISPLAY_VIEW", 27, 0)
                     TriggerEvent(k.event, k.eventParams)
