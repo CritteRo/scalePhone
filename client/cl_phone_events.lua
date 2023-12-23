@@ -431,14 +431,14 @@ AddEventHandler('scalePhone.OverrideWallpaper', function(_type, theme, _imgsourc
     end
     if type(_type) == 'string' then
         if _type == 'clear' then
-            overrideWallpaper[_theme] = {type = "clear", img = "phone_wallpaper_override", txd = "phone_wallpaper_override", txn = "phone_wallpaper_override"}
+            overrideWallpaper[_theme] = {type = "clear", img = "phone_wallpaper_override_"..tostring(_theme), txd = "phone_wallpaper_override_"..tostring(_theme), txn = "phone_wallpaper_override_"..tostring(_theme)}
             SetResourceKvp('scalePhone_wp_type_'..tostring(_theme), 'clear')
         elseif _type == "url" then
             if type(_imgsource) == 'string' then
-                overrideWallpaper[_theme] = {type = "url", img = "phone_wallpaper_override", txd = CreateRuntimeTxd('phone_wallpaper_override'), txn = "phone_wallpaper_override"}
+                overrideWallpaper[_theme] = {type = "url", img = "phone_wallpaper_override_"..tostring(_theme), txd = CreateRuntimeTxd('phone_wallpaper_override'), txn = "phone_wallpaper_override_"..tostring(_theme)}
                 local dui = CreateDui(_imgsource, 256, 256)
                 local dui_handle = GetDuiHandle(dui)
-                overrideWallpaper[_theme].txn = CreateRuntimeTextureFromDuiHandle(overrideWallpaper[_theme].txd, "phone_wallpaper_override", dui_handle)
+                overrideWallpaper[_theme].txn = CreateRuntimeTextureFromDuiHandle(overrideWallpaper[_theme].txd, "phone_wallpaper_override_"..tostring(_theme), dui_handle)
                 --DestroyDui(dui)
                 SetResourceKvp('scalePhone_wp_type_'..tostring(_theme), 'url')
                 SetResourceKvp('scalePhone_wp_imgsource_'..tostring(_theme), _imgsource)
@@ -448,7 +448,7 @@ AddEventHandler('scalePhone.OverrideWallpaper', function(_type, theme, _imgsourc
             
         elseif _type == "texture" then
             if type(_imgsource) == 'string' and type(_imgsource2) == 'string' then
-                overrideWallpaper[_theme] = {type = "texture", img = "phone_wallpaper_override", txd = CreateRuntimeTxd('phone_wallpaper_override'), txn = "phone_wallpaper_override"}
+                overrideWallpaper[_theme] = {type = "texture", img = "phone_wallpaper_override_"..tostring(_theme), txd = CreateRuntimeTxd('phone_wallpaper_override'), txn = "phone_wallpaper_override_"..tostring(_theme)}
                 AddReplaceTexture(_imgsource, _imgsource2, overrideWallpaper[_theme].txd, overrideWallpaper[_theme].txn)
 
                 SetResourceKvp('scalePhone_wp_type_'..tostring(_theme), 'url')
