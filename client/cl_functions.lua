@@ -1,4 +1,4 @@
-AddEventHandler("scalePhone.ChangePhoneTheme", function(_data)
+RegisterNetEvent("scalePhone.ChangePhoneTheme", function(_data)
     if _data.themeID ~= nil then
         themeID = _data.themeID
         if isPhoneActive then
@@ -8,7 +8,19 @@ AddEventHandler("scalePhone.ChangePhoneTheme", function(_data)
     end
 end)
 
-AddEventHandler("scalePhone.TogglePhoneSleepMode", function()
+RegisterNetEvent("scalePhone.ChangePhoneCase", function(_data)
+    if _data.phoneCaseID ~= nil and tonumber(_data.phoneCaseID) ~= nil then
+        local _ids = {[0] = true,[1] = true,[2] = true,[3] = true,[4] = true,[5] = true,[6] = true}
+        if _ids[tonumber(_data.phoneCaseID)] ~= nil then
+            phoneCaseID = tonumber(_data.phoneCaseID)
+        end
+        if isPhoneActive then
+            N_0x83a169eabcdb10a2(PlayerPedId(), phoneCaseID)
+        end
+    end
+end)
+
+RegisterNetEvent("scalePhone.TogglePhoneSleepMode", function()
     sleepMode = not sleepMode
     Scaleform.CallFunction(phoneScaleform, false, "SET_SLEEP_MODE", sleepMode)
     TriggerEvent('scalePhone.Event.SleepModeChanged', sleepMode)

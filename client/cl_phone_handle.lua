@@ -9,6 +9,7 @@ selectID = 0
 appSelectID = 0
 renderID = 0
 themeID = 0
+phoneCaseID = 0
 phoneScale = 250.0 --250.0
 phonePos = {x = 47.0, y = -22.0, z = -60.0}
 sleepMode = false

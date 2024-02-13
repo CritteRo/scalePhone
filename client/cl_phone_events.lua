@@ -112,7 +112,7 @@ AddEventHandler('scalePhone.OpenPhone', function()
             SetPedConfigFlag(PlayerPedId(), 242, not true)
             SetPedConfigFlag(PlayerPedId(), 243, not true)
             SetPedConfigFlag(PlayerPedId(), 244, true)
-            N_0x83a169eabcdb10a2(PlayerPedId(), 0)
+            N_0x83a169eabcdb10a2(PlayerPedId(), phoneCaseID) --phone case color. 0=blue, 1=green, 2=red, 3=orange, 4=gray, 5=purple, 6=pink, 7 or more = dark-gray?
             while tempy <= phonePos.y do
                 tempy = tempy + 1.5
                 SetMobilePhonePosition(phonePos.x, tempy, phonePos.z)
